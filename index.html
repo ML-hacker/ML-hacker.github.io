@@ -223,7 +223,7 @@
 
         <div class='meta-info-bar'>
           <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-12T11:51:30.932Z" itemprop="datePublished">2023-09-12</time>
+  <time class="dt-published" datetime="2023-09-12T13:23:46.370Z" itemprop="datePublished">2023-09-12</time>
 </div>
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
@@ -234,7 +234,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            1.1k words 
+            997 words 
           </div>
         </div>
         
@@ -244,10 +244,12 @@
       <div class="e-content article-entry" itemprop="articleBody">
         
           <div class="truncate-text">
-            WEB签到include![[Pasted image 20230908201141.png]]首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议
-![[Pasted image 20230908201343.png]]得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZmlsZV9wYXRoKTsKfQplbHNlewogICAgZWNobyAiZXJyb3IiOwp9Cg&#x3D;&#x3D;
+            WEB签到include首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议
+得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZmlsZV9wYXRoKTsKfQplbHNlewogICAgZWNobyAiZXJyb3IiOwp9Cg&#x3D;&#x3D;
 base64解密
-12345678&lt;?php$file_path = &quot;/flag&quot;;if (file_exists($file_path)) &#123;    $flag = file_get_contents($file_path);&#125;else&#123;    echo &q...  
+12345678&lt;?php$file_path = &quot;/flag&quot;;if (file_exists($file_path)) &#123;    $flag = file_get_contents($file_path);&#125;else&#123;    echo &quot;error&quot;;?&gt;
+
+可见直接读flag目录即可得到flag解码得到SICTF{ed2cb4ee-506f-47a8-8...  
           </div>
         
       </div>
