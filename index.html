@@ -176,7 +176,7 @@
       
         <a class="archive-link" href="/archives/2023/09 ">
           September 2023 
-          <div class="archive-count">2 </div>
+          <div class="archive-count">3 </div>
         </a>
       
     </div>
@@ -190,9 +190,15 @@
       <h3 class="widget-title">Recent Posts</h3>
       <ul>
         
-          <a class="recent-link" href="/2023/09/13/rce-pdf/" title="rce-pdf" >
+          <a class="recent-link" href="/2023/09/13/lolita-N1/" title="udf导出表" >
             <div class="recent-link-text">
-              rce-pdf
+              udf导出表
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/09/13/rce-pdf/" title="从XSS到 RCE (dompdf 0day)" >
+            <div class="recent-link-text">
+              从XSS到 RCE (dompdf 0day)
             </div>
           </a>
         
@@ -214,6 +220,80 @@
       
    
 
+<article id="post-lolita-N1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 itemprop="name">
+        <a class="p-name article-title" href="/2023/09/13/lolita-N1/">udf导出表</a>
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-09-13T08:28:55.000Z" itemprop="datePublished">2023-09-13</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+    Uncategorized 
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            818 words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <div class="truncate-text">
+            这道题是N1大佬做的，叫我来测试一下
+url:http://dev.xswl.io:8230/
+进入后发现key source 那就可以很简单看出是sql注入
+判断后为数字型，字段数为2，user为root
+f12-发现让我们查看源码，那就是说要拿到源码，而sql注入中只能利用load_file（）函数进行读取源码
+所以，默认路径下
+
+拿到源码
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980&lt;?php//for n1ctf ezmariadb secret cmdif ($_REQUEST[&quot;SSSSSSSSSSSSSsecret&quot;] === &quot;flag_is_not_here&quot;)&#123;    header(&quot;Content-Type: text/plain&quot...  
+          </div>
+        
+      </div>
+
+         
+    </div>
+    
+     
+    <a class="right-panel  non-pic  "
+      
+      href="/2023/09/13/lolita-N1/" 
+    >
+       
+      <i class="fa-solid fa-angle-right non-pic"></i>
+       
+    </a>
+     
+  </div>
+  
+</article>
+
+ 
+
+   
+
 <article id="post-rce-pdf" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
    
   <div class="article-inner">
@@ -225,7 +305,7 @@
   
     
       <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/13/rce-pdf/">rce-pdf</a>
+        <a class="p-name article-title" href="/2023/09/13/rce-pdf/">从XSS到 RCE (dompdf 0day)</a>
       </h1>
     
   
