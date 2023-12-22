@@ -12,6 +12,22 @@
   
   
   
+<!-- Gaug.es Analytics -->
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', 'true');
+    t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+    t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+<!-- End Gaug.es Analytics -->
+
 
   
   <title>n1ctf-ezmaira | Delete&#39;s blog</title>
@@ -28,7 +44,7 @@
 <meta property="og:description" content="没想到吧，又是lolita师傅出的题因为当时N1CTF没解出来，所以找了lolita师傅开了个环境复现一下，在此特别感谢lolita师傅 进来还是直接load_file() 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/11/03/n1ctf-ezmaira/1.png">
-<meta property="og:image" content="http://example.com/2023/11/03/n1ctf-ezmaira/3.png">
+<meta property="og:image" content="http://example.com/3.png">
 <meta property="article:published_time" content="2023-11-03T05:19:58.000Z">
 <meta property="article:modified_time" content="2023-11-03T05:25:43.712Z">
 <meta property="article:author" content="DELETE">
@@ -152,14 +168,14 @@
     <div class="widget">
       <h3 class="widget-title">Categories</h3>
       <div class="category-box">
-            <a class="category-link" href="/categories/CTF/">
-                CTF
-                <div class="category-count">5</div>
-            </a>
-        
             <a class="category-link" href="/categories/%E5%AE%9E%E6%88%98/">
                 实战
                 <div class="category-count">2</div>
+            </a>
+        
+            <a class="category-link" href="/categories/CTF/">
+                CTF
+                <div class="category-count">6</div>
             </a>
         </div>
     </div>
@@ -182,6 +198,11 @@
     <div class="widget">
       <h3 class="widget-title">Archives</h3>
       
+      
+        <a class="archive-link" href="/archives/2023/12 ">
+          December 2023 
+          <div class="archive-count">1 </div>
+        </a>
       
         <a class="archive-link" href="/archives/2023/11 ">
           November 2023 
@@ -209,6 +230,12 @@
       <h3 class="widget-title">Recent Posts</h3>
       <ul>
         
+          <a class="recent-link" href="/2023/12/22/N1star(1)/" title="关于N1 star给的一道题的审计分析(一)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(一)
+            </div>
+          </a>
+        
           <a class="recent-link" href="/2023/11/03/n1ctf-ezmaira/" title="n1ctf-ezmaira" >
             <div class="recent-link-text">
               n1ctf-ezmaira
@@ -230,12 +257,6 @@
           <a class="recent-link" href="/2023/10/21/%E5%A4%A9%E5%B1%B1/" title="天山固网线上赛WP" >
             <div class="recent-link-text">
               天山固网线上赛WP
-            </div>
-          </a>
-        
-          <a class="recent-link" href="/2023/09/13/lolita-N1/" title="udf导出表" >
-            <div class="recent-link-text">
-              udf导出表
             </div>
           </a>
         
@@ -322,7 +343,7 @@
 <p>这里当时我有个问题就是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mariadb --plugin-dir=. --default-auth=cap</span><br></pre></td></tr></table></figure>
 <p>他可以自己配路径，所以不需要考虑自己的so文件上传到哪里去<br>最后直接cat  &#x2F;flag</p>
-<p>拿下<br><img src="/2023/11/03/n1ctf-ezmaira/3.png"></p>
+<p>拿下<br><img src="/3.png"></p>
 <p>每次复现都能学到很多东西，加油加油</p>
 
         
@@ -336,10 +357,15 @@
   
     
 <nav id="article-nav">
-  <a class="article-nav-btn left  disabled "
+  <a class="article-nav-btn left "
+    
+      href="/2023/12/22/N1star(1)/"
+      title="关于N1 star给的一道题的审计分析(一)"
      >
     <i class="fa-solid fa-angle-left"></i>
     <p class="title-text">
+      
+        关于N1 star给的一道题的审计分析(一)
         
     </p>
   </a>
