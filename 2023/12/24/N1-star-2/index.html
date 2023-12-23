@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="false" > 
+<link href="/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/fontawesome/css/brands.css" rel="stylesheet">
+<link href="/fontawesome/css/solid.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+<!-- Gaug.es Analytics -->
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', 'true');
+    t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+    t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+<!-- End Gaug.es Analytics -->
+
+
+  
+  <title>关于N1 star给的一道题的审计分析(二) | Delete&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="今天因为打了一天安洵杯所以就没有分析多少，还是发出来赶赶进度把哈哈哈 前面的I函数就走完了，接下来就是 1234if($cid &#x3D;&#x3D; 0) $this-&gt;show(&amp;#x27;&lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;*&amp;#123; padding: 0; margin: 0; &amp;#125; div&amp;#123; padding: 4px 48px;&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于N1 star给的一道题的审计分析(二)">
+<meta property="og:url" content="http://example.com/2023/12/24/N1-star-2/index.html">
+<meta property="og:site_name" content="Delete&#39;s blog">
+<meta property="og:description" content="今天因为打了一天安洵杯所以就没有分析多少，还是发出来赶赶进度把哈哈哈 前面的I函数就走完了，接下来就是 1234if($cid &#x3D;&#x3D; 0) $this-&gt;show(&amp;#x27;&lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;*&amp;#123; padding: 0; margin: 0; &amp;#125; div&amp;#123; padding: 4px 48px;&amp;#12">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-23T16:52:03.000Z">
+<meta property="article:modified_time" content="2023-12-23T16:53:24.237Z">
+<meta property="article:author" content="DELETE">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Delete's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  
+   
+  <div id="main-grid" class="shadow   ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Delete's blog </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+      <a class="main-nav-link" href="/friend">friend</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+      <a class="nav-dropdown-link" href="/friend">friend</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/images/1.jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">DELETE </div>
+      <div class="dot"></div>
+      <div class="subtitle">成为那耀眼的光 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/ML-hacker" title="ML-hacker"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/CTF/">
+                CTF
+                <div class="category-count">7</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E5%AE%9E%E6%88%98/">
+                实战
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/WP/" rel="tag">WP</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%AE%9E%E6%88%98/" rel="tag">实战</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag">漏洞复现</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Archives</h3>
+      
+      
+        <a class="archive-link" href="/archives/2023/12 ">
+          December 2023 
+          <div class="archive-count">2 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/11 ">
+          November 2023 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/10 ">
+          October 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/09 ">
+          September 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Recent Posts</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2023/12/24/N1-star-2/" title="关于N1 star给的一道题的审计分析(二)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(二)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/12/22/N1star(1)/" title="关于N1 star给的一道题的审计分析(一)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(一)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/11/03/n1ctf-ezmaira/" title="n1ctf-ezmaira" >
+            <div class="recent-link-text">
+              n1ctf-ezmaira
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/10/31/ACTF/" title="ACTF2023 WP" >
+            <div class="recent-link-text">
+              ACTF2023 WP
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/10/27/PHP-parameter/" title="PHP中非法参数名问题分析" >
+            <div class="recent-link-text">
+              PHP中非法参数名问题分析
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+<article id="post-N1-star-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        关于N1 star给的一道题的审计分析(二)
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-12-23T16:52:03.000Z" itemprop="datePublished">2023-12-24</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/CTF/">CTF</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            1.2k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <p>今天因为打了一天安洵杯所以就没有分析多少，还是发出来赶赶进度把哈哈哈</p>
+<p>前面的<code>I</code>函数就走完了，接下来就是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="variable">$cid</span> == <span class="number">0</span>) <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">show</span>(<span class="string">&#x27;&lt;style type=&quot;text/css&quot;&gt;*&#123; padding: 0; margin: 0; &#125; div&#123; padding: 4px 48px;&#125; body&#123; background: #fff; font-family: &quot;微软雅黑&quot;; color: #b80202;font-size:24px&#125; h1&#123; font-size: 100px; font-weight: normal; margin-bottom: 12px; &#125; p&#123; line-height: 1.8em; font-size: 36px &#125; a,a:hover&#123;color:blue;&#125;&lt;/style&gt;&lt;div style=&quot;padding: 24px 48px;&quot;&gt; &lt;h1&gt;:)&lt;/h1&gt;&lt;p&gt;欢迎使用 &lt;b&gt;ThinkPHP&lt;/b&gt;！&lt;/p&gt;&lt;br/&gt;版本 V&#123;$Think.version&#125;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://ad.topthink.com/Public/static/client.js&quot;&gt;&lt;/script&gt;&lt;thinkad id=&quot;ad_55e75dfae343f5a1&quot;&gt;&lt;/thinkad&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://tajs.qq.com/stats?sId=9347272&quot; charset=&quot;UTF-8&quot;&gt;&lt;/script&gt;&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">page</span>(<span class="variable">$cid</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>先传一个cid &#x3D; 0;开始跟进</p>
+<p>大概流程: -&gt; show()-&gt;view-&gt;display()-&gt;G();-&gt;listen()-&gt;fetch()-&gt;getThemePath-&gt;getTemplateTheme-&gt;C();</p>
+<h3 id="function-show"><a href="#function-show" class="headerlink" title="function show()"></a>function show()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"><span class="variable">$content</span>, <span class="variable">$charset</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$contentType</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$prefix</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;view-&gt;<span class="title function_ invoke__">display</span>(<span class="string">&#x27;&#x27;</span>, <span class="variable">$charset</span>, <span class="variable">$contentType</span>, <span class="variable">$content</span>, <span class="variable">$prefix</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用了view属性，找了一下继承的控制器<code>Controller.class.php</code>,发现到了这个属性</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="variable">$view</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面给show’传递了$content和$charset<br>所以给display传值<br>再来看一下display函数如何定义的</p>
+<h3 id="function-display"><a href="#function-display" class="headerlink" title="function display()"></a>function display()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">display</span>(<span class="params"><span class="variable">$templateFile</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$charset</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$contentType</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$content</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$prefix</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">G</span>(<span class="string">&#x27;viewStartTime&#x27;</span>);</span><br><span class="line">    <span class="comment">// 视图开始标签</span></span><br><span class="line">    <span class="title class_">Hook</span>::<span class="title function_ invoke__">listen</span>(<span class="string">&#x27;view_begin&#x27;</span>, <span class="variable">$templateFile</span>);</span><br><span class="line">    <span class="comment">// 解析并获取模板内容</span></span><br><span class="line">    <span class="variable">$content</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">fetch</span>(<span class="variable">$templateFile</span>, <span class="variable">$content</span>, <span class="variable">$prefix</span>);</span><br><span class="line">    <span class="comment">// 输出模板内容</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">render</span>(<span class="variable">$content</span>, <span class="variable">$charset</span>, <span class="variable">$contentType</span>);</span><br><span class="line">    <span class="comment">// 视图结束标签</span></span><br><span class="line">    <span class="title class_">Hook</span>::<span class="title function_ invoke__">listen</span>(<span class="string">&#x27;view_end&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟进到G函数</p>
+<h3 id="function-G"><a href="#function-G" class="headerlink" title="function G()"></a>function G()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 记录和统计时间（微秒）和内存使用情况</span></span><br><span class="line"><span class="comment"> * 使用方法:</span></span><br><span class="line"><span class="comment"> * &lt;code&gt;</span></span><br><span class="line"><span class="comment"> * G(&#x27;begin&#x27;); // 记录开始标记位</span></span><br><span class="line"><span class="comment"> * // ... 区间运行代码</span></span><br><span class="line"><span class="comment"> * G(&#x27;end&#x27;); // 记录结束标签位</span></span><br><span class="line"><span class="comment"> * echo G(&#x27;begin&#x27;,&#x27;end&#x27;,6); // 统计区间运行时间 精确到小数后6位</span></span><br><span class="line"><span class="comment"> * echo G(&#x27;begin&#x27;,&#x27;end&#x27;,&#x27;m&#x27;); // 统计区间内存使用情况</span></span><br><span class="line"><span class="comment"> * 如果end标记位没有定义，则会自动以当前作为标记位</span></span><br><span class="line"><span class="comment"> * 其中统计内存使用需要 MEMORY_LIMIT_ON 常量为true才有效</span></span><br><span class="line"><span class="comment"> * &lt;/code&gt;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $start 开始标签</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $end 结束标签</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> integer|string $dec 小数位或者m</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">G</span>(<span class="params"><span class="variable">$start</span>, <span class="variable">$end</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$dec</span> = <span class="number">4</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$_info</span> = <span class="keyword">array</span>();</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$_mem</span>  = <span class="keyword">array</span>();</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">is_float</span>(<span class="variable">$end</span>)) &#123;</span><br><span class="line">        <span class="comment">// 记录时间</span></span><br><span class="line">        <span class="variable">$_info</span>[<span class="variable">$start</span>] = <span class="variable">$end</span>;</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (!<span class="keyword">empty</span>(<span class="variable">$end</span>)) &#123;</span><br><span class="line">        <span class="comment">// 统计时间和内存使用</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_info</span>[<span class="variable">$end</span>])) &#123;</span><br><span class="line">            <span class="variable">$_info</span>[<span class="variable">$end</span>] = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (MEMORY_LIMIT_ON &amp;&amp; <span class="string">&#x27;m&#x27;</span> == <span class="variable">$dec</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_mem</span>[<span class="variable">$end</span>])) &#123;</span><br><span class="line">                <span class="variable">$_mem</span>[<span class="variable">$end</span>] = <span class="title function_ invoke__">memory_get_usage</span>();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">number_format</span>((<span class="variable">$_mem</span>[<span class="variable">$end</span>] - <span class="variable">$_mem</span>[<span class="variable">$start</span>]) / <span class="number">1024</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">number_format</span>((<span class="variable">$_info</span>[<span class="variable">$end</span>] - <span class="variable">$_info</span>[<span class="variable">$start</span>]), <span class="variable">$dec</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 记录时间和内存使用</span></span><br><span class="line">        <span class="variable">$_info</span>[<span class="variable">$start</span>] = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">if</span> (MEMORY_LIMIT_ON) &#123;</span><br><span class="line">            <span class="variable">$_mem</span>[<span class="variable">$start</span>] = <span class="title function_ invoke__">memory_get_usage</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<blockquote>
+<p>G($start&#x3D;’viewStartTime’,$end&#x3D;’’， $dec &#x3D; 4)</p>
+</blockquote>
+<p>在<code>$_info</code>、<code>$_mem_</code>后面var_dump了一下，发现都是一些时间和内存的记录<br>因为end默认是string所以直接跳到</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$_info</span>[<span class="variable">$start</span>] = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">if</span> (MEMORY_LIMIT_ON) &#123;</span><br><span class="line">    <span class="variable">$_mem</span>[<span class="variable">$start</span>] = <span class="title function_ invoke__">memory_get_usage</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据前面注释可以知道，其实就是<code>记录和统计时间（微秒）和内存使用情况</code><br>最后return了null所以就继续跟进</p>
+<p>可以看到这里利用了一个<code>Hook</code>的机制(刚好不太懂所以就去顺便学习了一下)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Hook</span>::<span class="title function_ invoke__">listen</span>(<span class="string">&#x27;view_begin&#x27;</span>, <span class="variable">$templateFile</span>);</span><br></pre></td></tr></table></figure>
+<p>跟进去  - &gt; listen函数</p>
+<h3 id="function-listen"><a href="#function-listen" class="headerlink" title="function listen()"></a>function listen()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">listen</span>(<span class="params"><span class="variable">$tag</span>, &amp;<span class="variable">$params</span> = <span class="literal">null</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$tags</span>[<span class="variable">$tag</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span> (APP_DEBUG) &#123;</span><br><span class="line">            <span class="title function_ invoke__">G</span>(<span class="variable">$tag</span> . <span class="string">&#x27;Start&#x27;</span>);</span><br><span class="line">            <span class="title function_ invoke__">trace</span>(<span class="string">&#x27;[ &#x27;</span> . <span class="variable">$tag</span> . <span class="string">&#x27; ] --START--&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;INFO&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="built_in">self</span>::<span class="variable">$tags</span>[<span class="variable">$tag</span>] <span class="keyword">as</span> <span class="variable">$name</span>) &#123;</span><br><span class="line">            APP_DEBUG &amp;&amp; <span class="title function_ invoke__">G</span>(<span class="variable">$name</span> . <span class="string">&#x27;_start&#x27;</span>);</span><br><span class="line">            <span class="variable">$result</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">exec</span>(<span class="variable">$name</span>, <span class="variable">$tag</span>, <span class="variable">$params</span>);</span><br><span class="line">            <span class="keyword">if</span> (APP_DEBUG) &#123;</span><br><span class="line">                <span class="title function_ invoke__">G</span>(<span class="variable">$name</span> . <span class="string">&#x27;_end&#x27;</span>);</span><br><span class="line">                <span class="title function_ invoke__">trace</span>(<span class="string">&#x27;Run &#x27;</span> . <span class="variable">$name</span> . <span class="string">&#x27; [ RunTime:&#x27;</span> . <span class="title function_ invoke__">G</span>(<span class="variable">$name</span> . <span class="string">&#x27;_start&#x27;</span>, <span class="variable">$name</span> . <span class="string">&#x27;_end&#x27;</span>, <span class="number">6</span>) . <span class="string">&#x27;s ]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;INFO&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="literal">false</span> === <span class="variable">$result</span>) &#123;</span><br><span class="line">                <span class="comment">// 如果返回false 则中断插件执行</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (APP_DEBUG) &#123;</span><br><span class="line">            <span class="comment">// 记录行为的执行日志</span></span><br><span class="line">            <span class="title function_ invoke__">trace</span>(<span class="string">&#x27;[ &#x27;</span> . <span class="variable">$tag</span> . <span class="string">&#x27; ] --END-- [ RunTime:&#x27;</span> . <span class="title function_ invoke__">G</span>(<span class="variable">$tag</span> . <span class="string">&#x27;Start&#x27;</span>, <span class="variable">$tag</span> . <span class="string">&#x27;End&#x27;</span>, <span class="number">6</span>) . <span class="string">&#x27;s ]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;INFO&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里<code>view_begin</code>不存在这个键，所以直接跳到ruturn<br>所以跟进到：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$content</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">fetch</span>(<span class="variable">$templateFile</span>, <span class="variable">$content</span>, <span class="variable">$prefix</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="function-fetch"><a href="#function-fetch" class="headerlink" title="function fetch()"></a>function fetch()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析和获取模板内容 用于输出</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@access</span> public</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $templateFile 模板文件名</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $content 模板输出内容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $prefix 模板缓存前缀</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch</span>(<span class="params"><span class="variable">$templateFile</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$content</span> = <span class="string">&#x27;&#x27;</span>, <span class="variable">$prefix</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable">$content</span>)) &#123;</span><br><span class="line">        <span class="variable">$templateFile</span> = <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">parseTemplate</span>(<span class="variable">$templateFile</span>);</span><br><span class="line">        <span class="comment">// 模板文件不存在直接返回</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_ invoke__">is_file</span>(<span class="variable">$templateFile</span>)) &#123;</span><br><span class="line">            <span class="title function_ invoke__">E</span>(<span class="title function_ invoke__">L</span>(<span class="string">&#x27;_TEMPLATE_NOT_EXIST_&#x27;</span>) . <span class="string">&#x27;:&#x27;</span> . <span class="variable">$templateFile</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="title function_ invoke__">defined</span>(<span class="string">&#x27;THEME_PATH&#x27;</span>) <span class="keyword">or</span> <span class="title function_ invoke__">define</span>(<span class="string">&#x27;THEME_PATH&#x27;</span>, <span class="variable">$this</span>-&gt;<span class="title function_ invoke__">getThemePath</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 页面缓存</span></span><br><span class="line">    <span class="title function_ invoke__">ob_start</span>();</span><br><span class="line">    <span class="title function_ invoke__">ob_implicit_flush</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;php&#x27;</span> == <span class="title function_ invoke__">strtolower</span>(<span class="title function_ invoke__">C</span>(<span class="string">&#x27;TMPL_ENGINE_TYPE&#x27;</span>))) &#123;</span><br><span class="line">        <span class="comment">// 使用PHP原生模板</span></span><br><span class="line">        <span class="variable">$_content</span> = <span class="variable">$content</span>;</span><br><span class="line">        <span class="comment">// 模板阵列变量分解成为独立变量</span></span><br><span class="line">        <span class="title function_ invoke__">extract</span>(<span class="variable">$this</span>-&gt;tVar, EXTR_OVERWRITE);</span><br><span class="line">        <span class="comment">// 直接载入PHP模板</span></span><br><span class="line">        <span class="keyword">empty</span>(<span class="variable">$_content</span>) ? <span class="keyword">include</span> <span class="variable">$templateFile</span> : <span class="keyword">eval</span>(<span class="string">&#x27;?&gt;&#x27;</span> . <span class="variable">$_content</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 视图解析标签</span></span><br><span class="line">        <span class="variable">$params</span> = <span class="keyword">array</span>(<span class="string">&#x27;var&#x27;</span> =&gt; <span class="variable language_">$this</span>-&gt;tVar, <span class="string">&#x27;file&#x27;</span> =&gt; <span class="variable">$templateFile</span>, <span class="string">&#x27;content&#x27;</span> =&gt; <span class="variable">$content</span>, <span class="string">&#x27;prefix&#x27;</span> =&gt; <span class="variable">$prefix</span>);</span><br><span class="line">        <span class="title class_">Hook</span>::<span class="title function_ invoke__">listen</span>(<span class="string">&#x27;view_parse&#x27;</span>, <span class="variable">$params</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取并清空缓存</span></span><br><span class="line">    <span class="variable">$content</span> = <span class="title function_ invoke__">ob_get_clean</span>();</span><br><span class="line">    <span class="comment">// 内容过滤标签</span></span><br><span class="line">    <span class="title class_">Hook</span>::<span class="title function_ invoke__">listen</span>(<span class="string">&#x27;view_filter&#x27;</span>, <span class="variable">$content</span>);</span><br><span class="line">    <span class="comment">// 输出模板文件</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$content</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>1、<code>content</code>不为空-&gt;</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">defined</span>(<span class="string">&#x27;THEME_PATH&#x27;</span>) <span class="keyword">or</span> <span class="title function_ invoke__">define</span>(<span class="string">&#x27;THEME_PATH&#x27;</span>, <span class="variable">$this</span>-&gt;<span class="title function_ invoke__">getThemePath</span>());</span><br></pre></td></tr></table></figure>
+<p>因为跟进后发现进入了getThemePath函数，所以可以判断‘THEME_PATH’没有被定义</p>
+<h3 id="function-getThemePath"><a href="#function-getThemePath" class="headerlink" title="function getThemePath()"></a>function getThemePath()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取当前的模板主题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@access</span> private</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">getTemplateTheme</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">$this</span>-&gt;theme) &#123;</span><br><span class="line">            <span class="comment">// 指定模板主题</span></span><br><span class="line">            <span class="variable">$theme</span> = <span class="variable language_">$this</span>-&gt;theme;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/* 获取模板主题名称 */</span></span><br><span class="line">            <span class="variable">$theme</span> = <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DEFAULT_THEME&#x27;</span>);</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">C</span>(<span class="string">&#x27;TMPL_DETECT_THEME&#x27;</span>)) &#123;</span><br><span class="line"><span class="comment">// 自动侦测模板主题</span></span><br><span class="line">                <span class="variable">$t</span> = <span class="title function_ invoke__">C</span>(<span class="string">&#x27;VAR_TEMPLATE&#x27;</span>);</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="variable">$t</span>])) &#123;</span><br><span class="line">                    <span class="variable">$theme</span> = <span class="variable">$_GET</span>[<span class="variable">$t</span>];</span><br><span class="line">                &#125; <span class="keyword">elseif</span> (<span class="title function_ invoke__">cookie</span>(<span class="string">&#x27;think_template&#x27;</span>)) &#123;</span><br><span class="line">                    <span class="variable">$theme</span> = <span class="title function_ invoke__">cookie</span>(<span class="string">&#x27;think_template&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$theme</span>, <span class="title function_ invoke__">explode</span>(<span class="string">&#x27;,&#x27;</span>, <span class="title function_ invoke__">C</span>(<span class="string">&#x27;THEME_LIST&#x27;</span>)))) &#123;</span><br><span class="line">                    <span class="variable">$theme</span> = <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DEFAULT_THEME&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="title function_ invoke__">cookie</span>(<span class="string">&#x27;think_template&#x27;</span>, <span class="variable">$theme</span>, <span class="number">864000</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_ invoke__">defined</span>(<span class="string">&#x27;THEME_NAME&#x27;</span>) || <span class="title function_ invoke__">define</span>(<span class="string">&#x27;THEME_NAME&#x27;</span>, <span class="variable">$theme</span>); <span class="comment">// 当前模板主题名称</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$theme</span> ? <span class="variable">$theme</span> . <span class="string">&#x27;/&#x27;</span> : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2023/12/22/N1star(1)/"
+      title="关于N1 star给的一道题的审计分析(一)"
+     >
+
+    <p class="title-text">
+      
+        关于N1 star给的一道题的审计分析(一)
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+ 
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2023 DELETE<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
