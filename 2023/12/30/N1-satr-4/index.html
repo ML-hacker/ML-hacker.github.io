@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="false" > 
+<link href="/fontawesome/css/fontawesome.css" rel="stylesheet">
+<link href="/fontawesome/css/brands.css" rel="stylesheet">
+<link href="/fontawesome/css/solid.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+<!-- Gaug.es Analytics -->
+<script>
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', 'true');
+    t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+    t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+<!-- End Gaug.es Analytics -->
+
+
+  
+  <title>关于N1 star给的一道题的审计分析(四) | Delete&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="期末了，抽出点时间分析 db方法后面静态调用了getInstance，因为要加载一个类，所以自动会跳到前面分析过得autoload方法 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647* 类库自动加载   * @param string $class 对象类名   * @ret">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于N1 star给的一道题的审计分析(四)">
+<meta property="og:url" content="http://example.com/2023/12/30/N1-satr-4/index.html">
+<meta property="og:site_name" content="Delete&#39;s blog">
+<meta property="og:description" content="期末了，抽出点时间分析 db方法后面静态调用了getInstance，因为要加载一个类，所以自动会跳到前面分析过得autoload方法 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647* 类库自动加载   * @param string $class 对象类名   * @ret">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-30T08:49:12.000Z">
+<meta property="article:modified_time" content="2023-12-30T08:50:01.008Z">
+<meta property="article:author" content="DELETE">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Delete's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  
+   
+  <div id="main-grid" class="shadow   ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Delete's blog </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+      <a class="main-nav-link" href="/friend">friend</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+      <a class="nav-dropdown-link" href="/friend">friend</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/images/1.jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">DELETE </div>
+      <div class="dot"></div>
+      <div class="subtitle">成为那耀眼的光 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/ML-hacker" title="ML-hacker"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/CTF/">
+                CTF
+                <div class="category-count">9</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E5%AE%9E%E6%88%98/">
+                实战
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/WP/" rel="tag">WP</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%AE%9E%E6%88%98/" rel="tag">实战</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="tag">漏洞复现</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Archives</h3>
+      
+      
+        <a class="archive-link" href="/archives/2023/12 ">
+          December 2023 
+          <div class="archive-count">4 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/11 ">
+          November 2023 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/10 ">
+          October 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/09 ">
+          September 2023 
+          <div class="archive-count">3 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Recent Posts</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2023/12/30/N1-satr-4/" title="关于N1 star给的一道题的审计分析(四)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(四)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/12/26/N1-star-3/" title="关于N1 star给的一道题的审计分析(三)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(三)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/12/24/N1-star-2/" title="关于N1 star给的一道题的审计分析(二)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(二)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/12/22/N1star(1)/" title="关于N1 star给的一道题的审计分析(一)" >
+            <div class="recent-link-text">
+              关于N1 star给的一道题的审计分析(一)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/11/03/n1ctf-ezmaira/" title="n1ctf-ezmaira" >
+            <div class="recent-link-text">
+              n1ctf-ezmaira
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+<article id="post-N1-satr-4" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        关于N1 star给的一道题的审计分析(四)
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-12-30T08:49:12.000Z" itemprop="datePublished">2023-12-30</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/CTF/">CTF</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            2.7k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <p>期末了，抽出点时间分析</p>
+<p>db方法后面静态调用了getInstance，因为要加载一个类，所以自动会跳到前面分析过得<code>autoload</code>方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">* 类库自动加载</span><br><span class="line">   * @param <span class="keyword">string</span> <span class="variable">$class</span> 对象类名</span><br><span class="line">   * @<span class="keyword">return</span> <span class="keyword">void</span></span><br><span class="line">   */</span><br><span class="line">  <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">autoload</span>(<span class="params"><span class="variable">$class</span></span>)</span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">      <span class="comment">// 检查是否存在映射</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$_map</span>[<span class="variable">$class</span>])) &#123;</span><br><span class="line">          <span class="keyword">include</span> <span class="built_in">self</span>::<span class="variable">$_map</span>[<span class="variable">$class</span>];</span><br><span class="line">      &#125; <span class="keyword">elseif</span> (<span class="literal">false</span> !== <span class="title function_ invoke__">strpos</span>(<span class="variable">$class</span>, <span class="string">&#x27;\\&#x27;</span>)) &#123;</span><br><span class="line">          <span class="variable">$name</span> = <span class="title function_ invoke__">strstr</span>(<span class="variable">$class</span>, <span class="string">&#x27;\\&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line">          <span class="keyword">if</span> (<span class="title function_ invoke__">in_array</span>(<span class="variable">$name</span>, <span class="keyword">array</span>(<span class="string">&#x27;Think&#x27;</span>, <span class="string">&#x27;Org&#x27;</span>, <span class="string">&#x27;Behavior&#x27;</span>, <span class="string">&#x27;Com&#x27;</span>, <span class="string">&#x27;Vendor&#x27;</span>)) || <span class="title function_ invoke__">is_dir</span>(LIB_PATH . <span class="variable">$name</span>)) &#123;</span><br><span class="line">              <span class="comment">// Library目录下面的命名空间自动定位</span></span><br><span class="line">              <span class="variable">$path</span> = LIB_PATH;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="comment">// 检测自定义命名空间 否则就以模块为命名空间</span></span><br><span class="line">              <span class="variable">$namespace</span> = <span class="title function_ invoke__">C</span>(<span class="string">&#x27;AUTOLOAD_NAMESPACE&#x27;</span>);</span><br><span class="line">              <span class="variable">$path</span>      = <span class="keyword">isset</span>(<span class="variable">$namespace</span>[<span class="variable">$name</span>]) ? <span class="title function_ invoke__">dirname</span>(<span class="variable">$namespace</span>[<span class="variable">$name</span>]) . <span class="string">&#x27;/&#x27;</span> : APP_PATH;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="variable">$filename</span> = <span class="variable">$path</span> . <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;/&#x27;</span>, <span class="variable">$class</span>) . EXT;</span><br><span class="line">          <span class="keyword">if</span> (<span class="title function_ invoke__">is_file</span>(<span class="variable">$filename</span>)) &#123;</span><br><span class="line">              <span class="comment">// Win环境下面严格区分大小写</span></span><br><span class="line">              <span class="keyword">if</span> (IS_WIN &amp;&amp; <span class="literal">false</span> === <span class="title function_ invoke__">strpos</span>(<span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;\\&#x27;</span>, <span class="title function_ invoke__">realpath</span>(<span class="variable">$filename</span>)), <span class="variable">$class</span> . EXT)) &#123;</span><br><span class="line">                  <span class="keyword">return</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">include</span> <span class="variable">$filename</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">elseif</span> (!<span class="title function_ invoke__">C</span>(<span class="string">&#x27;APP_USE_NAMESPACE&#x27;</span>)) &#123;</span><br><span class="line">          <span class="comment">// 自动加载的类库层</span></span><br><span class="line">          <span class="keyword">foreach</span> (<span class="title function_ invoke__">explode</span>(<span class="string">&#x27;,&#x27;</span>, <span class="title function_ invoke__">C</span>(<span class="string">&#x27;APP_AUTOLOAD_LAYER&#x27;</span>)) <span class="keyword">as</span> <span class="variable">$layer</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (<span class="title function_ invoke__">substr</span>(<span class="variable">$class</span>, -<span class="title function_ invoke__">strlen</span>(<span class="variable">$layer</span>)) == <span class="variable">$layer</span>) &#123;</span><br><span class="line">                  <span class="keyword">if</span> (<span class="title function_ invoke__">require_cache</span>(MODULE_PATH . <span class="variable">$layer</span> . <span class="string">&#x27;/&#x27;</span> . <span class="variable">$class</span> . EXT)) &#123;</span><br><span class="line">                      <span class="keyword">return</span>;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">// 根据自动加载路径设置进行尝试搜索</span></span><br><span class="line">          <span class="keyword">foreach</span> (<span class="title function_ invoke__">explode</span>(<span class="string">&#x27;,&#x27;</span>, <span class="title function_ invoke__">C</span>(<span class="string">&#x27;APP_AUTOLOAD_PATH&#x27;</span>)) <span class="keyword">as</span> <span class="variable">$path</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (<span class="title function_ invoke__">import</span>(<span class="variable">$path</span> . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$class</span>))</span><br><span class="line">              <span class="comment">// 如果加载类成功则返回</span></span><br><span class="line">              &#123;</span><br><span class="line">                  <span class="keyword">return</span>;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>自动加载完类后进入getInstance方法</p>
+<h3 id="function-getInstance"><a href="#function-getInstance" class="headerlink" title="function getInstance()"></a>function getInstance()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 取得数据库类实例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@static</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@access</span> public</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mixed $config 连接配置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Object 返回数据库驱动类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span>(<span class="params"><span class="variable">$config</span> = <span class="keyword">array</span>(<span class="params"></span>)</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$md5</span> = <span class="title function_ invoke__">md5</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$config</span>));</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$instance</span>[<span class="variable">$md5</span>])) &#123;</span><br><span class="line">        <span class="comment">// 解析连接参数 支持数组和字符串</span></span><br><span class="line">        <span class="variable">$options</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">parseConfig</span>(<span class="variable">$config</span>);</span><br><span class="line">        <span class="comment">// 兼容mysqli</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&#x27;mysqli&#x27;</span> == <span class="variable">$options</span>[<span class="string">&#x27;type&#x27;</span>]) &#123;</span><br><span class="line">            <span class="variable">$options</span>[<span class="string">&#x27;type&#x27;</span>] = <span class="string">&#x27;mysql&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果采用lite方式 仅支持原生SQL 包括query和execute方法</span></span><br><span class="line">        <span class="variable">$class</span> = !<span class="keyword">empty</span>(<span class="variable">$options</span>[<span class="string">&#x27;lite&#x27;</span>]) ? <span class="string">&#x27;Think\Db\Lite&#x27;</span> : <span class="string">&#x27;Think\\Db\\Driver\\&#x27;</span> . <span class="title function_ invoke__">ucwords</span>(<span class="title function_ invoke__">strtolower</span>(<span class="variable">$options</span>[<span class="string">&#x27;type&#x27;</span>]));</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">class_exists</span>(<span class="variable">$class</span>)) &#123;</span><br><span class="line">            <span class="built_in">self</span>::<span class="variable">$instance</span>[<span class="variable">$md5</span>] = <span class="keyword">new</span> <span class="variable">$class</span>(<span class="variable">$options</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 类没有定义</span></span><br><span class="line">            <span class="title function_ invoke__">E</span>(<span class="title function_ invoke__">L</span>(<span class="string">&#x27;_NO_DB_DRIVER_&#x27;</span>) . <span class="string">&#x27;: &#x27;</span> . <span class="variable">$class</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">self</span>::<span class="variable">$_instance</span> = <span class="built_in">self</span>::<span class="variable">$instance</span>[<span class="variable">$md5</span>];</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">self</span>::<span class="variable">$_instance</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>计算配置信息的MD5值作为连接实例的唯一标识，用于检查是否已经存在对应数据库连接实例</li>
+<li>如果尚未创建特定配置信息对应数据库连接实例，将解析给定的连接配置信息，并跟进配置信息选择相应的数据库驱动类。</li>
+<li>根据配置信息中指定的数据库类型，动态加载对应的数据库驱动类，这里有一个兼容的处理，如果数据库类型是mysqli，则会转化为mysql。</li>
+<li>如果对应的数据库驱动类存在，则创建一个新的数据库连接实例，并存储在静态数组<code>self::$instance</code>中。</li>
+<li>如果特定的数据库驱动类不存在，则会抛出一个异常，提示数据库驱动类未定义。</li>
+<li>最后返回创建的数据库连接实例<br>跟进后得到的结果<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$md5</span>:<span class="string">&quot;14d71035552fef7c92e4b5c611232830&quot;</span></span><br><span class="line"><span class="variable">$config</span>=<span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>跟进到 parseConfig方法</p>
+<h3 id="function-parseConfig"><a href="#function-parseConfig" class="headerlink" title="function parseConfig()"></a>function parseConfig()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 数据库连接参数解析</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@static</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@access</span> private</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mixed $config</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> array</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">parseConfig</span>(<span class="params"><span class="variable">$config</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$config</span>)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">is_string</span>(<span class="variable">$config</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">self</span>::<span class="title function_ invoke__">parseDsn</span>(<span class="variable">$config</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$config</span> = <span class="title function_ invoke__">array_change_key_case</span>(<span class="variable">$config</span>);</span><br><span class="line">        <span class="variable">$config</span> = <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">&#x27;type&#x27;</span>        =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_type&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>    =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_user&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;password&#x27;</span>    =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_pwd&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;hostname&#x27;</span>    =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_host&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;hostport&#x27;</span>    =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_port&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;database&#x27;</span>    =&gt; <span class="variable">$config</span>[<span class="string">&#x27;db_name&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;dsn&#x27;</span>         =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_dsn&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_dsn&#x27;</span>] : <span class="literal">null</span>,</span><br><span class="line">            <span class="string">&#x27;params&#x27;</span>      =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_params&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_params&#x27;</span>] : <span class="literal">null</span>,</span><br><span class="line">            <span class="string">&#x27;charset&#x27;</span>     =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_charset&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_charset&#x27;</span>] : <span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;deploy&#x27;</span>      =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_deploy_type&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_deploy_type&#x27;</span>] : <span class="number">0</span>,</span><br><span class="line">            <span class="string">&#x27;rw_separate&#x27;</span> =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_rw_separate&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_rw_separate&#x27;</span>] : <span class="literal">false</span>,</span><br><span class="line">            <span class="string">&#x27;master_num&#x27;</span>  =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_master_num&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_master_num&#x27;</span>] : <span class="number">1</span>,</span><br><span class="line">            <span class="string">&#x27;slave_no&#x27;</span>    =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_slave_no&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_slave_no&#x27;</span>] : <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;debug&#x27;</span>       =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_debug&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_debug&#x27;</span>] : APP_DEBUG,</span><br><span class="line">            <span class="string">&#x27;lite&#x27;</span>        =&gt; <span class="keyword">isset</span>(<span class="variable">$config</span>[<span class="string">&#x27;db_lite&#x27;</span>]) ? <span class="variable">$config</span>[<span class="string">&#x27;db_lite&#x27;</span>] : <span class="literal">false</span>,</span><br><span class="line">        );</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$config</span> = <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">&#x27;type&#x27;</span>        =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_TYPE&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_USER&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;password&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_PWD&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;hostname&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_HOST&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;hostport&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_PORT&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;database&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_NAME&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;dsn&#x27;</span>         =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_DSN&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;params&#x27;</span>      =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_PARAMS&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;charset&#x27;</span>     =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_CHARSET&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;deploy&#x27;</span>      =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_DEPLOY_TYPE&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;rw_separate&#x27;</span> =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_RW_SEPARATE&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;master_num&#x27;</span>  =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_MASTER_NUM&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;slave_no&#x27;</span>    =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_SLAVE_NO&#x27;</span>),</span><br><span class="line">            <span class="string">&#x27;debug&#x27;</span>       =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_DEBUG&#x27;</span>, <span class="literal">null</span>, APP_DEBUG),</span><br><span class="line">            <span class="string">&#x27;lite&#x27;</span>        =&gt; <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_LITE&#x27;</span>),</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$config</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个私有的静态方法。<br>逻辑：</p>
+<ul>
+<li>接收一个数据库连接配置数组<code>$config</code>或从配置文件中读取数据库连接配置信息</li>
+<li>如果传入了非空的配置数组<code>$config</code>，则跟进数组键名不区分大小写的特性，将数组键名统一转化为小写，并从给定的配置数组中提取数据库连接所需要的参数，参数包括：<ul>
+<li>数据库类型</li>
+<li>用户名</li>
+<li>主机名</li>
+<li>密码</li>
+<li>主机端口</li>
+<li>数据库名</li>
+<li>数据库DSN</li>
+<li>连接参数</li>
+<li>字符集</li>
+<li>数据库部署方式</li>
+<li>读写分离</li>
+<li>主服务器数量</li>
+<li>从服务器编号</li>
+<li>调试模式</li>
+<li>是否使用轻量级数据库</li>
+</ul>
+</li>
+<li>如果没有传入配置数组<code>$config</code>，则从系统的全局之中读取相同的数据库连接参数，即用上面所说的C（）方法进行获取</li>
+<li>返回整理后的数据库连接配置数组</li>
+</ul>
+<p>然后因为上面的<code>$config</code>为空，所以直接利用C（）方法去获取配置。<br>获取一下然后dump出来看看</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">15</span>) &#123; </span><br><span class="line"><span class="string">&#x27;type&#x27;</span>     =&gt; <span class="keyword">string</span>(<span class="number">5</span>) <span class="string">&quot;mysql&quot;</span> </span><br><span class="line"><span class="string">&#x27;username&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;root&quot;</span> </span><br><span class="line"><span class="string">&#x27;password&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">7</span>) <span class="string">&quot;root123&quot;</span> </span><br><span class="line"><span class="string">&#x27;hostname&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">9</span>) <span class="string">&quot;127.0.0.1&quot;</span> </span><br><span class="line"><span class="string">&#x27;hostport&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">3306</span>) </span><br><span class="line"><span class="string">&#x27;database&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">3</span>) <span class="string">&quot;web&quot;</span> </span><br><span class="line"><span class="string">&#x27;dsn&#x27;</span>      =&gt; <span class="literal">NULL</span> </span><br><span class="line"><span class="string">&#x27;params&#x27;</span>   =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line"><span class="string">&#x27;charset&#x27;</span>  =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;utf8&quot;</span> </span><br><span class="line"><span class="string">&#x27;deploy&#x27;</span>   =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="string">&#x27;rw_separate&#x27;</span> =&gt; <span class="keyword">bool</span>(<span class="literal">false</span>) </span><br><span class="line"><span class="string">&#x27;master_num&#x27;</span>=&gt; <span class="keyword">int</span>(<span class="number">1</span>) </span><br><span class="line"><span class="string">&#x27;slave_no&#x27;</span>  =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="string">&#x27;debug&#x27;</span>     =&gt; <span class="keyword">bool</span>(<span class="literal">true</span>) </span><br><span class="line">lite<span class="string">&#x27;       =&gt; NULL &#125;</span></span><br></pre></td></tr></table></figure>
+<p>回到db方法，<br>在几个判断处打了一个断点且用echo测试<br>发现：</p>
+<ul>
+<li>type为mysql不需要转化</li>
+<li><code>$option[&#39;lite&#39;]</code>为空即<code>$class</code>的值为<code>Think\Db\Driver\Mysql</code></li>
+<li><code>$clas</code>被定义且静态调用instance方法，实例化一个对象</li>
+</ul>
+<p>然后就到了<code>Drive.class.php</code>中的__construct方法<br>这个时候有点好奇为什么不是经过autoload方法而是直接进入Driver类，<br>就去问了一下师傅，说是经历过autoload加载后的类就不需要再autoload了，所以就直接进入对应的类。（使用get_decleared_classes就可以看见被声明过的类了）</p>
+<h3 id="function-construct-in-Drive-class-php"><a href="#function-construct-in-Drive-class-php" class="headerlink" title="function __construct() in Drive.class.php"></a>function __construct() in Drive.class.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 架构函数 读取数据库配置信息</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@access</span> public</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> array $config 数据库配置数组</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$config</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;   <span class="keyword">echo</span> <span class="string">&quot;Drive类的construct方法被调用！\r\n&quot;</span>; <span class="comment">//自己添加用于测试</span></span><br><span class="line">       <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$config</span>)) &#123;</span><br><span class="line">           <span class="variable language_">$this</span>-&gt;config = <span class="title function_ invoke__">array_merge</span>(<span class="variable">$this</span>-&gt;config, <span class="variable">$config</span>);</span><br><span class="line">           <span class="keyword">if</span> (<span class="title function_ invoke__">is_array</span>(<span class="variable">$this</span>-&gt;config[<span class="string">&#x27;params&#x27;</span>])) &#123;</span><br><span class="line">               <span class="variable language_">$this</span>-&gt;options = <span class="variable language_">$this</span>-&gt;config[<span class="string">&#x27;params&#x27;</span>] + <span class="variable language_">$this</span>-&gt;options;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑</p>
+<ul>
+<li>如果传入了<code>$config</code>参数，会将传入的配置信息与当前实例的配置信息进行合并，<code>$config</code>参数可以包含数据库连接需要的各种参数</li>
+<li>如果<code>$this-&gt;$config[&#39;params&#39;]</code>是一个数组，会将其合并到<code>$this-&gt;option</code>数组中。</li>
+</ul>
+<p>然后同样dump了一下，</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">$this</span>-&gt;<span class="variable">$config</span>:</span><br><span class="line"> <span class="keyword">array</span>(<span class="number">17</span>) &#123; <span class="string">&#x27;type&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">5</span>) <span class="string">&quot;mysql&quot;</span> </span><br><span class="line"> <span class="string">&#x27;hostname&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">9</span>) <span class="string">&quot;127.0.0.1&quot;</span> </span><br><span class="line"> <span class="string">&#x27;database&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">3</span>) <span class="string">&quot;web&quot;</span> </span><br><span class="line"> <span class="string">&#x27;username&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;root&quot;</span> </span><br><span class="line"> <span class="string">&#x27;password&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">7</span>) <span class="string">&quot;root123&quot;</span> </span><br><span class="line"> <span class="string">&#x27;hostport&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">3306</span>) </span><br><span class="line"> <span class="string">&#x27;dsn&#x27;</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"> <span class="string">&#x27;params&#x27;</span> =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line"> <span class="string">&#x27;charset&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;utf8&quot;</span> </span><br><span class="line"> <span class="string">&#x27;prefix&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"> <span class="string">&#x27;debug&#x27;</span> =&gt; <span class="keyword">bool</span>(<span class="literal">true</span>) </span><br><span class="line"> <span class="string">&#x27;deploy&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"> <span class="string">&#x27;rw_separate&#x27;</span> =&gt; <span class="keyword">bool</span>(<span class="literal">false</span>) </span><br><span class="line"> <span class="string">&#x27;master_num&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">1</span>) </span><br><span class="line"> <span class="string">&#x27;slave_no&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"> <span class="string">&#x27;db_like_fields&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"> <span class="string">&#x27;lite&#x27;</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">$this</span>-&gt;options</span><br><span class="line"><span class="keyword">array</span>(<span class="number">4</span>) &#123; </span><br><span class="line">[<span class="number">8</span>] =&gt; <span class="keyword">int</span>(<span class="number">2</span>) </span><br><span class="line">[<span class="number">3</span>] =&gt; <span class="keyword">int</span>(<span class="number">2</span>) </span><br><span class="line">[<span class="number">11</span>] =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line">[<span class="number">17</span>] =&gt; <span class="keyword">bool</span>(<span class="literal">false</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟进后返回到db方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 切换数据库连接</span></span><br><span class="line">  <span class="variable language_">$this</span>-&gt;db = <span class="variable language_">$this</span>-&gt;_db[<span class="variable">$linkNum</span>];</span><br><span class="line">  <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_after_db</span>();</span><br><span class="line">  <span class="comment">// 字段检测</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;name) &amp;&amp; <span class="variable language_">$this</span>-&gt;autoCheckFields) &#123;</span><br><span class="line">      <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">_checkTableInfo</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">$this</span>;</span><br></pre></td></tr></table></figure>
+<p>dump出<code>$this-&gt;db</code>的值</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">D:\phpstudy_pro\WWW\N1start\tp\ThinkPHP\Library\Think\Model.<span class="keyword">class</span>.php:<span class="number">1620</span>: <span class="class"><span class="keyword">class</span> <span class="title">Think</span>\<span class="title">Db</span>\<span class="title">Driver</span>\<span class="title">Mysql</span>#</span></span><br><span class="line"><span class="class">8 (17) </span>&#123;</span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$PDOStatement</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$model</span> =&gt; <span class="keyword">string</span>(<span class="number">7</span>) <span class="string">&quot;_think_&quot;</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$queryStr</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$modelSql</span> =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$lastInsID</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$numRows</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$transTimes</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$error</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$linkID</span> =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$_linkID</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$config</span> =&gt; <span class="keyword">array</span>(<span class="number">17</span>) &#123;</span><br><span class="line"><span class="string">&#x27;type&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">5</span>) <span class="string">&quot;mysql&quot;</span> </span><br><span class="line"><span class="string">&#x27;hostname&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">9</span>) <span class="string">&quot;127.0.0.1&quot;</span> </span><br><span class="line"><span class="string">&#x27;database&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">3</span>) <span class="string">&quot;web&quot;</span> </span><br><span class="line"><span class="string">&#x27;username&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;root&quot;</span> </span><br><span class="line"><span class="string">&#x27;password&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">7</span>) <span class="string">&quot;root123&quot;</span> </span><br><span class="line"><span class="string">&#x27;hostport&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">3306</span>) </span><br><span class="line"><span class="string">&#x27;dsn&#x27;</span> =&gt; <span class="literal">NULL</span> </span><br><span class="line"><span class="string">&#x27;params&#x27;</span> =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line"><span class="string">&#x27;charset&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;utf8&quot;</span> </span><br><span class="line"><span class="string">&#x27;prefix&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="string">&#x27;debug&#x27;</span> =&gt; <span class="keyword">bool</span>(<span class="literal">true</span>) </span><br><span class="line"><span class="string">&#x27;deploy&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="string">&#x27;rw_separate&#x27;</span> =&gt; <span class="keyword">bool</span>(<span class="literal">false</span>) </span><br><span class="line"><span class="string">&#x27;master_num&#x27;</span> =&gt; <span class="keyword">int</span>(<span class="number">1</span>) </span><br><span class="line"><span class="string">&#x27;slave_no&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="string">&#x27;db_like_fields&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">0</span>) <span class="string">&quot;&quot;</span> </span><br><span class="line"><span class="string">&#x27;lite&#x27;</span> =&gt; <span class="literal">NULL</span> &#125; </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$exp</span> =&gt; <span class="keyword">array</span>(<span class="number">14</span>) &#123; </span><br><span class="line"><span class="string">&#x27;eq&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">1</span>) <span class="string">&quot;=&quot;</span> </span><br><span class="line"><span class="string">&#x27;neq&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">2</span>) <span class="string">&quot;&lt;&gt;&quot;</span> </span><br><span class="line"><span class="string">&#x27;gt&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">1</span>) <span class="string">&quot;&gt;&quot;</span> </span><br><span class="line"><span class="string">&#x27;egt&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">2</span>) <span class="string">&quot;&gt;=&quot;</span> </span><br><span class="line"><span class="string">&#x27;lt&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">1</span>) <span class="string">&quot;&lt;&quot;</span> </span><br><span class="line"><span class="string">&#x27;elt&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">2</span>) <span class="string">&quot;&lt;=&quot;</span> </span><br><span class="line"><span class="string">&#x27;notlike&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">8</span>) <span class="string">&quot;NOT LIKE&quot;</span> </span><br><span class="line"><span class="string">&#x27;like&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">4</span>) <span class="string">&quot;LIKE&quot;</span> </span><br><span class="line"><span class="string">&#x27;in&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">2</span>) <span class="string">&quot;IN&quot;</span> </span><br><span class="line"><span class="string">&#x27;notin&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">6</span>) <span class="string">&quot;NOT IN&quot;</span> </span><br><span class="line"><span class="string">&#x27;not in&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">6</span>) <span class="string">&quot;NOT IN&quot;</span> </span><br><span class="line"><span class="string">&#x27;between&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">7</span>) <span class="string">&quot;BETWEEN&quot;</span> </span><br><span class="line"><span class="string">&#x27;not between&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">11</span>) <span class="string">&quot;NOT BETWEEN&quot;</span> </span><br><span class="line"><span class="string">&#x27;notbetween&#x27;</span> =&gt; <span class="keyword">string</span>(<span class="number">11</span>) <span class="string">&quot;NOT BETWEEN&quot;</span> &#125; </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$selectSql</span> =&gt; <span class="keyword">string</span>(<span class="number">109</span>) <span class="string">&quot;SELECT%DISTINCT% %FIELD% FROM %TABLE%%FORCE%%JOIN%%WHERE%%GROUP%%HAVING%%ORDER%%LIMIT% %UNION%%LOCK%%COMMENT%&quot;</span> <span class="keyword">protected</span> <span class="variable">$queryTimes</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$executeTimes</span> =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$options</span> =&gt; <span class="keyword">array</span>(<span class="number">4</span>) &#123; </span><br><span class="line">[<span class="number">8</span>] =&gt; <span class="keyword">int</span>(<span class="number">2</span>) </span><br><span class="line">[<span class="number">3</span>] =&gt; <span class="keyword">int</span>(<span class="number">2</span>) </span><br><span class="line">[<span class="number">11</span>] =&gt; <span class="keyword">int</span>(<span class="number">0</span>) </span><br><span class="line">[<span class="number">17</span>] =&gt; <span class="keyword">bool</span>(<span class="literal">false</span>)</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$bind</span> =&gt; <span class="keyword">array</span>(<span class="number">0</span>) &#123; &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>进入_checkTableInfo方法</p>
+<h3 id="funtion-checkTableInfo"><a href="#funtion-checkTableInfo" class="headerlink" title="funtion _checkTableInfo()"></a>funtion _checkTableInfo()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 自动检测数据表信息</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@access</span> protected</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">_checkTableInfo</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">       <span class="comment">// 如果不是Model类 自动记录数据表信息</span></span><br><span class="line">       <span class="comment">// 只在第一次执行记录</span></span><br><span class="line">       <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;fields)) &#123;</span><br><span class="line">           <span class="comment">// 如果数据表字段没有定义则自动获取</span></span><br><span class="line">           <span class="keyword">if</span> (<span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_FIELDS_CACHE&#x27;</span>)) &#123;</span><br><span class="line">               <span class="variable">$db</span>     = <span class="variable language_">$this</span>-&gt;dbName ?: <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_NAME&#x27;</span>);</span><br><span class="line">               <span class="variable">$fields</span> = <span class="title function_ invoke__">F</span>(<span class="string">&#x27;_fields/&#x27;</span> . <span class="title function_ invoke__">strtolower</span>(<span class="variable">$db</span> . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$this</span>-&gt;tablePrefix . <span class="variable">$this</span>-&gt;name));</span><br><span class="line">               <span class="keyword">if</span> (<span class="variable">$fields</span>) &#123;</span><br><span class="line">                   <span class="variable language_">$this</span>-&gt;fields = <span class="variable">$fields</span>;</span><br><span class="line">                   <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$fields</span>[<span class="string">&#x27;_pk&#x27;</span>])) &#123;</span><br><span class="line">                       <span class="variable language_">$this</span>-&gt;pk = <span class="variable">$fields</span>[<span class="string">&#x27;_pk&#x27;</span>];</span><br><span class="line">                   &#125;</span><br><span class="line">                   <span class="keyword">return</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;配置不存在！\r\n&quot;</span>;<span class="comment">//自己加的</span></span><br><span class="line">           &#125;</span><br><span class="line">           <span class="comment">// 每次都会读取数据表信息</span></span><br><span class="line">           <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">flush</span>();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_FIELDS_CACHE&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>这个用来获取数据库字段缓存配置的函数或方法调用。<br>然后这里直接跳出了判断说明对应的配置值为空<br>那就紧接着进入到flush方法</p>
+<h3 id="function-flush"><a href="#function-flush" class="headerlink" title="function flush()"></a>function flush()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取字段信息并缓存</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@access</span> public</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">flush</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 缓存不存在则查询数据表信息</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">setModel</span>(<span class="variable">$this</span>-&gt;name);</span><br><span class="line">    <span class="variable">$fields</span> = <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">getFields</span>(<span class="variable">$this</span>-&gt;<span class="title function_ invoke__">getTableName</span>());</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$fields</span>) &#123;</span><br><span class="line">        <span class="comment">// 无法获取字段信息</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;fields = <span class="title function_ invoke__">array_keys</span>(<span class="variable">$fields</span>);</span><br><span class="line">    <span class="keyword">unset</span>(<span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>]);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$fields</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$val</span>) &#123;</span><br><span class="line">        <span class="comment">// 记录字段类型</span></span><br><span class="line">        <span class="variable">$type</span>[<span class="variable">$key</span>] = <span class="variable">$val</span>[<span class="string">&#x27;type&#x27;</span>];</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$val</span>[<span class="string">&#x27;primary&#x27;</span>]) &#123;</span><br><span class="line">            <span class="comment">// 增加复合主键支持</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>]) &amp;&amp; <span class="literal">null</span> != <span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="title function_ invoke__">is_string</span>(<span class="variable">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>])) &#123;</span><br><span class="line">                    <span class="variable language_">$this</span>-&gt;pk            = <span class="keyword">array</span>(<span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>]);</span><br><span class="line">                    <span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>] = <span class="variable language_">$this</span>-&gt;pk;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;pk[]            = <span class="variable">$key</span>;</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>][] = <span class="variable">$key</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;pk            = <span class="variable">$key</span>;</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_pk&#x27;</span>] = <span class="variable">$key</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$val</span>[<span class="string">&#x27;autoinc&#x27;</span>]) &#123;</span><br><span class="line">                <span class="variable language_">$this</span>-&gt;autoinc = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 记录字段类型信息</span></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;fields[<span class="string">&#x27;_type&#x27;</span>] = <span class="variable">$type</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2008-3-7 增加缓存开关控制</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_FIELDS_CACHE&#x27;</span>)) &#123;</span><br><span class="line">        <span class="comment">// 永久缓存数据表信息</span></span><br><span class="line">        <span class="variable">$db</span> = <span class="variable language_">$this</span>-&gt;dbName ?: <span class="title function_ invoke__">C</span>(<span class="string">&#x27;DB_NAME&#x27;</span>);</span><br><span class="line">        <span class="title function_ invoke__">F</span>(<span class="string">&#x27;_fields/&#x27;</span> . <span class="title function_ invoke__">strtolower</span>(<span class="variable">$db</span> . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$this</span>-&gt;tablePrefix . <span class="variable">$this</span>-&gt;name), <span class="variable">$this</span>-&gt;fields);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>逻辑：</p>
+<ul>
+<li>首先，该方法通过数据库操作对象 $this-&gt;db 获取当前数据表的字段信息。</li>
+<li>如果缓存中不存在字段信息，会通过数据库查询获取数据表的字段信息。 如果成功获取到数据表的字段信息，则会对字段进行处理，提取字段名并记录字段类型。同时，如果存在主键字段，则会将主键字段信息记录下来。</li>
+<li>根据配置项 C(‘DB_FIELDS_CACHE’) 的值来决定是否开启数据库字段信息的缓存功能。如果配置项为真（即开启状态），则将字段信息以永久缓存的方式存储起来，使用了 F(‘_fields&#x2F;‘ . strtolower($db . ‘.’ . $this-&gt;tablePrefix . $this-&gt;name), $this-&gt;fields) 进行缓存。缓存的键名包含了数据库名称、表前缀和表名等信息，以确保缓存的唯一性和准确性。</li>
+</ul>
+<p>跟进一下进入setModel方法</p>
+<h3 id="function-setModel"><a href="#function-setModel" class="headerlink" title="function setModel()"></a>function setModel()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setModel</span>(<span class="params"><span class="variable">$model</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;model = <span class="variable">$model</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传入的model是</p>
+<blockquote>
+<p>string(8) “Articles”</p>
+</blockquote>
+<p>然后进入getTableName方法</p>
+<h3 id="function-getTableName"><a href="#function-getTableName" class="headerlink" title="function getTableName()"></a>function getTableName()</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 得到完整的数据表名</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@access</span> public</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getTableName</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;trueTableName)) &#123;</span><br><span class="line">         <span class="variable">$tableName</span> = !<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;tablePrefix) ? <span class="variable language_">$this</span>-&gt;tablePrefix : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">         <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;tableName)) &#123;</span><br><span class="line">             <span class="variable">$tableName</span> .= <span class="variable language_">$this</span>-&gt;tableName;</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             <span class="variable">$tableName</span> .= <span class="title function_ invoke__">parse_name</span>(<span class="variable">$this</span>-&gt;name);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="variable language_">$this</span>-&gt;trueTableName = <span class="title function_ invoke__">strtolower</span>(<span class="variable">$tableName</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> (!<span class="keyword">empty</span>(<span class="variable language_">$this</span>-&gt;dbName) ? <span class="variable language_">$this</span>-&gt;dbName . <span class="string">&#x27;.&#x27;</span> : <span class="string">&#x27;&#x27;</span>) . <span class="variable language_">$this</span>-&gt;trueTableName;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑</p>
+<ul>
+<li>当调用该方法时，会先判断是否已经存在缓存的数据表名（$this-&gt;trueTableName）。如果存在，则直接返回缓存的表名，无需重新生成。</li>
+<li>如果不存在缓存的表名，会根据以下规则生成数据表名：<ul>
+<li>如果设置了表前缀（$this-&gt;tablePrefix），将其添加到表名中。</li>
+<li>如果设置了具体的表名（$this-&gt;tableName），则使用该表名。</li>
+<li>如果没有设置具体的表名，则将模型名称（$this-&gt;name）进行转换，然后作为表名。</li>
+<li>最后，将生成的表名转换为小写，并存储在 $this-&gt;trueTableName 中缓存起来。</li>
+</ul>
+</li>
+<li>返回格式化后的数据表名。如果设置了数据库名（$this-&gt;dbName），则返回 数据库名.表名 的格式，否则只返回表名。</li>
+</ul>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2023/12/26/N1-star-3/"
+      title="关于N1 star给的一道题的审计分析(三)"
+     >
+
+    <p class="title-text">
+      
+        关于N1 star给的一道题的审计分析(三)
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+ 
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2023 DELETE<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>

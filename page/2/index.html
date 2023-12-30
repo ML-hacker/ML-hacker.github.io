@@ -30,7 +30,7 @@
 
 
   
-  <title>Category: 实战 | Delete&#39;s blog</title>
+  <title>Delete&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -38,7 +38,7 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Delete&#39;s blog">
-<meta property="og:url" content="http://example.com/categories/%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Delete&#39;s blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="DELETE">
@@ -58,7 +58,7 @@
   
    
   <div id="main-grid" class="shadow   ">
-    <div id="nav" class=""  >
+    <div id="nav" class=" is_home "  >
       <navbar id="navbar">
   <nav id="title-nav">
     <a href="/">
@@ -260,65 +260,93 @@
 </sidebar>
     </div>
     <div id="content-body">
-       
+      
+   
 
-<div class="archive-main-card">
-    <div class="archive-top">
-      <div class="main-title-bar">
-        <div class="main-title-dot"></div>
-        <h1 class="article-title">Archives</h1>
-      </div>    
+<article id="post-SICTF" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 itemprop="name">
+        <a class="p-name article-title" href="/2023/09/12/SICTF/">SICTF wp</a>
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2023-09-12T13:23:46.370Z" itemprop="datePublished">2023-09-12</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/CTF/">CTF</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            997 words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WP/" rel="tag">WP</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <div class="truncate-text">
+            WEB签到include首先进入发现有SICTF传参，并且限制了前三个字符为php加上这里有include（）可推断为文件包含漏洞利用php伪协议
+得到密文PD9waHAKJGZpbGVfcGF0aCA9ICIvZmxhZyI7CmlmIChmaWxlX2V4aXN0cygkZmlsZV9wYXRoKSkgewogICAgJGZsYWcgPSBmaWxlX2dldF9jb250ZW50cygkZmlsZV9wYXRoKTsKfQplbHNlewogICAgZWNobyAiZXJyb3IiOwp9Cg&#x3D;&#x3D;
+base64解密
+12345678&lt;?php$file_path = &quot;/flag&quot;;if (file_exists($file_path)) &#123;    $flag = file_get_contents($file_path);&#125;else&#123;    echo &quot;error&quot;;?&gt;
+
+可见直接读flag目录即可得到flag解码得到SICTF{ed2cb4ee-506f-47a8-8...  
+          </div>
+        
+      </div>
+
+         
     </div>
     
-    
+     
+    <a class="right-panel  non-pic  "
       
-      
-        
-        <div class="year-line">
-            <div class="year-num">2023</div>
-            <div class="dot-wrapper">
-                <div class="dot"></div>
-            </div>
-            <div class="article-count">2 articles</div>
-        </div>
-      
-      <a class="archive-article-link" href="/2023/10/27/PHP-parameter/" title="PHP中非法参数名问题分析">
-        <div class="date">10-27</div>
-        <div class="line">
-            <div class="dot"></div>
-        </div>
-        <div class="title">
-            <div class="title-inner">
-                
-                    PHP中非法参数名问题分析
-                
-            </div>
-        </div>
-        <div class="tags">
-            #实战
-        </div>
-      </a>
-    
-      
-      
-      <a class="archive-article-link" href="/2023/09/13/rce-pdf/" title="从XSS到 RCE (dompdf 0day)">
-        <div class="date">09-13</div>
-        <div class="line">
-            <div class="dot"></div>
-        </div>
-        <div class="title">
-            <div class="title-inner">
-                
-                    从XSS到 RCE (dompdf 0day)
-                
-            </div>
-        </div>
-        <div class="tags">
-            #漏洞复现
-        </div>
-      </a>
-    
+      href="/2023/09/12/SICTF/" 
+    >
+       
+      <i class="fa-solid fa-angle-right non-pic"></i>
+       
+    </a>
+     
   </div>
+  
+</article>
+
+ 
+
+
+  <nav id="page-nav">
+    <!-- 在第二页时 page.prev_link 不知为何无法返回正确的链接 -->
+    <a id="prev-btn" class="page-nav-btn " href=" /  ">
+      <i class="fa-solid fa-angle-left"></i>
+    </a>
+    <div id="num-bar">
+      <a class="page-number" href="/">1</a><span class="page-number current">2</span>  
+    </div>
+    <a id="next-btn" class="page-nav-btn disabled" href="/">
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+  </nav>
+
+
     </div>
     <div id="footer-wrapper">
       <footer id="footer">
