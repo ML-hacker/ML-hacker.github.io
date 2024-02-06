@@ -4,14 +4,77 @@
         <link>http://ML-hacker.github.io/</link>
         <description>Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</lastBuildDate>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 02 Feb 2024 15:16:31 &#43;0800</lastBuildDate>
             <atom:link href="http://ML-hacker.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>thinkphp3.2.3 nday到rce深度利用</title>
+    <link>http://ML-hacker.github.io/posts/sql-rce/</link>
+    <pubDate>Fri, 02 Feb 2024 15:16:31 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/sql-rce/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>nosql-inject(mangodb and influxdb)</title>
+    <link>http://ML-hacker.github.io/posts/nosql-inject/</link>
+    <pubDate>Thu, 01 Feb 2024 23:27:59 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/nosql-inject/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>CTFshow元旦水友赛部分wp-web</title>
+    <link>http://ML-hacker.github.io/posts/ctfshow-yuandan/</link>
+    <pubDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/ctfshow-yuandan/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>关于N1star分析中find的详细分析</title>
+    <link>http://ML-hacker.github.io/posts/find-analysis/</link>
+    <pubDate>Wed, 24 Jan 2024 23:56:57 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/find-analysis/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Knightctf 2024 WP</title>
+    <link>http://ML-hacker.github.io/posts/knightctf-2024/</link>
+    <pubDate>Mon, 22 Jan 2024 17:38:41 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/knightctf-2024/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>关于N1 star给的一道题的审计分析</title>
+    <link>http://ML-hacker.github.io/posts/n1start/</link>
+    <pubDate>Mon, 22 Jan 2024 10:16:03 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/n1start/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>反序列化-phar</title>
+    <link>http://ML-hacker.github.io/posts/phar/</link>
+    <pubDate>Wed, 17 Jan 2024 18:32:32 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/phar/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>n1ctf-ezmaira</title>
+    <link>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</link>
+    <pubDate>Fri, 03 Nov 2023 13:19:58 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>ACTF2023 WP</title>
     <link>http://ML-hacker.github.io/posts/actf/</link>
     <pubDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/actf/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>PHP中非法参数名问题分析</title>
+    <link>http://ML-hacker.github.io/posts/php-parameter/</link>
+    <pubDate>Fri, 27 Oct 2023 16:59:24 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/php-parameter/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

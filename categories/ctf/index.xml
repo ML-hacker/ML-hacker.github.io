@@ -4,12 +4,47 @@
         <link>http://ML-hacker.github.io/categories/ctf/</link>
         <description>CTF - Category - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/ctf/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/ctf/" rel="self" type="application/rss+xml" /><item>
+    <title>CTFshow元旦水友赛部分wp-web</title>
+    <link>http://ML-hacker.github.io/posts/ctfshow-yuandan/</link>
+    <pubDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/ctfshow-yuandan/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Knightctf 2024 WP</title>
+    <link>http://ML-hacker.github.io/posts/knightctf-2024/</link>
+    <pubDate>Mon, 22 Jan 2024 17:38:41 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/knightctf-2024/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>n1ctf-ezmaira</title>
+    <link>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</link>
+    <pubDate>Fri, 03 Nov 2023 13:19:58 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>ACTF2023 WP</title>
     <link>http://ML-hacker.github.io/posts/actf/</link>
     <pubDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/actf/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>天山固网线上赛WP</title>
+    <link>http://ML-hacker.github.io/posts/%E5%A4%A9%E5%B1%B1/</link>
+    <pubDate>Sat, 21 Oct 2023 21:55:20 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/%E5%A4%A9%E5%B1%B1/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>SICTFround2 wp</title>
+    <link>http://ML-hacker.github.io/posts/sictf/</link>
+    <pubDate>Mon, 06 Feb 2023 14:36:17 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/sictf/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
