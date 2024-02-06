@@ -1,12 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Delete&#39;s blog</title>
-        <link>http://ML-hacker.github.io/</link>
-        <description>Delete&#39;s blog</description>
+        <title>CTF - Tag - Delete&#39;s blog</title>
+        <link>http://ML-hacker.github.io/tags/ctf/</link>
+        <description>CTF - Tag - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</lastBuildDate>
-            <atom:link href="http://ML-hacker.github.io/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/ctf/" rel="self" type="application/rss+xml" /><item>
     <title>ACTF2023 WP</title>
     <link>http://ML-hacker.github.io/posts/actf/</link>
     <pubDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</pubDate><author>
