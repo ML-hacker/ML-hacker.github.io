@@ -1,11 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>DELETE</title>
-        <link>http://ML-hacker.github.io/</link>
-        <description>DELETE</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 06 Feb 2024 13:35:16 &#43;0800</lastBuildDate>
-            <atom:link href="http://ML-hacker.github.io/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+        <title>All Posts - DELETE</title>
+        <link>http://ML-hacker.github.io/posts/</link>
+        <description>All Posts | DELETE</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 06 Feb 2024 13:35:16 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>First</title>
     <link>http://ML-hacker.github.io/posts/first/</link>
     <pubDate>Tue, 06 Feb 2024 13:35:16 &#43;0800</pubDate><author>
