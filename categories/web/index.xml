@@ -4,7 +4,14 @@
         <link>http://ML-hacker.github.io/categories/web/</link>
         <description>WEB - Category - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Wed, 21 Feb 2024 20:53:41 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/web/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/web/" rel="self" type="application/rss+xml" /><item>
+    <title>PYTHON安全问题总结(一)</title>
+    <link>http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/</link>
+    <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>LD_PRELOAD学习</title>
     <link>http://ML-hacker.github.io/posts/ld_preload/</link>
     <pubDate>Wed, 21 Feb 2024 20:53:41 &#43;0800</pubDate><author>

