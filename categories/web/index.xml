@@ -12,13 +12,6 @@
     </author><guid>http://ML-hacker.github.io/posts/ld_preload/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>thinkphp3.2.3 nday到rce深度利用</title>
-    <link>http://ML-hacker.github.io/posts/sql-rce/</link>
-    <pubDate>Fri, 02 Feb 2024 15:16:31 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/sql-rce/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
     <title>nosql-inject(mangodb and influxdb)</title>
     <link>http://ML-hacker.github.io/posts/nosql-inject/</link>
     <pubDate>Thu, 01 Feb 2024 23:27:59 &#43;0800</pubDate><author>

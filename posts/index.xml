@@ -40,13 +40,6 @@
     </author><guid>http://ML-hacker.github.io/posts/ld_preload/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>thinkphp3.2.3 nday到rce深度利用</title>
-    <link>http://ML-hacker.github.io/posts/sql-rce/</link>
-    <pubDate>Fri, 02 Feb 2024 15:16:31 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/sql-rce/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
     <title>nosql-inject(mangodb and influxdb)</title>
     <link>http://ML-hacker.github.io/posts/nosql-inject/</link>
     <pubDate>Thu, 01 Feb 2024 23:27:59 &#43;0800</pubDate><author>
@@ -73,6 +66,13 @@
     <pubDate>Wed, 17 Jan 2024 18:32:32 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/phar/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>n1ctf-ezmaira</title>
+    <link>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</link>
+    <pubDate>Fri, 03 Nov 2023 13:19:58 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/n1ctf-ezmaira/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

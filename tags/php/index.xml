@@ -19,13 +19,6 @@
     </author><guid>http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>thinkphp3.2.3 nday到rce深度利用</title>
-    <link>http://ML-hacker.github.io/posts/sql-rce/</link>
-    <pubDate>Fri, 02 Feb 2024 15:16:31 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/sql-rce/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
     <title>反序列化-phar</title>
     <link>http://ML-hacker.github.io/posts/phar/</link>
     <pubDate>Wed, 17 Jan 2024 18:32:32 &#43;0800</pubDate><author>
