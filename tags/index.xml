@@ -4,7 +4,14 @@
         <link>http://ML-hacker.github.io/tags/</link>
         <description>Tags - Tag - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Sun, 07 Jul 2024 22:55:20 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>Nodejs</title>
+    <link>http://ML-hacker.github.io/tags/nodejs/</link>
+    <pubDate>Sun, 07 Jul 2024 22:55:20 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/nodejs/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>BashFuck</title>
     <link>http://ML-hacker.github.io/tags/bashfuck/</link>
     <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
@@ -66,13 +73,6 @@
     <pubDate>Thu, 01 Feb 2024 23:27:59 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/tags/nosql/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>WP</title>
-    <link>http://ML-hacker.github.io/tags/wp/</link>
-    <pubDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/wp/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

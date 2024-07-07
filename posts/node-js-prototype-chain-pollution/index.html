@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Node JS Prototype chain pollution - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Node JS Prototype chain pollution" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-07T22:55:20+08:00" />
+<meta property="article:modified_time" content="2024-07-07T22:55:20+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Node JS Prototype chain pollution"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/" /><link rel="prev" href="http://ML-hacker.github.io/posts/filter-chain-learning/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Node JS Prototype chain pollution",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/"
+        },"genre": "posts","keywords": "Nodejs","wordcount":  672 ,
+        "url": "http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/","datePublished": "2024-07-07T22:55:20+08:00","dateModified": "2024-07-07T22:55:20+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Node JS Prototype chain pollution</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-07">2024-07-07</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-07">2024-07-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;672 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="before-writing" class="headerLink">
+    <a href="#before-writing" class="header-mark"></a>Before writing</h1><p>Because of procastinating, I have been for a long time to write some eassy in my blog. But rencently i decide to recover it. So i start to write it down in English.</p>
+<h1 id="prefix-content" class="headerLink">
+    <a href="#prefix-content" class="header-mark"></a>Prefix Content</h1><p>With some foundation data, we can acknowledge it more accurately.</p>
+<h2 id="the-concept-of-synchronous-and-asynchronous" class="headerLink">
+    <a href="#the-concept-of-synchronous-and-asynchronous" class="header-mark"></a>The concept of Synchronous and Asynchronous</h2><p>The Asynchronous like when you are reading, and eating at the same time. Synchronous is you do something one by one without
+time overlap.</p>
+<h2 id="fs-in-nodejs" class="headerLink">
+    <a href="#fs-in-nodejs" class="header-mark"></a>FS in Node.js</h2><p>so in Node.js, which have a module titled fs, have two function to use:
+readFileSync() and readFile().(The former is a synchronous function and the latter is an asynchronous function.)</p>
+<p>pretending we have a file named dt.txt and the content in it is &ldquo;DT you should get more exercise&rdquo;。
+like this
+<figure><img
+        
+        loading="lazy"
+        src="/img/Node-chain/1.png"
+        srcset="/img/Node-chain/1.png, /img/Node-chain/1.png 1.5x, /img/Node-chain/1.png 2x"
+        alt="/img/Node-chain/1.png"
+        title="/img/Node-chain/1.png" ></figure></p>
+<p>and we could use those function to read the content.</p>
+<p>Asynchronous :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span>  <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;dt.txt&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Asynchronous read:&#34;</span><span class="o">+</span><span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Synchronous:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">var</span> <span class="n">fs</span> <span class="o">=</span>  <span class="n">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="n">data</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s1">&#39;dt.txt&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&#34;Synchronous read: &#34;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">toString</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="the-module-of-child_process" class="headerLink">
+    <a href="#the-module-of-child_process" class="header-mark"></a>The module of child_process</h2><p>This module give us some function to create child process.</p>
+<p>Synchronous : <code>spawn exec execFile fork</code>
+Asynchornous:<code>spawnSync execSync execFileSync </code></p>
+<p>when we us Asychronous to create process, spawn is others basis, and when we use Synchronous to create it, we can use <strong>child_process.spwanSync()</strong>、<strong>child_process.execSync()</strong> and <strong>child_process.execFileSync()</strong></p>
+<h1 id="prototype-chain" class="headerLink">
+    <a href="#prototype-chain" class="header-mark"></a>Prototype chain</h1><p>two key word : prototype and proto</p>
+<h2 id="prototype" class="headerLink">
+    <a href="#prototype" class="header-mark"></a>prototype</h2><p>In JavaScript, the prototype object is an important mechanism for implementing object-oriented programming.It is unique to functions. It points to an object from a function. Its meaning is the prototype object of the function, that is, the prototype object of the instance created by this function (in fact, all functions can be used as constructors).</p>
+<p>and we can make some example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">function Food(bar,bar1,bar2) {
+</span></span><span class="line"><span class="cl">  this.bar = 1;
+</span></span><span class="line"><span class="cl">    this.bar1=5;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">let food = new Food();
+</span></span><span class="line"><span class="cl">Food.prototype.bar2=6;
+</span></span><span class="line"><span class="cl">console.log(food.bar1);
+</span></span><span class="line"><span class="cl">console.log(food.bar2);
+</span></span><span class="line"><span class="cl">//5
+</span></span><span class="line"><span class="cl">//6
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>as you can see, we can use property: prototype to point to this prototype function to create bar2, and we use food  to inherit Food which is a class. so the food have the property : bar2 =&gt; 6</p>
+<h2 id="proto" class="headerLink">
+    <a href="#proto" class="header-mark"></a>proto</h2><p>As we can concerned, if some class have been instantiated, you wiil not visit its prototype object by function prototype. In this case, we can use function proto to visit it&rsquo;s prototype object.</p>
+<p>so we can do like this :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">function Food(bar,bar1,bar2) {
+</span></span><span class="line"><span class="cl">    this.bar = 1;
+</span></span><span class="line"><span class="cl">    this.bar1=5;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">let food = new Food();
+</span></span><span class="line"><span class="cl">console.log(Food.prototype===food.__proto__);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="prototype-chains-conception" class="headerLink">
+    <a href="#prototype-chains-conception" class="header-mark"></a>Prototype chain&rsquo;s conception</h2><p>use the fromer example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">function Food() {
+</span></span><span class="line"><span class="cl">    this.bar = 1;
+</span></span><span class="line"><span class="cl">    this.bar1=5;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">function food(){
+</span></span><span class="line"><span class="cl">    this.bar=2;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">food.prototype = new Food();
+</span></span><span class="line"><span class="cl">let food1 = new food();
+</span></span><span class="line"><span class="cl">console.log(food1.bar);
+</span></span><span class="line"><span class="cl">console.log(food1.bar1);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>when we print food1.bar and food1.bar1. The Search order is like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">first we search in it original class, it hava property bar=2
+</span></span><span class="line"><span class="cl">so it can print it like : 2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">and we want to print property bar1 in it, but as we see, it not appear in its class, and we define food.prototype = new Food(), so it will search in it&#39;s prototype object ,
+</span></span><span class="line"><span class="cl">so it will print : 5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>and this searching structure  named prototype chain.</p>
+<h1 id="prototype-chain-pollution" class="headerLink">
+    <a href="#prototype-chain-pollution" class="header-mark"></a>Prototype chain pollution</h1><p>we use phith0n&rsquo;s example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// foo是一个简单的JavaScript对象
+</span></span><span class="line"><span class="cl">let foo = {bar: 1}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// foo.bar 此时为1
+</span></span><span class="line"><span class="cl">console.log(foo.bar)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 修改foo的原型（即Object）
+</span></span><span class="line"><span class="cl">foo.__proto__.bar = 2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 由于查找顺序的原因，foo.bar仍然是1
+</span></span><span class="line"><span class="cl">console.log(foo.bar)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 此时再用Object创建一个空的zoo对象
+</span></span><span class="line"><span class="cl">let zoo = {}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// 查看zoo.bar
+</span></span><span class="line"><span class="cl">console.log(zoo.bar)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/Node-chain/2.png"
+        srcset="/img/Node-chain/2.png, /img/Node-chain/2.png 1.5x, /img/Node-chain/2.png 2x"
+        alt="/img/Node-chain/2.png"
+        title="/img/Node-chain/2.png" ></figure>
+so there is an question: why the property in zoo.bar is 2??
+When we output zoo.bar, the node.js engine starts to search in zoo. If it is not found, it searches in zoo.proto, that is, in Object. And, our foo.proto.bar = 2, is to give Object adds a bar attribute, and this attribute is inherited by zoo.This kind of modification of the prototype object of a certain object to control the operation of other objects is prototype chain pollution.</p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-07-07</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nodejs/">Nodejs</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/filter-chain-learning/" class="prev" rel="prev" title="Filter Chain learning"><i class="fas fa-angle-left fa-fw"></i>Filter Chain learning</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>
