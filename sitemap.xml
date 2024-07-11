@@ -2,13 +2,15 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://ML-hacker.github.io/categories/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/categories/ctf/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/categories/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/categories/ctf/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/posts/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/python/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/posts/python-prototype-chain-pollution/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/</loc><lastmod>2024-07-11T21:55:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/nodejs/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/posts/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/tags/</loc><lastmod>2024-07-07T22:55:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/bashfuck/</loc><lastmod>2024-04-14T14:34:26&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/bypass/</loc><lastmod>2024-04-14T14:34:26&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/posts/filter-chain-learning/</loc><lastmod>2024-04-14T14:34:26&#43;08:00</lastmod></url><url>
