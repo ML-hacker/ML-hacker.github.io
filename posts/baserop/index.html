@@ -137,7 +137,7 @@
 <ul>
 <li>16进制的运算（虽然说这个比较简单但也是头疼）</li>
 <li>GDB的简单使用</li>
-<li>RET所在位置（x64是在ebp/rbp上八个字节，x86是在上面四个字节）</li>
+<li>RET所在位置（x64是在rbp上八个字节，x86是在ebp上面四个字节）</li>
 </ul>
 <p>只需要知道这几个以及一些汇编基础就可以开始啦</p>
 <p>（这里所有的溢出都不开启保护）</p>
@@ -353,7 +353,7 @@ exp.py</p>
         title="/img/baseROP/1.png" ></figure>
 然后s的位置就在ebp-0x64H上面</p>
 <p>所以我们就是往上走100个字节再加上4字节到ret然后进行跳转。
-(不过不知道为啥wiki上面是走114个字节，我也算不明白了呜呜呜)</p>
+(不过不知道为啥wiki上面是走112个字节，我也算不明白了呜呜呜)</p>
 <p>exp.py</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
