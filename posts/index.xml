@@ -4,7 +4,14 @@
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 11 Jul 2024 21:55:20 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 12 Jul 2024 14:38:20 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>基本ROP</title>
+    <link>http://ML-hacker.github.io/posts/baserop/</link>
+    <pubDate>Fri, 12 Jul 2024 14:38:20 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/baserop/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Python Prototype chains pollution</title>
     <link>http://ML-hacker.github.io/posts/python-prototype-chain-pollution/</link>
     <pubDate>Thu, 11 Jul 2024 21:55:20 &#43;0800</pubDate><author>
@@ -66,13 +73,6 @@
     <pubDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/ctfshow-yuandan/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Knightctf 2024 WP</title>
-    <link>http://ML-hacker.github.io/posts/knightctf-2024/</link>
-    <pubDate>Mon, 22 Jan 2024 17:38:41 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/knightctf-2024/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
