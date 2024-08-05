@@ -4,7 +4,21 @@
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 12 Jul 2024 14:38:20 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 25 Jul 2024 21:25:26 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>filter中发生的leak</title>
+    <link>http://ML-hacker.github.io/posts/filterleak/</link>
+    <pubDate>Thu, 25 Jul 2024 21:25:26 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/filterleak/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>HITCON CTF 2024 web复现</title>
+    <link>http://ML-hacker.github.io/posts/hitcon2024/</link>
+    <pubDate>Mon, 22 Jul 2024 00:26:26 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/hitcon2024/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>基本ROP</title>
     <link>http://ML-hacker.github.io/posts/baserop/</link>
     <pubDate>Fri, 12 Jul 2024 14:38:20 &#43;0800</pubDate><author>
@@ -59,20 +73,6 @@
     <pubDate>Wed, 21 Feb 2024 20:53:41 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/ld_preload/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>nosql-inject(mangodb and influxdb)</title>
-    <link>http://ML-hacker.github.io/posts/nosql-inject/</link>
-    <pubDate>Thu, 01 Feb 2024 23:27:59 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/nosql-inject/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>CTFshow元旦水友赛部分wp-web</title>
-    <link>http://ML-hacker.github.io/posts/ctfshow-yuandan/</link>
-    <pubDate>Thu, 25 Jan 2024 22:14:21 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/ctfshow-yuandan/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
