@@ -1,0 +1,21 @@
+.about-container {
+    text-align: center;
+    font-family: "Arial", sans-serif; /* 使用现代化的无衬线字体 */
+    color: #ffffff; /* 文字颜色 */
+}
+
+.about-container h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5); /* 添加文字阴影 */
+}
+
+.about-container p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 让文字更立体 */
+}
+
+.about-container strong {
+    color: #ffcc00; /* 重点信息用亮色 */
+}
