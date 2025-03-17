@@ -19,3 +19,27 @@
 .about-container strong {
     color: #ffcc00; /* 重点信息用亮色 */
 }
+
+/* 调整 Gitalk 容器的样式，避免覆盖其他页面元素 */
+#gt-container {
+    position: relative !important; /* 避免使用 absolute/fixed 影响页面结构 */
+    z-index: 1 !important; /* 确保不会遮挡其他元素 */
+    margin-top: 20px; /* 留出一定的间距 */
+    padding: 10px; /* 增加内边距，防止紧贴 */
+}
+
+/* 修正 Gitalk 可能影响全局的样式 */
+.gt-header, .gt-comments {
+    position: relative !important;
+    z-index: 1;
+}
+
+/* 兼容性优化，确保 Gitalk 不会超出页面边界 */
+#gt-container iframe {
+    max-width: 100% !important;
+}
+
+/* 避免 Gitalk 影响全局样式 */
+.gt-container * {
+    box-sizing: border-box;
+}

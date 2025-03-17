@@ -2,16 +2,22 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>http://ML-hacker.github.io/categories/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/dcsync/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/initial/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/posts/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/pth/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/sudo%E6%8F%90%E6%9D%83/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/tags/web/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/categories/%E4%BA%91%E9%95%9C/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
+            <loc>http://ML-hacker.github.io/posts/initial/</loc><lastmod>2025-03-18T00:02:15&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/ast/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/categories/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/categories/ctf/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/posts/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/shadow-dom/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/tags/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/posts/trx-ctf-writeups/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/upzip/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
-            <loc>http://ML-hacker.github.io/tags/web/</loc><lastmod>2025-03-10T10:49:20&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/tags/filterchain/</loc><lastmod>2024-07-25T21:25:26&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/posts/filterleak/</loc><lastmod>2024-07-25T21:25:26&#43;08:00</lastmod></url><url>
             <loc>http://ML-hacker.github.io/posts/hitcon2024/</loc><lastmod>2024-07-22T00:26:26&#43;08:00</lastmod></url><url>

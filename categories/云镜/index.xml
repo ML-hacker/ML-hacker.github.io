@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>云镜 - Category - Delete&#39;s blog</title>
+        <link>http://ML-hacker.github.io/categories/%E4%BA%91%E9%95%9C/</link>
+        <description>云镜 - Category - Delete&#39;s blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/%E4%BA%91%E9%95%9C/" rel="self" type="application/rss+xml" /><item>
+    <title>云镜-Initial</title>
+    <link>http://ML-hacker.github.io/posts/initial/</link>
+    <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/initial/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>
