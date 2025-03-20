@@ -4,7 +4,14 @@
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 20 Mar 2025 16:41:40 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>DCSync Learning</title>
+    <link>http://ML-hacker.github.io/posts/dcsync-learning/</link>
+    <pubDate>Thu, 20 Mar 2025 16:41:40 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/dcsync-learning/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>云镜-Initial</title>
     <link>http://ML-hacker.github.io/posts/initial/</link>
     <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
@@ -66,13 +73,6 @@
     <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>浅谈BashFuck</title>
-    <link>http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/</link>
-    <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/%E6%B5%85%E8%B0%88bashfuck/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
