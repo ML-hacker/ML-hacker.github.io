@@ -1,0 +1,694 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Pydash原型链污染链子分析 - Delete&#39;s blog</title><meta name="Description" content=""><meta property="og:title" content="Pydash原型链污染链子分析" />
+<meta property="og:description" content="首发于奇安信攻防论坛：https://forum.butian.net/share/4251" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-03-25T13:50:22+08:00" />
+<meta property="article:modified_time" content="2025-03-25T13:50:22+08:00" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Pydash原型链污染链子分析"/>
+<meta name="twitter:description" content="首发于奇安信攻防论坛：https://forum.butian.net/share/4251"/>
+<meta name="application-name" content="Delete&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Delete&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="canonical" href="http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/" /><link rel="prev" href="http://ML-hacker.github.io/posts/dcsync-learning/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Pydash原型链污染链子分析",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/"
+        },"genre": "posts","wordcount":  585 ,
+        "url": "http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/","datePublished": "2025-03-25T13:50:22+08:00","dateModified": "2025-03-25T13:50:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Delete"},"author": {
+                "@type": "Person",
+                "name": "Delete"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('' === 'light' || '' === 'dark' || '' === 'black') setTheme(''), saveTheme(''); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Delete&#39;s blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about"> About </a><a class="menu-item" href="/friend"> Friend </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Delete&#39;s blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about" title="">About</a><a class="menu-item" href="/friend" title="">Friend</a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pydash原型链污染链子分析</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-03-25">2025-03-25</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-03-25">2025-03-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;585 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="content" id="content"><p>首发于奇安信攻防论坛：https://forum.butian.net/share/4251</p>
+<h1 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h1><p>NCTF遇到了一道pydash题目，似乎与SUCTF2025出的一道SU_blog都是这个知识点，遂想基于这道题分析一下链子。<del>其实还可以结合idekctf那道题</del></p>
+<h1 id="nctf-pydash" class="headerLink">
+    <a href="#nctf-pydash" class="header-mark"></a>NCTF-Pydash</h1><p>我们首先来贴一下题目给的源码然后下载一下Pydash的源码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">Hints: Flag在环境变量中
+</span></span></span><span class="line"><span class="cl"><span class="s1">&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pydash</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">bottle</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_path__</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">,</span> <span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="s1">&#39;__closure__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__code__&#39;</span><span class="p">,</span> <span class="s1">&#39;__defaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__dir__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__eq__&#39;</span><span class="p">,</span> <span class="s1">&#39;__format__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__ge__&#39;</span><span class="p">,</span> <span class="s1">&#39;__get__&#39;</span><span class="p">,</span> <span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__gt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__hash__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init_subclass__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__kwdefaults__&#39;</span><span class="p">,</span> <span class="s1">&#39;__le__&#39;</span><span class="p">,</span> <span class="s1">&#39;__lt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ne__&#39;</span><span class="p">,</span> <span class="s1">&#39;__new__&#39;</span><span class="p">,</span> <span class="s1">&#39;__qualname__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__reduce__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce_ex__&#39;</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s1">&#39;__sizeof__&#39;</span><span class="p">,</span> <span class="s1">&#39;__str__&#39;</span><span class="p">,</span> <span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span> <span class="s1">&#39;__wrapped__&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s2">&#34;Optional&#34;</span><span class="p">,</span><span class="s2">&#34;render&#34;</span>
+</span></span><span class="line"><span class="cl">               <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;bottle&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">__forbidden_name__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="s2">&#34;__builtins__&#34;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">setval</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;__&#34;</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_name__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">name</span><span class="o">==</span><span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_path__</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="n">obj</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.post</span><span class="p">(</span><span class="s1">&#39;/setValue&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">set_value</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span><span class="o">=</span><span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">6</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">32</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span><span class="o">=</span><span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;yes&#34;</span> <span class="k">if</span> <span class="n">setval</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&#34;no&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@bottle.get</span><span class="p">(</span><span class="s1">&#39;/render&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">render_template</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path</span><span class="o">=</span><span class="n">bottle</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;hacker&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">blacklist</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;{&#34;</span><span class="p">,</span><span class="s2">&#34;}&#34;</span><span class="p">,</span><span class="s2">&#34;.&#34;</span><span class="p">,</span><span class="s2">&#34;%&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;&#34;</span><span class="p">,</span><span class="s2">&#34;&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;_&#34;</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;hacker&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bottle</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">bottle</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>主要看一下这里的<code>set_</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们来看一下pydash关于这一个函数是如何用的
+/src/pydash/objects.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">PathT</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Sets the value of an object described by `path`. If any part of the object path doesn&#39;t exist,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    it will be created.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Args:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        obj: Object to modify.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        path: Target path to set value to.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        value: Value to set.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Modified `obj`.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Warning:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        `obj` is modified in place.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &gt;&gt;&gt; set_(</span><span class="si">{}</span><span class="s2">, &#34;a.b.c&#34;, 1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}}
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &gt;&gt;&gt; set_(</span><span class="si">{}</span><span class="s2">, &#34;a.0.c&#34;, 1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        {&#39;a&#39;: {&#39;0&#39;: {&#39;c&#39;: 1}}}
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &gt;&gt;&gt; set_([1, 2], &#34;[2][0]&#34;, 1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        [1, 2, [1]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &gt;&gt;&gt; set_(</span><span class="si">{}</span><span class="s2">, &#34;a.b[0].c&#34;, 1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        {&#39;a&#39;: {&#39;b&#39;: [{&#39;c&#39;: 1}]}}
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    .. versionadded:: 2.2.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    .. versionchanged:: 3.3.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Added :func:`set_` as main definition and :func:`deep_set` as alias.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    .. versionchanged:: 4.0.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        - Modify `obj` in place.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        - Support creating default path values as ``list`` or ``dict`` based on whether key or index
+</span></span></span><span class="line"><span class="cl"><span class="s2">          substrings are used.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        - Remove alias ``deep_set``.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">set_with</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是说我们往name中传入一个对象，path中传入其属性名，values传入更改的值就可以改掉其属性的值，例如这样子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pydash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Apple</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;apple&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">sweet</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">Apple</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;修改前: </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">sweet</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&#34;sweet&#34;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;修改后: </span><span class="si">{</span><span class="n">a</span><span class="o">.</span><span class="n">sweet</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/1.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/1.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/1.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/1.png 2x"
+        alt="/img/Pydash原型链污染链子分析/1.png"
+        title="/img/Pydash原型链污染链子分析/1.png" ></figure>
+所以我们就要利用这个来进行污染某些参数从而读取到environ。
+我们先来看看要污染什么值，首先从这个源码看不到可以读取environ的地方，所以我们应该去找一下import的库，可以看到最后面<code>return bottle.template(path)</code>return了一个值，利用bottle来渲染模板，遂看其源码。
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/2.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/2.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/2.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/2.png 2x"
+        alt="/img/Pydash原型链污染链子分析/2.png"
+        title="/img/Pydash原型链污染链子分析/2.png" ></figure>
+我们直接搜索到对应的函数，看到这一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">adapter</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;template_adapter&#39;</span><span class="p">,</span> <span class="n">SimpleTemplate</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="n">lookup</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;template_lookup&#39;</span><span class="p">,</span> <span class="n">TEMPLATE_PATH</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到默认的模板引擎是SimpleTemplate，lookup就是模板的搜索路径也就是<code>TEMPLATE_PATH</code>这个变量
+默认的TEMPLATE_PATH的值为<code>['./','./views/']</code>，所以会去这里面去lookup
+然后接着交给<code>SimpleTemplate</code>去解析</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="n">TEMPLATES</span><span class="p">[</span><span class="n">tplid</span><span class="p">]</span> <span class="o">=</span> <span class="n">adapter</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">tpl</span><span class="p">,</span> <span class="n">lookup</span><span class="o">=</span><span class="n">lookup</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">TEMPLATES</span><span class="p">[</span><span class="n">tplid</span><span class="p">]</span> <span class="o">=</span> <span class="n">adapter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">tpl</span><span class="p">,</span> <span class="n">lookup</span><span class="o">=</span><span class="n">lookup</span><span class="p">,</span> <span class="o">**</span><span class="n">settings</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>跟进这个解析器，然后因为后面传入的是name是一个path而不是一个模板，所以会走到BaseTemplate这里先寻找并解析目录下的模板文件再扔给SimpleTemplate进行渲染解析。
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/3.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/3.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/3.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/3.png 2x"
+        alt="/img/Pydash原型链污染链子分析/3.png"
+        title="/img/Pydash原型链污染链子分析/3.png" ></figure>
+这里的name就是传入的<code>bottle.template(path)</code>的值，这里假设我们path传的是<code>environ</code>，然后通过<code>abspath()</code>方法得到TEMPLATE_PATH的绝对路径。接着进入search方法（name=environ）
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/4.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/4.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/4.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/4.png 2x"
+        alt="/img/Pydash原型链污染链子分析/4.png"
+        title="/img/Pydash原型链污染链子分析/4.png" ></figure>
+search方法中
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/5.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/5.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/5.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/5.png 2x"
+        alt="/img/Pydash原型链污染链子分析/5.png"
+        title="/img/Pydash原型链污染链子分析/5.png" ></figure>
+最后把name拼接到lookup中的每个绝对路径中，然后读到文件后就返回这个fname，接着走到<code>SimpleTemplate</code>的<code>prepare</code>方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SimpleTemplate</span><span class="p">(</span><span class="n">BaseTemplate</span><span class="p">):</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  
+</span></span><span class="line"><span class="cl">                <span class="n">escape_func</span><span class="o">=</span><span class="n">html_escape</span><span class="p">,</span>  
+</span></span><span class="line"><span class="cl">                <span class="n">noescape</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  
+</span></span><span class="line"><span class="cl">                <span class="n">syntax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">ka</span><span class="p">):</span>  
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span>  
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_str</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">touni</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">enc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_escape</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">escape_func</span><span class="p">(</span><span class="n">touni</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">enc</span><span class="p">))</span>  
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">syntax</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">noescape</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_escape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_str</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个方法的作用就是初始化模板的字符处理逻辑，支持 HTML 转义或直接输出原始 HTML，也就是解析这个传入的template变成html
+然后回到template结尾</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">TEMPLATES</span><span class="p">[</span><span class="n">tplid</span><span class="p">]</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进入render方法
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/6.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/6.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/6.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/6.png 2x"
+        alt="/img/Pydash原型链污染链子分析/6.png"
+        title="/img/Pydash原型链污染链子分析/6.png" ></figure>
+走到execute方法
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/7.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/7.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/7.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/7.png 2x"
+        alt="/img/Pydash原型链污染链子分析/7.png"
+        title="/img/Pydash原型链污染链子分析/7.png" ></figure>
+构建了env执行环境，然后在env中执行预编译的模板也就是这里的self.c
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/8.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/8.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/8.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/8.png 2x"
+        alt="/img/Pydash原型链污染链子分析/8.png"
+        title="/img/Pydash原型链污染链子分析/8.png" ></figure>
+如果模板调用 <code>rebase()</code> 继承父模板就递归渲染父模版
+这个时候就会去读取environ模板文件
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/9.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/9.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/9.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/9.png 2x"
+        alt="/img/Pydash原型链污染链子分析/9.png"
+        title="/img/Pydash原型链污染链子分析/9.png" ></figure>
+然后在render中返回解析后的内容
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/10.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/10.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/10.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/10.png 2x"
+        alt="/img/Pydash原型链污染链子分析/10.png"
+        title="/img/Pydash原型链污染链子分析/10.png" ></figure>
+至此整个链子就分析完了，最后整理一下链子逻辑</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">template:adapter()-&gt;class:BaseTemplate:search()-&gt;class:SimpleTemplate:prepare()-&gt;render()-&gt;exec()-&gt;stdout
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以很简单，我们只需要将模板文件改成linux的proc让他去读environ即可，利用<code>set_</code>方法更改掉TEMPLATE_
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/11.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/11.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/11.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/11.png 2x"
+        alt="/img/Pydash原型链污染链子分析/11.png"
+        title="/img/Pydash原型链污染链子分析/11.png" ></figure>
+其默认的值为<code>./</code>和<code>./views/</code>，我们需要读取其environ，就可以利用<code>../../../proc/self/environ</code>来读取，只需要我们将TEMPLATE_PATH改为<code>../../../proc/self/</code>然后把environ放入到其中进行渲染即可得到环境变量。
+接下来去看setval函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">setval</span><span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&#34;__&#34;</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_name__</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">name</span><span class="o">==</span><span class="n">word</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">__forbidden_path__</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">obj</span><span class="o">=</span><span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">]</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">        <span class="n">pydash</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以结合黑名单，playload应该是这样子的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">setval</span><span class="o">.</span><span class="vm">__globals__</span><span class="o">.</span><span class="n">bottle</span><span class="o">.</span><span class="n">TEMPLATE_PATH</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;../../../../../proc/self/&#39;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是pydash是不允许去修改__globals__属性的，去看⼀下代码
+在helpers.py中
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/12.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/12.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/12.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/12.png 2x"
+        alt="/img/Pydash原型链污染链子分析/12.png"
+        title="/img/Pydash原型链污染链子分析/12.png" ></figure>
+所以我们要先污染这个<code>RESTRICTED_KEYS</code>之后再去污染bottle的值即可。
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/13.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/13.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/13.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/13.png 2x"
+        alt="/img/Pydash原型链污染链子分析/13.png"
+        title="/img/Pydash原型链污染链子分析/13.png" ></figure>
+接着
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/14.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/14.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/14.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/14.png 2x"
+        alt="/img/Pydash原型链污染链子分析/14.png"
+        title="/img/Pydash原型链污染链子分析/14.png" ></figure>
+最后渲染
+<figure><img
+        
+        loading="lazy"
+        src="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/15.png"
+        srcset="/img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/15.png, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/15.png 1.5x, /img/Pydash%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93%e9%93%be%e5%ad%90%e5%88%86%e6%9e%90/15.png 2x"
+        alt="/img/Pydash原型链污染链子分析/15.png"
+        title="/img/Pydash原型链污染链子分析/15.png" ></figure>
+得到flag</p></div>
+
+        
+
+<div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-03-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/dcsync-learning/" class="prev" rel="prev" title="DCSync Learning"><i class="fas fa-angle-left fa-fw"></i>DCSync Learning</a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2024 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/ML-hacker" target="_blank" rel="noopener noreferrer">Delete</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"gitalk":{"admin":["ML-hacker"],"clientID":"Ov23litCMvAwYlar13Vt","clientSecret":"c7a209c62df10823175338027316d019ec9593e8","id":"2025-03-25T13:50:22+08:00","owner":"ML-hacker","repo":"ML-hacker.github.io","title":"Pydash原型链污染链子分析"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script></div>
+</body>
+
+</html>

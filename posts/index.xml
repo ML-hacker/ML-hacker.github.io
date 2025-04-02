@@ -4,7 +4,14 @@
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 20 Mar 2025 16:41:40 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 25 Mar 2025 13:50:22 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Pydash原型链污染链子分析</title>
+    <link>http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/</link>
+    <pubDate>Tue, 25 Mar 2025 13:50:22 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/pydash%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E9%93%BE%E5%AD%90%E5%88%86%E6%9E%90/</guid>
+    <description><![CDATA[<p>首发于奇安信攻防论坛：https://forum.butian.net/share/4251</p>]]></description>
+</item><item>
     <title>DCSync Learning</title>
     <link>http://ML-hacker.github.io/posts/dcsync-learning/</link>
     <pubDate>Thu, 20 Mar 2025 16:41:40 &#43;0800</pubDate><author>
@@ -66,13 +73,6 @@
     <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/filter-chain-learning/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Open_basedir绕过</title>
-    <link>http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Sun, 14 Apr 2024 14:34:26 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/open_basedir%E7%BB%95%E8%BF%87%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
