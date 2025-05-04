@@ -125,12 +125,78 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">nosql-inject(mangodb and influxdb)</h1><div class="post-meta">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">nosql-inject(mangodb and influxdb)</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1871 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;</div>
-        </div><div class="content" id="content"><div class="details admonition warning open">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-02-01">2024-02-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1871 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;9 minutes&nbsp;<span id="/posts/nosql-inject/" class="leancloud_visitors" data-flag-title="nosql-inject(mangodb and influxdb)">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class="leancloud-visitors-count waline-pageview-count" data-path="/posts/nosql-inject/"></span>&nbsp;views
+                    </span>&nbsp;<span id="/posts/nosql-inject/" class="comment_count" data-flag-title="nosql-inject(mangodb and influxdb)">
+                        <i class="far fa-comments fa-fw"></i>&nbsp;<span class="waline-comment-count" id="waline-comment-count" data-path="/posts/nosql-inject/"></span>&nbsp;comments
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x001-nosql-database">0x001 NoSQL database</a></li>
+    <li><a href="#0x002nosql-database-models">0x002NoSQL database models</a></li>
+    <li><a href="#0x003注入的类型">0x003注入的类型</a></li>
+    <li><a href="#0x004判断是否存在注入点">0x004判断是否存在注入点</a></li>
+    <li><a href="#inject-function">Inject function</a>
+      <ul>
+        <li><a href="#重言式注入">重言式注入</a></li>
+        <li><a href="#运算符注入">运算符注入</a></li>
+        <li><a href="#联合查询注入">联合查询注入</a></li>
+        <li><a href="#使用-command-方法造成的注入">使用 Command 方法造成的注入</a></li>
+        <li><a href="#盲注">盲注</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#利用nosql-注入提取数据">利用NoSQL 注入提取数据</a></li>
+        <li><a href="#利用nosql运算符注入来提取数据">利用NoSQL运算符注入来提取数据</a></li>
+        <li><a href="#lab">lab</a></li>
+      </ul>
+    </li>
+    <li><a href="#javascript运算符提取数据">javascript运算符提取数据</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#什么是influxdb">什么是InfluxDB</a></li>
+    <li><a href="#influxdb的数据组织">influxDB的数据组织</a></li>
+    <li><a href="#写入数据的一些操作">写入数据的一些操作</a>
+      <ul>
+        <li><a href="#measurement">measurement</a></li>
+        <li><a href="#tag-set">Tag set</a></li>
+        <li><a href="#field-set">Field set</a></li>
+        <li><a href="#timestamp">Timestamp</a></li>
+        <li><a href="#其他的一些东西">其他的一些东西</a></li>
+        <li><a href="#model-of-lp">model of LP</a></li>
+      </ul>
+    </li>
+    <li><a href="#查询的操作">查询的操作</a>
+      <ul>
+        <li><a href="#flux语法">Flux语法</a></li>
+        <li><a href="#influxql语法">influxQL语法</a></li>
+      </ul>
+    </li>
+    <li><a href="#注入利用">注入利用</a>
+      <ul>
+        <li><a href="#构建一个易被攻击的web">构建一个易被攻击的web</a></li>
+        <li><a href="#构建一些playload">构建一些playload</a></li>
+      </ul>
+    </li>
+    <li><a href="#ssrf利用">SSRF利用</a></li>
+    <li><a href="#xss利用">XSS利用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition warning open">
                 <div class="details-summary admonition-title">
                     <i class="icon fas fa-exclamation-triangle fa-fwwarning"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
                 </div>
@@ -1596,8 +1662,8 @@ exp.py:</p>
 </div>
 <div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript><div id="gitalk" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript><div id="waline" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/">Waline</a>.
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
@@ -1613,7 +1679,7 @@ exp.py:</p>
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"gitalk":{"admin":["ML-hacker"],"clientID":"Ov23litCMvAwYlar13Vt","clientSecret":"c7a209c62df10823175338027316d019ec9593e8","id":"2024-02-01T23:27:59+08:00","owner":"ML-hacker","repo":"ML-hacker.github.io","title":"nosql-inject(mangodb and influxdb)"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script></div>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/waline/waline.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"waline":{"comment":true,"copyright":true,"dark":"body[theme='dark'], body[theme='black']","el":"#waline","lang":"en","pageview":true,"serverURL":"https://comment.delete.love/"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/waline/waline.js" defer></script><script type="text/javascript" src="/js/waline.min.js" defer></script></div>
 </body>
 
 </html>

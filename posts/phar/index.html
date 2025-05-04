@@ -125,12 +125,47 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-            <div class="container"><article class="page single"><h1 class="single-title animate__animated animate__flipInX">反序列化-phar</h1><div class="post-meta">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">反序列化-phar</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/web/"><i class="far fa-folder fa-fw"></i>WEB</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1149 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
-        </div><div class="content" id="content"><div class="details admonition warning open">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-17">2024-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1149 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;<span id="/posts/phar/" class="leancloud_visitors" data-flag-title="反序列化-phar">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class="leancloud-visitors-count waline-pageview-count" data-path="/posts/phar/"></span>&nbsp;views
+                    </span>&nbsp;<span id="/posts/phar/" class="comment_count" data-flag-title="反序列化-phar">
+                        <i class="far fa-comments fa-fw"></i>&nbsp;<span class="waline-comment-count" id="waline-comment-count" data-path="/posts/phar/"></span>&nbsp;comments
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x01-什么是phar">0x01 什么是phar？</a></li>
+    <li><a href="#0x02关于phar的一些知识">0x02关于phar的一些知识</a>
+      <ul>
+        <li><a href="#phar的文件结构">phar的文件结构</a></li>
+        <li><a href="#demo">demo</a></li>
+        <li><a href="#demo2">demo2</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x03触发函数">0x03触发函数</a>
+      <ul>
+        <li><a href="#stream-api">Stream API</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x04一些bypass">0x04一些bypass</a>
+      <ul>
+        <li><a href="#常规bypass">常规bypass</a></li>
+        <li><a href="#绕过__wakeup">绕过__\wakeup</a></li>
+        <li><a href="#绕过头部脏数据">绕过头部脏数据</a></li>
+        <li><a href="#绕过尾部脏数据">绕过尾部脏数据</a></li>
+        <li><a href="#绕过前后脏数据">绕过前后脏数据</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><div class="details admonition warning open">
                 <div class="details-summary admonition-title">
                     <i class="icon fas fa-exclamation-triangle fa-fwwarning"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
                 </div>
@@ -1043,8 +1078,8 @@ playlaod:http://127.0.0.1/phar.php?filename=compress.zlib://phar://phar.gif
 </div>
 <div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript><div id="gitalk" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript><div id="waline" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://waline.js.org/">Waline</a>.
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
@@ -1060,7 +1095,7 @@ playlaod:http://127.0.0.1/phar.php?filename=compress.zlib://phar://phar.gif
         </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
             <i class="fas fa-comment fa-fw"></i>
         </a>
-    </div><div class="assets"><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"gitalk":{"admin":["ML-hacker"],"clientID":"Ov23litCMvAwYlar13Vt","clientSecret":"c7a209c62df10823175338027316d019ec9593e8","id":"2024-01-17T18:32:32+08:00","owner":"ML-hacker","repo":"ML-hacker.github.io","title":"反序列化-phar"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/js/gitalk.min.js" defer></script></div>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/waline/waline.min.css"><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"waline":{"comment":true,"copyright":true,"dark":"body[theme='dark'], body[theme='black']","el":"#waline","lang":"en","pageview":true,"serverURL":"https://comment.delete.love/"}},"data":{"desktop-header-typeit":"Delete's blog","mobile-header-typeit":"Delete's blog"},"search":{"distance":100,"findAllMatches":false,"highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":50,"threshold":0.3,"useExtendedSearch":false},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="https://.disqus.com/embed.js" defer></script><script type="text/javascript" src="/lib/waline/waline.js" defer></script><script type="text/javascript" src="/js/waline.min.js" defer></script></div>
 </body>
 
 </html>
