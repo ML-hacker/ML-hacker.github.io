@@ -4,14 +4,21 @@
         <link>http://ML-hacker.github.io/</link>
         <description>Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 17 Apr 2025 13:07:20 &#43;0800</lastBuildDate>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 15 May 2025 20:33:17 &#43;0800</lastBuildDate>
             <atom:link href="http://ML-hacker.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>关于2025年全国大学生计算机系统能力大赛-操作系统设计赛(全国)</title>
     <link>http://ML-hacker.github.io/posts/os/</link>
-    <pubDate>Thu, 17 Apr 2025 13:07:20 &#43;0800</pubDate><author>
+    <pubDate>Thu, 15 May 2025 20:33:17 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/os/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>N1junior2025</title>
+    <link>http://ML-hacker.github.io/posts/n1junior2025/</link>
+    <pubDate>Thu, 15 May 2025 19:33:17 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/n1junior2025/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Pydash原型链污染链子分析</title>
@@ -68,13 +75,6 @@
     <pubDate>Thu, 11 Jul 2024 21:55:20 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/python-prototype-chain-pollution/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Node JS Prototype chain pollution</title>
-    <link>http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/</link>
-    <pubDate>Sun, 07 Jul 2024 22:55:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/node-js-prototype-chain-pollution/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
