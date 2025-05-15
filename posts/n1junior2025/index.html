@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/n1junior2025/"
-        },"genre": "posts","keywords": "WEB, XSS, include","wordcount":  340 ,
+        },"genre": "posts","keywords": "WEB, XSS, include","wordcount":  348 ,
         "url": "http://ML-hacker.github.io/posts/n1junior2025/","datePublished": "2025-05-15T19:33:17+08:00","dateModified": "2025-05-15T19:33:17+08:00","publisher": {
             "@type": "Organization",
             "name": "Delete"},"author": {
@@ -129,7 +129,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-05-15">2025-05-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-05-15">2025-05-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;340 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/posts/n1junior2025/" class="leancloud_visitors" data-flag-title="N1junior2025">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-05-15">2025-05-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-05-15">2025-05-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;348 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/posts/n1junior2025/" class="leancloud_visitors" data-flag-title="N1junior2025">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class="leancloud-visitors-count waline-pageview-count" data-path="/posts/n1junior2025/"></span>&nbsp;views
                     </span>&nbsp;<span id="/posts/n1junior2025/" class="comment_count" data-flag-title="N1junior2025">
                         <i class="far fa-comments fa-fw"></i>&nbsp;<span class="waline-comment-count" id="waline-comment-count" data-path="/posts/n1junior2025/"></span>&nbsp;comments
@@ -490,7 +490,43 @@ bushi，刚写完这一段就能打通
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DOCKER_BUILDKIT=1 docker-compose up -d
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>先起一个环境，去吃个饭，晚点来继续搞</p></div>
+</div><p>先起一个环境，去吃个饭，晚点来继续搞</p>
+<p>很简单判断是H2数据库</p>
+<p>login路由
+<figure><img
+        
+        loading="lazy"
+        src="/img/n1junior2025/13.png"
+        srcset="/img/n1junior2025/13.png, /img/n1junior2025/13.png 1.5x, /img/n1junior2025/13.png 2x"
+        alt="/img/n1junior2025/13.png"
+        title="/img/n1junior2025/13.png" ></figure>
+跟进看到有个query的地方
+<figure><img
+        
+        loading="lazy"
+        src="/img/n1junior2025/14.png"
+        srcset="/img/n1junior2025/14.png, /img/n1junior2025/14.png 1.5x, /img/n1junior2025/14.png 2x"
+        alt="/img/n1junior2025/14.png"
+        title="/img/n1junior2025/14.png" ></figure>
+executeQuery这里可以堆叠输入
+黑名单：
+<figure><img
+        
+        loading="lazy"
+        src="/img/n1junior2025/15.png"
+        srcset="/img/n1junior2025/15.png, /img/n1junior2025/15.png 1.5x, /img/n1junior2025/15.png 2x"
+        alt="/img/n1junior2025/15.png"
+        title="/img/n1junior2025/15.png" ></figure>
+然后不会了，马上去补知识&hellip;&hellip;..
+可以看到h2的配置文件
+<figure><img
+        
+        loading="lazy"
+        src="/img/n1junior2025/16.png"
+        srcset="/img/n1junior2025/16.png, /img/n1junior2025/16.png 1.5x, /img/n1junior2025/16.png 2x"
+        alt="/img/n1junior2025/16.png"
+        title="/img/n1junior2025/16.png" ></figure>
+然后网上看了大概有几种打法，还在学习中呜呜呜，但是这里是利用alies可以写一个方法来调用去弹shell或者其他操作，太晚了，该休息了&hellip;&hellip;&hellip;&hellip;.</p></div>
 
         
 
