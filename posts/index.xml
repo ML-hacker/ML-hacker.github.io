@@ -4,7 +4,28 @@
         <link>http://ML-hacker.github.io/posts/</link>
         <description>All Posts | Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 15 May 2025 20:33:17 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 16 May 2025 12:09:35 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Classloader Learning</title>
+    <link>http://ML-hacker.github.io/posts/classloader-learning/</link>
+    <pubDate>Fri, 16 May 2025 12:09:35 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/classloader-learning/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>JAVA Servlet基础</title>
+    <link>http://ML-hacker.github.io/posts/java-servlet%E5%9F%BA%E7%A1%80/</link>
+    <pubDate>Fri, 16 May 2025 12:07:22 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/java-servlet%E5%9F%BA%E7%A1%80/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>JAVA代理模式学习</title>
+    <link>http://ML-hacker.github.io/posts/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 16 May 2025 12:04:56 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>关于2025年全国大学生计算机系统能力大赛-操作系统设计赛(全国)</title>
     <link>http://ML-hacker.github.io/posts/os/</link>
     <pubDate>Thu, 15 May 2025 20:33:17 &#43;0800</pubDate><author>
@@ -52,27 +73,6 @@
     <pubDate>Thu, 25 Jul 2024 21:25:26 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/filterleak/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>HITCON CTF 2024 web复现</title>
-    <link>http://ML-hacker.github.io/posts/hitcon2024/</link>
-    <pubDate>Mon, 22 Jul 2024 00:26:26 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/hitcon2024/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>基本ROP</title>
-    <link>http://ML-hacker.github.io/posts/baserop/</link>
-    <pubDate>Fri, 12 Jul 2024 14:38:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/baserop/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Python Prototype chains pollution</title>
-    <link>http://ML-hacker.github.io/posts/python-prototype-chain-pollution/</link>
-    <pubDate>Thu, 11 Jul 2024 21:55:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/python-prototype-chain-pollution/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -4,7 +4,28 @@
         <link>http://ML-hacker.github.io/tags/</link>
         <description>Tags - Tag - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Thu, 15 May 2025 19:33:17 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 16 May 2025 12:09:35 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>loader</title>
+    <link>http://ML-hacker.github.io/tags/loader/</link>
+    <pubDate>Fri, 16 May 2025 12:09:35 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/loader/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>servlet</title>
+    <link>http://ML-hacker.github.io/tags/servlet/</link>
+    <pubDate>Fri, 16 May 2025 12:07:22 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/servlet/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>proxy</title>
+    <link>http://ML-hacker.github.io/tags/proxy/</link>
+    <pubDate>Fri, 16 May 2025 12:04:56 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/proxy/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>include</title>
     <link>http://ML-hacker.github.io/tags/include/</link>
     <pubDate>Thu, 15 May 2025 19:33:17 &#43;0800</pubDate><author>
@@ -52,27 +73,6 @@
     <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/tags/sudo%E6%8F%90%E6%9D%83/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>ast</title>
-    <link>http://ML-hacker.github.io/tags/ast/</link>
-    <pubDate>Mon, 10 Mar 2025 10:49:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/ast/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>Shadow Dom</title>
-    <link>http://ML-hacker.github.io/tags/shadow-dom/</link>
-    <pubDate>Mon, 10 Mar 2025 10:49:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/shadow-dom/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>upzip</title>
-    <link>http://ML-hacker.github.io/tags/upzip/</link>
-    <pubDate>Mon, 10 Mar 2025 10:49:20 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/upzip/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
