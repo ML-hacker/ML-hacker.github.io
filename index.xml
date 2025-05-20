@@ -4,9 +4,16 @@
         <link>http://ML-hacker.github.io/</link>
         <description>Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 16 May 2025 12:09:35 &#43;0800</lastBuildDate>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 20 May 2025 13:31:07 &#43;0800</lastBuildDate>
             <atom:link href="http://ML-hacker.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Midnight Sun CTF 2025 WEB</title>
+    <link>http://ML-hacker.github.io/posts/midnight-sun-ctf-2025-web/</link>
+    <pubDate>Tue, 20 May 2025 13:31:07 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/posts/midnight-sun-ctf-2025-web/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>Classloader Learning</title>
     <link>http://ML-hacker.github.io/posts/classloader-learning/</link>
     <pubDate>Fri, 16 May 2025 12:09:35 &#43;0800</pubDate><author>
@@ -68,13 +75,6 @@
     <pubDate>Mon, 10 Mar 2025 10:49:20 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/posts/trx-ctf-writeups/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>filter中发生的leak</title>
-    <link>http://ML-hacker.github.io/posts/filterleak/</link>
-    <pubDate>Thu, 25 Jul 2024 21:25:26 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/posts/filterleak/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
