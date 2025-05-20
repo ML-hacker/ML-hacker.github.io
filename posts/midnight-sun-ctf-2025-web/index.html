@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http://ML-hacker.github.io/posts/midnight-sun-ctf-2025-web/"
-        },"genre": "posts","keywords": "XSS, php, race condition","wordcount":  510 ,
+        },"genre": "posts","keywords": "XSS, php, race condition","wordcount":  834 ,
         "url": "http://ML-hacker.github.io/posts/midnight-sun-ctf-2025-web/","datePublished": "2025-05-20T13:31:07+08:00","dateModified": "2025-05-20T13:31:07+08:00","publisher": {
             "@type": "Organization",
             "name": "Delete"},"author": {
@@ -129,7 +129,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/ML-hacker" title="Author" target="_blank" rel="noopener noreferrer author" class="author">Delete</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-05-20">2025-05-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-05-20">2025-05-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;510 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/posts/midnight-sun-ctf-2025-web/" class="leancloud_visitors" data-flag-title="Midnight Sun CTF 2025 WEB">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2025-05-20">2025-05-20</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2025-05-20">2025-05-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;834 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;<span id="/posts/midnight-sun-ctf-2025-web/" class="leancloud_visitors" data-flag-title="Midnight Sun CTF 2025 WEB">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class="leancloud-visitors-count waline-pageview-count" data-path="/posts/midnight-sun-ctf-2025-web/"></span>&nbsp;views
                     </span>&nbsp;<span id="/posts/midnight-sun-ctf-2025-web/" class="comment_count" data-flag-title="Midnight Sun CTF 2025 WEB">
                         <i class="far fa-comments fa-fw"></i>&nbsp;<span class="waline-comment-count" id="waline-comment-count" data-path="/posts/midnight-sun-ctf-2025-web/"></span>&nbsp;comments
@@ -154,7 +154,8 @@
     <a href="#hackchan" class="header-mark"></a><strong>Hackchan</strong></h2><pre><code>Hackchan is your friendly neighborhood grocery store, with an exclusive loyalty program where points can be redeemed for amazing rewards. The system is said to be bulletproof, but there are whispers of a vulnerability that would allow one into the Billionaire Club by obtaining one billion loyalty points in their Hackchan account.
 </code></pre>
 <h3 id="condition-of-getting-flag" class="headerLink">
-    <a href="#condition-of-getting-flag" class="header-mark"></a>Condition of getting flag</h3><p>在views.py中看见了得到flag的条件</p>
+    <a href="#condition-of-getting-flag" class="header-mark"></a>Condition of getting flag</h3><p>在views.py中看见了得到flag的条件
+I saw a condition to get flag in views.py</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -181,9 +182,11 @@
 </span></span><span class="line"><span class="cl">                <span class="n">template</span> <span class="o">=</span> <span class="s2">&#34;authenticated_template.html&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>即当当前用户的balance大于999_999_999的时候就可以得到flag，所以要看一下逻辑。</p>
+</div><p>即当当前用户的balance大于999_999_999的时候就可以得到flag，所以要看一下逻辑。
+That is, when the current user&rsquo;s balance is greater than 999_999_999, you can get the flag, so you need to look at the logic.</p>
 <h3 id="bot处理流程" class="headerLink">
-    <a href="#bot%e5%a4%84%e7%90%86%e6%b5%81%e7%a8%8b" class="header-mark"></a>bot处理流程</h3><p>在bot.js中处理problem中的url的过程，这个地方就可以构造路由让admin去访问。</p>
+    <a href="#bot%e5%a4%84%e7%90%86%e6%b5%81%e7%a8%8b" class="header-mark"></a>bot处理流程</h3><p>在bot.js中处理problem中的url的过程，这个地方就可以构造路由让admin去访问。
+At the proccess of handling problem in bot.js, this place could construct a route to be accessed by admin</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -208,7 +211,8 @@
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后和balance有关的函数只有</p>
+</div><p>然后和balance有关的函数只有
+Then the balance-related functions are only this one.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -248,7 +252,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后我们现在要找到一个地方去得到balance，于是翻看源码
-这里用了TF-IDF，将question转换为了数值向量</p>
+这里用了TF-IDF，将question转换为了数值向量
+Then we now have to find a place to get balance, so we search the source codeHere, TF-IDF is used, and the question is converted into a numeric vector</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -261,7 +266,8 @@
 </span></span><span class="line"><span class="cl"><span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">faq_questions</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后我们主要看到处理fac这里。</p>
+</div><p>然后我们主要看到处理faq这里。
+Then we mainly see the processing of faq here.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -305,6 +311,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>所以我们只需要找一个label匹配到我们的.swp文件（题目故意留的，可以嵌入xss，but我利用vim -r 看不出来是什么问题，所以等wp吧，再补上）
+So we only need to find a label that matches our .swp file (the title is deliberately left, and it can be embedded in xss, but I can&rsquo;t see what the problem is using vim -r, so wait for wp and then make up for it)
 <figure><img
         
         loading="lazy"
@@ -313,6 +320,7 @@
         alt="/img/Midnight-Sun-CTF-2025-WEB/1.png"
         title="/img/Midnight-Sun-CTF-2025-WEB/1.png" ></figure>
 因为是<code>.</code>开头的文件，所以在文件系统里面会放在最前面，再回顾我们的fac内容，这里只贴出部分
+Because it is a file starting with <code>.</code>, it will be placed at the front of the file system. Then review our fac content, only some of it is posted here
 <figure><img
         
         loading="lazy"
@@ -322,6 +330,7 @@
         title="/img/Midnight-Sun-CTF-2025-WEB/2.png" ></figure>
 我们只需要匹配其中的media即可，他就会将.swap文件渲染出来。
 所以我们只需要让<code>action=fac&amp;question={text}</code>的text内容与对应的question对应上即可
+We just need to match the media in it, and it will render the .swap file.So we just need to make the text content of <code>action=fac&amp;question={text}</code> correspond to the corresponding question
 <figure><img
         
         loading="lazy"
@@ -340,6 +349,7 @@ playload:
         title="/img/Midnight-Sun-CTF-2025-WEB/4.png" ></figure>
 即可触发xss，那么接下来就很简单了，记得我们前面的bot吗，只需要控制这个xss让bot给我们转钱即可。
 所以让bot访问：
+It can trigger xss, so the next step is very simple. Remember the bot we had in front of, just control this xss and let the bot transfer money to us.So let bot access:
 <code>http://web:8000/?action=create-transaction9</code>然后post过去
 <code>recipient=deletee&amp;amount=9999999999</code>
 <figure><img
@@ -350,6 +360,7 @@ playload:
         alt="/img/Midnight-Sun-CTF-2025-WEB/5.png"
         title="/img/Midnight-Sun-CTF-2025-WEB/5.png" ></figure>
 但是一次最多只能转10块钱，所以还得看一下逻辑，然后注意到处理的时候是分两块的
+But you can only transfer at most 10 yuan at a time, so you have to look at the logic and notice that it is divided into two parts when processing
 <figure><img
         
         loading="lazy"
@@ -358,7 +369,8 @@ playload:
         alt="/img/Midnight-Sun-CTF-2025-WEB/6.png"
         title="/img/Midnight-Sun-CTF-2025-WEB/6.png" ></figure>
 看到这里<code>confirmed_transactions = Transaction.query.filter(Transaction.status == 'confirmed').all()</code>所以我们可以在<code>confirm_transaction</code>之后的间隙将订单的status更改一次为confirmed即可完成转账，也就是race condition
-最后的playload：</p>
+最后的playload：
+See here <code>confirmed_transactions = Transaction.query.filter(Transaction.status == 'confirmed').all()</code> so we can change the status of the order to confirm once in the gap after <code>confirm_transaction</code> to complete the transfer, that is, race conditionThe final playload:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -464,7 +476,9 @@ playload:
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>用的<code>&lt;img src=x onerror=&quot;eval(atob('playload'))&quot;/&gt;</code>注意下编码问题即可，最后再次感谢HighDex
-用英文说一遍:</p>
+用英文说一遍:
+Use <code>&lt;img src=x oneerror=&quot;eval(atob('playload'))&quot;/&gt;</code> and pay attention to the encoding problem. Finally, thank HighDex again
+Say it in English:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
