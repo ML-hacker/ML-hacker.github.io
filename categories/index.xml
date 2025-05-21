@@ -4,19 +4,19 @@
         <link>http://ML-hacker.github.io/categories/</link>
         <description>Categories - Category - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 20 May 2025 13:31:07 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/" rel="self" type="application/rss+xml" /><item>
-    <title>CTF</title>
-    <link>http://ML-hacker.github.io/categories/ctf/</link>
-    <pubDate>Tue, 20 May 2025 13:31:07 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/categories/ctf/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 16 May 2025 12:09:35 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/categories/" rel="self" type="application/rss+xml" /><item>
     <title>JAVA</title>
     <link>http://ML-hacker.github.io/categories/java/</link>
     <pubDate>Fri, 16 May 2025 12:09:35 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/categories/java/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>CTF</title>
+    <link>http://ML-hacker.github.io/categories/ctf/</link>
+    <pubDate>Thu, 15 May 2025 19:33:17 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/categories/ctf/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>内网</title>

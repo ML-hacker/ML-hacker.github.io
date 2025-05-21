@@ -4,28 +4,7 @@
         <link>http://ML-hacker.github.io/tags/</link>
         <description>Tags - Tag - Delete&#39;s blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>718191931@qq.com (Delete)</managingEditor>
-            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Tue, 20 May 2025 13:31:07 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>PHP</title>
-    <link>http://ML-hacker.github.io/tags/php/</link>
-    <pubDate>Tue, 20 May 2025 13:31:07 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/php/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>race condition</title>
-    <link>http://ML-hacker.github.io/tags/race-condition/</link>
-    <pubDate>Tue, 20 May 2025 13:31:07 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/race-condition/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>XSS</title>
-    <link>http://ML-hacker.github.io/tags/xss/</link>
-    <pubDate>Tue, 20 May 2025 13:31:07 &#43;0800</pubDate><author>
-        <name>Delete</name>
-    </author><guid>http://ML-hacker.github.io/tags/xss/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
+            <webMaster>718191931@qq.com (Delete)</webMaster><lastBuildDate>Fri, 16 May 2025 12:09:35 &#43;0800</lastBuildDate><atom:link href="http://ML-hacker.github.io/tags/" rel="self" type="application/rss+xml" /><item>
     <title>loader</title>
     <link>http://ML-hacker.github.io/tags/loader/</link>
     <pubDate>Fri, 16 May 2025 12:09:35 &#43;0800</pubDate><author>
@@ -61,6 +40,13 @@
     </author><guid>http://ML-hacker.github.io/tags/web/</guid>
     <description><![CDATA[]]></description>
 </item><item>
+    <title>XSS</title>
+    <link>http://ML-hacker.github.io/tags/xss/</link>
+    <pubDate>Thu, 15 May 2025 19:33:17 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/xss/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>DCSync</title>
     <link>http://ML-hacker.github.io/tags/dcsync/</link>
     <pubDate>Thu, 20 Mar 2025 16:41:40 &#43;0800</pubDate><author>
@@ -73,6 +59,20 @@
     <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
         <name>Delete</name>
     </author><guid>http://ML-hacker.github.io/tags/initial/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>PTH</title>
+    <link>http://ML-hacker.github.io/tags/pth/</link>
+    <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/pth/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>sudo提权</title>
+    <link>http://ML-hacker.github.io/tags/sudo%E6%8F%90%E6%9D%83/</link>
+    <pubDate>Tue, 18 Mar 2025 00:02:15 &#43;0800</pubDate><author>
+        <name>Delete</name>
+    </author><guid>http://ML-hacker.github.io/tags/sudo%E6%8F%90%E6%9D%83/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
